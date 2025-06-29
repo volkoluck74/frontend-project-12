@@ -20,6 +20,9 @@
   },
   "homepage": "https://github.com/volkoluck74/frontend-project-12#readme",
   "dependencies": {
-    "@hexlet/chat-server": "^2.0.4"
+    "@hexlet/chat-server": "^1.1.6",
+    "react-redux": "^9.2.0",
+    "redux": "^5.0.1",
+    "redux-thunk": "^3.1.0"
   }
 }
