@@ -2,14 +2,16 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import LoginPage from './Components/login'
+import ChatPage from './Components/pageWithChat'
 import NotFoundPage from './Components/notFound'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useSelector } from "react-redux"
 import './App.css'
+import hasToken from '../src/utils/hasToken.js'
 
 const LoginOrChatPage = () => {
   return (
-    (localStorage.getItem('token') === undefined) ? <Navigate to="/login"/> : <Navigate to="/login"/>
+    !hasToken() ? <Navigate to="login"/> : <ChatPage/>
   )
 }
 
@@ -19,6 +21,7 @@ function App() {
       <Routes>
         <Route path='/' element={<LoginOrChatPage/>}/>
         <Route path='login' element={<LoginPage/>}/>
+        <Route path='chat' element={<ChatPage/>}/>
         <Route path='*' element={<NotFoundPage/>}/>
       </Routes>
     </BrowserRouter>

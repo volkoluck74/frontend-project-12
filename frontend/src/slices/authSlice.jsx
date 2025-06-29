@@ -28,6 +28,7 @@ const autnSlice = createSlice({
         logout: (state) => {
             state.user = null;
             state.token = null;
+            localStorage.setItem('token', null);
         },
     },
     extraReducers: (builder) => {

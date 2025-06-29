@@ -3,10 +3,12 @@ import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import {login} from "../slices/authSlice.jsx"
+import hasToken from '../utils/hasToken.js'
+import {Navigate} from 'react-router-dom'
 
 const LoginForm = () => {
     const dispatch = useDispatch()
-    const {token} = useSelector(state => state.auth)
+    const token = localStorage.getItem('token')
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -14,19 +16,17 @@ const LoginForm = () => {
         },
     });
     const navigate = useNavigate();
-    const hasToken = () => {
-        return localStorage.getItem('token') !== undefined && localStorage.getItem('token') !== 'undefined'
-    }
-    
-    const onSubmit =  (e) => {
+    const onSubmit =  async (e) => {
         e.preventDefault();
-        dispatch(login(formik.values))
+        try {
+            await dispatch(login(formik.values))
+            navigate('/')
+
+        }
+        catch {
+            navigate('/login')
+        }
     }
-    
-    useEffect(()=>{
-        hasToken() ? navigate('/login') : navigate('/login')
-    },[token])
-    
     return (
         <form className="col-12 col-md-6 mt-3 mt-md-0" onSubmit={onSubmit}>
             <h1 className="text-center mb-4">Войти</h1>
