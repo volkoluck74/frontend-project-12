@@ -1,10 +1,7 @@
 import { useFormik } from "formik"
-import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import {login} from "../slices/authSlice.jsx"
-import hasToken from '../utils/hasToken.js'
-import {Navigate} from 'react-router-dom'
 
 const LoginForm = () => {
     const dispatch = useDispatch()

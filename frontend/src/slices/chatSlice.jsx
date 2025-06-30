@@ -1,14 +1,13 @@
 import {createSlice, createAsyncThunk} from `@reduxjs/toolkit`
 import routes from './../routes.js'
 import axios from 'axios'
-import { current } from '@reduxjs/toolkit';
 
 
 export const getChats = createAsyncThunk(
     'chat/getChats',
     async (token) => {
         try {
-            const response = await axios.get(routes.usersPath(), {
+            const response = await axios.get(routes.dataPath(), {
                 headers: token,
             });
             console.log(response.data)

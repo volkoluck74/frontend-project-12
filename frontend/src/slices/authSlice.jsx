@@ -6,9 +6,10 @@ export const login = createAsyncThunk(
     'autn/login',
     async (body) => {
         try {
-            const data = await axios.post(routes.loginPath(), body);
-            const token = data.data.token;
-            return token;
+            const data = await axios.post(routes.loginPath(), body)
+            const token = data.data.token
+            const username = data.data.username
+            return {token, username}
         }
         catch {
             console.log('Error auth')
@@ -19,16 +20,17 @@ export const login = createAsyncThunk(
 const autnSlice = createSlice({
     name: 'auth',
     initialState: {
-        user: null,
+        username: null,
         token: null,
         status: 'idle',
         error: null
     },
     reducers:{
         logout: (state) => {
-            state.user = null;
+            state.username = null;
             state.token = null;
             localStorage.setItem('token', null);
+            localStorage.setItem('username', null);
         },
     },
     extraReducers: (builder) => {
@@ -38,9 +40,10 @@ const autnSlice = createSlice({
             })
             .addCase(login.fulfilled, (state, action) => {
                 state.status = 'succeeded'
-                state.token = action.payload
-                localStorage.setItem('token', JSON.stringify(action.payload));
-                //localStorage.setItem('token', action.payload)
+                state.token = action.payload.token,
+                state.username = action.payload.username,
+                localStorage.setItem('token', JSON.stringify(action.payload.token));
+                localStorage.setItem('username', JSON.stringify(action.payload.username));
             })
             .addCase(login.rejected, (state, action) => {
                 state.status = 'failed'
