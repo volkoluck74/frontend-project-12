@@ -1,8 +1,11 @@
 import { useFormik } from "formik"
 import { useDispatch, useSelector } from "react-redux"
 import routes from './../routes.js'
+import { useEffect} from 'react'
+
 import axios from 'axios'
 import getAuthHeader from './../utils/getAuthHeader.js'
+import {io} from 'socket.io-client'
 
 const ChatForm = () => {
     const formik = useFormik({
@@ -10,20 +13,42 @@ const ChatForm = () => {
             body: '',
         },
     });
+    //const socket = io('http://localhost:5001');
+    const socket = io();
     const token = getAuthHeader()
     const {currentChannelId} = useSelector(state => state.chats)
+    useEffect(() => {
+        socket.on('newMessage', (payload) => {
+            console.log('Message')
+            console.log(payload);
+          })
+        socket.on('connect', () => {
+            console.log(socket.id)
+        })
+        socket.on('newChannel', (payload) => {
+            console.log('Channel')
+            console.log(payload) 
+          });
+    }, );
     const onSubmit =  async (e) => {
         e.preventDefault();
         const newMessage = { 
             body: formik.values.body, 
             channelId: currentChannelId, 
-            username: localStorage.getItem('username'),
+            username: JSON.parse(localStorage.getItem('userId')).username
         }
+        const newChannel = { name: 'new channel' }
         console.log(newMessage)
         try {
             const response = await axios.post(routes.messagesPath(), newMessage, {
                 headers: token,
             })
+            console.log(response)
+            const response2 = await axios.post(routes.channelsPath(), newChannel, {
+                headers: token,
+            })
+            console.log(response2)
+            /*
             console.log(response)
             const response2 = await axios.get(routes.dataPath(), {
                 headers: token,
@@ -33,6 +58,10 @@ const ChatForm = () => {
                 headers: token,
             })
             console.log(response3.data)
+            
+            const response2 = await axios.post(routes.newUserPath(), { username: 'newuser', password: 'tttt456'});
+            console.log(response2)
+            */
         }
         catch {
             console.log('Ooops')
