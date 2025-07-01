@@ -6,14 +6,7 @@ import chatSlice, {getChats} from "../slices/chatSlice.jsx"
 import {logout} from "../slices/authSlice.jsx"
 import ItemChannel from "./itemChannel.jsx"
 import ChatForm from "./ChatForm.jsx"
-
-const getAuthHeader = () => {
-  const token = JSON.parse(localStorage.getItem('token'))
-  if (token !== undefined) {
-    return { Authorization: `Bearer ${token}` }
-  }
-  return {}
-}
+import getAuthHeader from './../utils/getAuthHeader.js'
 
 const ChatPage = () => {
     const dispatch = useDispatch()

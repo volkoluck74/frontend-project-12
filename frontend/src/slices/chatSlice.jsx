@@ -1,4 +1,4 @@
-import {createSlice, createAsyncThunk} from `@reduxjs/toolkit`
+import { createAsyncThunk, createSlice, createEntityAdapter } from '@reduxjs/toolkit'
 import routes from './../routes.js'
 import axios from 'axios'
 

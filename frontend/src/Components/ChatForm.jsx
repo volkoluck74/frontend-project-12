@@ -2,14 +2,8 @@ import { useFormik } from "formik"
 import { useDispatch, useSelector } from "react-redux"
 import routes from './../routes.js'
 import axios from 'axios'
+import getAuthHeader from './../utils/getAuthHeader.js'
 
-const getAuthHeader = () => {
-    const token = JSON.parse(localStorage.getItem('token'))
-    if (token !== undefined) {
-      return { Authorization: `Bearer ${token}` }
-    }
-    return {}
-  }
 const ChatForm = () => {
     const formik = useFormik({
         initialValues: {

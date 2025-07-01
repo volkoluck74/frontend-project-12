@@ -1,3 +1,10 @@
 export default function hasToken () {
-    return localStorage.getItem('token') !== 'null' && localStorage.getItem('token') !== null && localStorage.getItem('token') !== undefined && localStorage.getItem('token') !== 'undefined'
+    try{
+        const token = JSON.parse(localStorage.getItem('userId')).token
+        return true
+    }
+    catch {
+        return false
+    }
+    
 }

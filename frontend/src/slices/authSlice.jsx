@@ -1,4 +1,4 @@
-import {createSlice, createAsyncThunk} from `@reduxjs/toolkit`
+import { createAsyncThunk, createSlice, createEntityAdapter } from '@reduxjs/toolkit'
 import routes from './../routes.js'
 import axios from 'axios'
 
@@ -27,23 +27,21 @@ const autnSlice = createSlice({
     },
     reducers:{
         logout: (state) => {
-            state.username = null;
-            state.token = null;
-            localStorage.setItem('token', null);
-            localStorage.setItem('username', null);
+            state.username = null
+            state.token = null
+            localStorage.removeItem('userId')
         },
     },
     extraReducers: (builder) => {
         builder
             .addCase(login.pending, (state) =>{
-                state.status = 'loading';
+                state.status = 'loading'
             })
             .addCase(login.fulfilled, (state, action) => {
                 state.status = 'succeeded'
-                state.token = action.payload.token,
-                state.username = action.payload.username,
-                localStorage.setItem('token', JSON.stringify(action.payload.token));
-                localStorage.setItem('username', JSON.stringify(action.payload.username));
+                state.token = action.payload.token
+                state.username = action.payload.username
+                localStorage.setItem('userId', JSON.stringify(action.payload))
             })
             .addCase(login.rejected, (state, action) => {
                 state.status = 'failed'
