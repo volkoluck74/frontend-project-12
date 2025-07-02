@@ -3,7 +3,7 @@ import routes from './../routes.js'
 import axios from 'axios'
 
 export const login = createAsyncThunk(
-    'autn/login',
+    'auth/login',
     async (body) => {
         try {
             const data = await axios.post(routes.loginPath(), body)
@@ -17,7 +17,7 @@ export const login = createAsyncThunk(
     }
 )
 
-const autnSlice = createSlice({
+const authSlice = createSlice({
     name: 'auth',
     initialState: {
         username: null,
@@ -50,5 +50,5 @@ const autnSlice = createSlice({
     }
 })
 
-export const { logout } = autnSlice.actions
-export default autnSlice.reducer
+export const { logout } = authSlice.actions
+export default authSlice.reducer

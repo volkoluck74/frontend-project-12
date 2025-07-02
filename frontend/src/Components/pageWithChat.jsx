@@ -2,22 +2,38 @@ import React from 'react'
 import { useEffect} from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import chatSlice, {getChats} from "../slices/chatSlice.jsx"
+import chatSlice, {getChannels, getMessages} from "../slices/chatSlice.jsx"
 import {logout} from "../slices/authSlice.jsx"
 import ItemChannel from "./itemChannel.jsx"
+import ItemMessage from "./itemMessage.jsx"
 import ChatForm from "./ChatForm.jsx"
 import getAuthHeader from './../utils/getAuthHeader.js'
+import {io} from 'socket.io-client'
 
 const ChatPage = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const {channels} = useSelector(state => state.chats)
     const {messages} = useSelector(state => state.chats)
+    
+    const socket = io();
     const {currentChannelId} = useSelector(state => state.chats)
+    const {status} = useSelector(state => state.chats)
+    let currentChannel = channels.length > 0 ? channels.filter(item => item.id === currentChannelId)[0] : {}
     const token = getAuthHeader()
+
     useEffect(() => {
-      dispatch(getChats(token))
+      dispatch(getMessages())
+      dispatch(getChannels())
     }, []);
+    useEffect(() => {
+      socket.on('newMessage', (payload) => {
+          dispatch(getMessages())
+        })
+      socket.on('newChannel', (payload) => {
+          console.log(payload) 
+        });
+  }, );
     const onSubmitLogout =  async (e) => {
       e.preventDefault();
       try {
@@ -28,7 +44,9 @@ const ChatPage = () => {
         navigate('/')
       }
     }
-    const currentChannel = channels.length > 0 ? channels.filter(item => item.id === currentChannelId)[0] : {}
+    const addNewChanel = () => {
+      
+    }
     return (
     <>
       <div className="h-100" id="chat">
@@ -59,10 +77,12 @@ const ChatPage = () => {
             <div className="col p-0 h-100">
               <div className="d-flex flex-column h-100">
                 <div className="bg-light mb-4 p-3 shadow-sm small">
-                  <p className="m-0"><b># {currentChannel.name}</b></p>
-                  <span className="text-muted">0 сообщений</span>
+                  {currentChannel?.name !== undefined ? <p className="m-0"><b># {currentChannel.name}</b></p> : <p className="m-0"><b>#</b></p>}
+                  <span className="text-muted">{messages.filter(item => item.channelId === currentChannelId).length} сообщений</span>
                 </div>
-                <div id="messages-box" className="chat-messages overflow-auto px-5 "></div>
+                <div id="messages-box" className="chat-messages overflow-auto px-5 ">
+                {messages.filter(item => item.channelId === currentChannelId).map(item => <ItemMessage item={item}/>)} 
+                </div>
                 <div className="mt-auto px-5 py-3">
                   <ChatForm/>
                 </div>
