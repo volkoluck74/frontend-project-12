@@ -15,11 +15,12 @@ import RenamingChannelDialog from "./RenameChannelDialog.jsx"
 import getAuthHeader from './../utils/getAuthHeader.js'
 import { io } from 'socket.io-client'
 import {getMessages, selectAllMessages} from '../slices/messageSlice.jsx'
+import Header from './Header.jsx'
 
 
 const ChatPage = () => {
     const dispatch = useDispatch()
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     const channels = useSelector(selectAllChannels)
     const messages = useSelector(selectAllMessages)
     const { addingChannel, currentChannelId, removingChannel, renamingChannel} = useSelector(state => state.uiState)
@@ -76,12 +77,7 @@ const ChatPage = () => {
             <div className='h-100'>
                 <div className="h-100" id="chat">
                     <div className="d-flex flex-column h-100">
-                        <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
-                            <div className="container">
-                                <a className="navbar-brand" href="/">Hexlet Chat</a>
-                                <button type="button" className="btn btn-primary" onClick={onSubmitLogout}>Выйти</button>
-                            </div>
-                        </nav>
+                        <Header/>
                         <div className="container h-100 my-4 overflow-hidden rounded shadow">
                             <div className="row h-100 bg-white flex-md-row">
                                 <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">

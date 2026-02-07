@@ -12,7 +12,7 @@ const ChatForm = () => {
         initialValues: {
             body: '',
         },
-    });
+    })
     //const socket = io();
     const dispatch = useDispatch()
     //const token = getAuthHeader()

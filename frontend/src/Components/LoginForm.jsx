@@ -12,7 +12,7 @@ const LoginForm = () => {
             password: '',
         },
     });
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     const onSubmit =  async (e) => {
         e.preventDefault();
         try {

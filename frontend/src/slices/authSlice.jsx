@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, createEntityAdapter } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import routes from './../routes.js'
 import axios from 'axios'
 
@@ -11,8 +11,22 @@ export const login = createAsyncThunk(
             const username = data.data.username
             return {token, username}
         }
-        catch {
-            console.log('Error auth')
+        catch (e) {
+            console.log(e)
+        }
+    }
+)
+export const registration = createAsyncThunk(
+    'auth/registration',
+    async (newUser, { rejectWithValue }) => {
+        try {
+            const response = await axios.post(routes.newUserPath(), newUser)
+            return response.data
+        }
+        catch (e) {
+            return rejectWithValue(
+                e.status === 409 ? 'Такой пользователь уже существует' : 'Ошибка регистрации'
+            )
         }
     }
 )
@@ -31,11 +45,15 @@ const authSlice = createSlice({
             state.token = null
             localStorage.removeItem('userId')
         },
+        clearError: (state) => {
+            state.error = null
+        }
     },
     extraReducers: (builder) => {
         builder
             .addCase(login.pending, (state) =>{
                 state.status = 'loading'
+                state.error = null
             })
             .addCase(login.fulfilled, (state, action) => {
                 state.status = 'succeeded'
@@ -47,8 +65,20 @@ const authSlice = createSlice({
                 state.status = 'failed'
                 state.error = action.error.message
             })
+            .addCase(registration.pending, (state) =>{
+                state.status = 'loading'
+                state.error = null
+            })
+            .addCase(registration.fulfilled, (state) => {
+                state.status = 'succeeded'
+                state.error = null
+            })
+            .addCase(registration.rejected, (state, action) => {
+                state.status = 'failed'
+                state.error = action.payload || 'Ошибка'
+            })
     }
 })
 
-export const { logout } = authSlice.actions
+export const { logout, clearError } = authSlice.actions
 export default authSlice.reducer
