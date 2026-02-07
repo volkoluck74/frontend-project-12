@@ -1,14 +1,16 @@
 import React, { useRef, useEffect } from 'react'
-import { changeCurrentChannel, changeChannelWithMenu } from "../slices/UIslice"
+import { changeCurrentChannel, changeChannelWithMenu, changeCurrentRemoveChannel, openRemovingChannelDialog, changeCurentRenameChannel, openRenamingChannelDialog} from "../slices/UIslice.jsx"
 import cn from 'classnames'
 import { useDispatch, useSelector } from "react-redux"
 
 const ItemChannelWithMenu = (props) => {
     const dispatch = useDispatch()
-    const { numberChannelWithMenu, currentChannelId } = useSelector(state => state.uiState)
+    const { numberChannelWithMenu, currentChannelId} = useSelector(state => state.uiState)
     
     const menuRef = useRef(null)
     const toggleButtonRef = useRef(null)
+  
+    const isMenuActionClicked = useRef(false)
     
     const cnMainButton = props.item.id === currentChannelId ? 
         "w-100 rounded-0 text-start btn btn-secondary" : 
@@ -41,25 +43,60 @@ const ItemChannelWithMenu = (props) => {
     const handleMenuClear = () => {
         dispatch(changeChannelWithMenu({ id: 0 }))
     }
+
     useEffect(() => {
         const handleClickOutside = (event) => {
+            if (isMenuActionClicked.current) {
+                isMenuActionClicked.current = false;
+                return;
+            }
+            
             if (props.item.id === numberChannelWithMenu &&
                 menuRef.current && 
                 !menuRef.current.contains(event.target) &&
                 toggleButtonRef.current && 
                 !toggleButtonRef.current.contains(event.target)) {
-                handleMenuClear()
+                handleMenuClear();
             }
         }
-
+        
         if (props.item.id === numberChannelWithMenu) {
-            document.addEventListener('mousedown', handleClickOutside)
+            document.addEventListener('mousedown', handleClickOutside);
         }
+        
         return () => {
-            document.removeEventListener('mousedown', handleClickOutside)
+            document.removeEventListener('mousedown', handleClickOutside);
         }
-    }, [props.item.id, numberChannelWithMenu, dispatch])
+    }, [props.item.id, numberChannelWithMenu, handleMenuClear]);
 
+    const deleteChannel = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        isMenuActionClicked.current = true;
+        
+        dispatch(changeCurrentRemoveChannel({ id: props.item.id }))
+        dispatch(openRemovingChannelDialog())
+        setTimeout(() => {
+            handleMenuClear();
+            isMenuActionClicked.current = false;
+        }, 100);
+    }
+
+    const renameChannel = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        isMenuActionClicked.current = true;
+        
+        dispatch(changeCurentRenameChannel({ id: props.item.id }))
+        dispatch(openRenamingChannelDialog())
+        
+        setTimeout(() => {
+            handleMenuClear();
+            isMenuActionClicked.current = false;
+        }, 100);
+    }
     return (
         <li className="nav-item w-100">
             <div role='group' className={cnDivGroup}>
@@ -84,10 +121,10 @@ const ItemChannelWithMenu = (props) => {
                     className={props.item.id === numberChannelWithMenu ? "dropdown-menu show" : "dropdown-menu"}
                     ref={menuRef}
                 >
-                    <a className="dropdown-item" role="button" tabIndex="0" href="#">
+                    <a className="dropdown-item" role="button" tabIndex="0" href="#" onClick = {deleteChannel}>
                         Удалить
                     </a>
-                    <a className="dropdown-item" role="button" tabIndex="0" href="#">
+                    <a className="dropdown-item" role="button" tabIndex="0" href="#" onClick={renameChannel}>
                         Переименовать
                     </a>
                 </div>

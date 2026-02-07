@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import LoginPage from './Components/login'
-import ChatPage from './Components/pageWithChat'
-import NotFoundPage from './Components/notFound'
+import LoginPage from './Components/Login'
+import ChatPage from './Components/PageWithChat'
+import NotFoundPage from './Components/NotFound'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useSelector } from "react-redux"
 import './App.css'

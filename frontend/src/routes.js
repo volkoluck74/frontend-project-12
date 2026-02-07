@@ -6,4 +6,5 @@ export default {
   messagesPath: () => [apiPath, 'messages'].join('/'),
   channelsPath: () => [apiPath, 'channels'].join('/'),
   newUserPath: () => [apiPath, 'signup'].join('/'),
+  channelsPathWithId: (id) => [apiPath, 'channels', id].join('/')
 }

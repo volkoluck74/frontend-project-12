@@ -2,24 +2,27 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { getMessages } from "../slices/chatSlice.jsx"
-import { getChannels, setErrorAddingNewChannel } from "../slices/channelSlice.jsx"
+import { getChannels} from "../slices/channelSlice.jsx"
 import { logout } from "../slices/authSlice.jsx"
-import { openChannelDialog, closeChannelDialog } from "../slices/UIslice.jsx"
-import ItemChannel from "./itemChannel.jsx"
+import { openChannelDialog} from "../slices/UIslice.jsx"
+import ItemChannel from "./ItemChannel.jsx"
 import ItemChannelWithMenu from "./ItemChannelWithMenu.jsx"
-import NewChannelDialog from "./newChannelDialog.jsx"
-import ItemMessage from "./itemMessage.jsx"
+import NewChannelDialog from "./NewChannelDialog.jsx"
+import ItemMessage from "./ItemMessage.jsx"
 import ChatForm from "./ChatForm.jsx"
+import RemovingChannelDialog from "./RemovingChannelDialog.jsx"
+import RenamingChannelDialog from "./RenameChannelDialog.jsx"
 import getAuthHeader from './../utils/getAuthHeader.js'
 import { io } from 'socket.io-client'
+import {getMessages} from '../slices/messageSlice.jsx'
+
 
 const ChatPage = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate();
-    const { channels,  } = useSelector(state => state.channels)
-    const { messages } = useSelector(state => state.chats)
-    const { addingChannel, currentChannelId } = useSelector(state => state.uiState)
+    const { channels} = useSelector(state => state.channels)
+    const { messages } = useSelector(state => state.messages)
+    const { addingChannel, currentChannelId, removingChannel, renamingChannel} = useSelector(state => state.uiState)
     
     const token = getAuthHeader()
     let currentChannel = channels.length > 0 ? channels.find(item => item.id === currentChannelId) : {}
@@ -39,6 +42,13 @@ const ChatPage = () => {
         socket.on('newChannel', (payload) => {
             dispatch(getChannels())
         });
+                
+        socket.on('removeChannel', (payload) => {
+          dispatch(getChannels())
+      });
+      socket.on('renameChannel', (payload) => {
+        dispatch(getChannels())
+    });
         
         return () => {
             socket.disconnect();
@@ -59,10 +69,7 @@ const ChatPage = () => {
         dispatch(openChannelDialog())
     }
 
-    const closeNewChannelDialog = () => {
-        dispatch(closeChannelDialog())
-        dispatch(setErrorAddingNewChannel({ error: '' }))
-    }
+   
     return (
         <>
             <div className='h-100'>
@@ -121,8 +128,10 @@ const ChatPage = () => {
                     </div>
                 </div>
             </div>
-            {addingChannel && <div className='fade modal-backdrop show'></div>}
-            {addingChannel && <NewChannelDialog closeNewChannelDialog={closeNewChannelDialog} />}
+            {(addingChannel || removingChannel || renamingChannel) && <div className='fade modal-backdrop show'></div>}
+            {addingChannel && <NewChannelDialog/>}
+            {removingChannel && <RemovingChannelDialog />}
+            {renamingChannel && <RenamingChannelDialog />}
         </>
     );
 }

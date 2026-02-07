@@ -5,7 +5,7 @@ import { useEffect, useRef} from 'react'
 //import axios from 'axios'
 //import getAuthHeader from './../utils/getAuthHeader.js'
 //import {io} from 'socket.io-client'
-import {postMessage} from "../slices/chatSlice.jsx"
+import {postMessage} from "../slices/messageSlice.jsx"
 
 const ChatForm = () => {
     const formik = useFormik({
@@ -16,8 +16,15 @@ const ChatForm = () => {
     //const socket = io();
     const dispatch = useDispatch()
     //const token = getAuthHeader()
-    const {currentChannelId} = useSelector(state => state.uiState)
-    const {status} = useSelector(state => state.chats)
+    const { currentChannelId, addingChannel, renamingChannel } = useSelector(state => state.uiState)
+    const isAnyModalOpen = addingChannel  || renamingChannel
+    const inputEl = useRef(null)
+    useEffect(() => {
+        if (!isAnyModalOpen && inputEl.current) {
+            inputEl.current.focus()
+        }
+    }, [isAnyModalOpen, currentChannelId]) 
+    const {status} = useSelector(state => state.messages)
     const onSubmit =  async (e) => {
         e.preventDefault();
         const newMessage = { 
@@ -58,14 +65,11 @@ const ChatForm = () => {
         
         formik.setFieldValue('body', '')
     }
-    const inputEl = useRef(null)
-    useEffect(() => {
-        inputEl.current.focus()
-    })
+    
     return (
         <form novalidate className="py-1 border rounded-2" onSubmit={onSubmit}>
             <div className="input-group has-validation">
-                <input name="body" aria-label="Новое сообщение" placeholder="Введите сообщение..." className="border-0 p-0 ps-2 form-control" id = 'body' value={formik.values.body} onChange={formik.handleChange} disabled = {status !=='succeeded'} ref = {inputEl}/>
+                <input name="body" aria-label="Новое сообщение" placeholder="Введите сообщение..." className="border-0 p-0 ps-2 form-control" id = 'body' value={formik.values.body} onChange={formik.handleChange} disabled = {status !=='succeeded'} ref = {inputEl} autoFocus={!isAnyModalOpen}/>
                 <button type="submit" disabled = {formik.values.body === '' || status !=='succeeded'} className="btn btn-group-vertical">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor" className="bi bi-arrow-right-square">
                         <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"></path>

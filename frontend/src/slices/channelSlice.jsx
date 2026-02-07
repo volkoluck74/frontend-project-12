@@ -5,7 +5,7 @@ import getAuthHeader from './../utils/getAuthHeader.js'
 
 
 export const getChannels = createAsyncThunk(
-    'chat/getChannels',
+    'channels/getChannels',
     async () => {
         const token = getAuthHeader()
         try {
@@ -21,7 +21,7 @@ export const getChannels = createAsyncThunk(
 )
 
 export const postChannel = createAsyncThunk(
-    'chat/postChannel',
+    'channels/postChannel',
     async (newChannel) => {
     const token = getAuthHeader()
         try {
@@ -36,24 +36,47 @@ export const postChannel = createAsyncThunk(
     }
 )
 
+export const editChannel = createAsyncThunk(
+    'channels/editChannel',
+    async ({newNameChannel, id}) => {
+    const changes = {name: newNameChannel}
+    const token = getAuthHeader()
+        try {
+            const response = await axios.patch(routes.channelsPathWithId(id), changes, {
+               headers: token,
+            })
+            return response.data
+        }
+        catch {
+            console.log('Error edit channel')
+        }
+    }
+)
+
+export const removeChannel = createAsyncThunk(
+    'channels/removeChannel',
+    async (id) => {
+    const token = getAuthHeader()
+        try {
+            const response = await axios.delete(routes.channelsPathWithId(id), {
+                headers: token,
+            })
+            console.log(response.data);
+            console.log(routes.channelsPathWithId(id))
+            return response.data
+        }
+        catch {
+            console.log('Error remove channel')
+        }
+    }
+)
+
 const channelsSlice = createSlice({
     name: 'channels',
     initialState: {
         channels: [],
-        //currentChannelId : '1',
-        errorAddingNewChannel: '',
         status: 'idle',
         error: null
-    },
-    reducers:{
-        /*
-        changeCurrentChannel: (state, action) => {
-            state.currentChannelId = action.payload.id
-        },
-        */
-        setErrorAddingNewChannel: (state, action) => {
-            state.errorAddingNewChannel = action.payload.error
-        }
     },
     extraReducers: (builder) => {
         builder
@@ -81,8 +104,33 @@ const channelsSlice = createSlice({
                 state.status = 'failed'
                 state.error = action.error.message
             })
+            .addCase(editChannel.pending, (state) =>{
+                console.log(state)
+                state.status = 'loading';
+            })
+            .addCase(editChannel.fulfilled, (state) => {
+                console.log(state)
+                state.status = 'succeeded'
+            })
+            .addCase(editChannel.rejected, (state, action) => {
+                console.log(state)
+                state.status = 'failed'
+                state.error = action.error.message
+            })
+            .addCase(removeChannel.pending, (state) =>{
+                console.log(state)
+                state.status = 'loading';
+            })
+            .addCase(removeChannel.fulfilled, (state) => {
+                console.log(state)
+                state.status = 'succeeded'
+            })
+            .addCase(removeChannel.rejected, (state, action) => {
+                console.log(state)
+                state.status = 'failed'
+                state.error = action.error.message
+            })
     }
 })
 
-export const { /*changeCurrentChannel, */ setErrorAddingNewChannel} = channelsSlice.actions
 export default channelsSlice.reducer

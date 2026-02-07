@@ -1,5 +1,5 @@
 //import {changeCurrentChannel} from "../slices/chatSlice"
-import {changeCurrentChannel} from "../slices/UIslice"
+import {changeCurrentChannel} from "../slices/UIslice.jsx"
 import { useDispatch, useSelector } from "react-redux"
 
 const ItemChannel = (props) => {
