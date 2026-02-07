@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { getChannels} from "../slices/channelSlice.jsx"
+import { getChannels, selectAllChannels} from "../slices/channelSlice.jsx"
 import { logout } from "../slices/authSlice.jsx"
 import { openChannelDialog} from "../slices/UIslice.jsx"
 import ItemChannel from "./ItemChannel.jsx"
@@ -14,14 +14,14 @@ import RemovingChannelDialog from "./RemovingChannelDialog.jsx"
 import RenamingChannelDialog from "./RenameChannelDialog.jsx"
 import getAuthHeader from './../utils/getAuthHeader.js'
 import { io } from 'socket.io-client'
-import {getMessages} from '../slices/messageSlice.jsx'
+import {getMessages, selectAllMessages} from '../slices/messageSlice.jsx'
 
 
 const ChatPage = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate();
-    const { channels} = useSelector(state => state.channels)
-    const { messages } = useSelector(state => state.messages)
+    const channels = useSelector(selectAllChannels)
+    const messages = useSelector(selectAllMessages)
     const { addingChannel, currentChannelId, removingChannel, renamingChannel} = useSelector(state => state.uiState)
     
     const token = getAuthHeader()
@@ -67,6 +67,7 @@ const ChatPage = () => {
 
     const addNewChannel = () => {
         dispatch(openChannelDialog())
+        console.log(messages)
     }
 
    

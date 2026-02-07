@@ -4,7 +4,7 @@ import { useEffect, useRef} from 'react'
 //import axios from 'axios'
 //import getAuthHeader from './../utils/getAuthHeader.js'
 //import {io} from 'socket.io-client'
-import {postChannel} from "../slices/channelSlice.jsx"
+import {postChannel, selectAllChannels, selectChannelsStatus} from "../slices/channelSlice.jsx"
 import {changeCurrentChannel, closeChannelDialog, setChannelChangeError} from "../slices/UIslice.jsx"
 import * as Yup from 'yup'
 
@@ -12,7 +12,8 @@ import * as Yup from 'yup'
 const NewChannelDialog = () => {
     const dispatch = useDispatch()
     const {channelChangeError} = useSelector(state => state.uiState)
-    const {channels, status} = useSelector(state => state.channels)
+    const channels = useSelector(selectAllChannels)
+    const status = useSelector(selectChannelsStatus)
     const modalRef = useRef(null)
     const inputEl = useRef(null)
     const formik = useFormik({

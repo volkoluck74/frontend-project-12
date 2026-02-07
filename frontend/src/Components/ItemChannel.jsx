@@ -8,7 +8,6 @@ const ItemChannel = (props) => {
     const cn =  props.item.id === currentChannelId ? "w-100 rounded-0 text-start btn btn-secondary" : "w-100 rounded-0 text-start btn"
     const changeChannel = (id) => {
         dispatch(changeCurrentChannel({id}))
-        console.log(currentChannelId)
     }
     return(
         <li key = {props.item.id} className="nav-item w-100">

@@ -5,7 +5,7 @@ import { useEffect, useRef} from 'react'
 //import axios from 'axios'
 //import getAuthHeader from './../utils/getAuthHeader.js'
 //import {io} from 'socket.io-client'
-import {postMessage} from "../slices/messageSlice.jsx"
+import {postMessage, selectMessagesStatus} from "../slices/messageSlice.jsx"
 
 const ChatForm = () => {
     const formik = useFormik({
@@ -19,12 +19,13 @@ const ChatForm = () => {
     const { currentChannelId, addingChannel, renamingChannel } = useSelector(state => state.uiState)
     const isAnyModalOpen = addingChannel  || renamingChannel
     const inputEl = useRef(null)
+    const status = useSelector(selectMessagesStatus)
     useEffect(() => {
         if (!isAnyModalOpen && inputEl.current) {
             inputEl.current.focus()
         }
-    }, [isAnyModalOpen, currentChannelId]) 
-    const {status} = useSelector(state => state.messages)
+    }, [isAnyModalOpen, currentChannelId, status]) 
+    
     const onSubmit =  async (e) => {
         e.preventDefault();
         const newMessage = { 
