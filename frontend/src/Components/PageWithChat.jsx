@@ -10,11 +10,12 @@ import ItemMessage from "./ItemMessage.jsx"
 import ChatForm from "./ChatForm.jsx"
 import RemovingChannelDialog from "./RemovingChannelDialog.jsx"
 import RenamingChannelDialog from "./RenameChannelDialog.jsx"
-import getAuthHeader from './../utils/getAuthHeader.js'
+//import getAuthHeader from './../utils/getAuthHeader.js'
 import { io } from 'socket.io-client'
 import {getMessages, selectAllMessages} from '../slices/messageSlice.jsx'
 import Header from './Header.jsx'
 import { useTranslation} from "react-i18next"
+import useToast from '../hooks/useToast.js'
 
 const ChatPage = () => {
     const {t} = useTranslation('all')
@@ -22,8 +23,8 @@ const ChatPage = () => {
     const channels = useSelector(selectAllChannels)
     const messages = useSelector(selectAllMessages)
     const { addingChannel, currentChannelId, removingChannel, renamingChannel} = useSelector(state => state.uiState)
-    
-    const token = getAuthHeader()
+    const { showError } = useToast()
+    //const token = getAuthHeader()
     let currentChannel = channels.length > 0 ? channels.find(item => item.id === currentChannelId) : {}
 
     useEffect(() => {
@@ -32,21 +33,41 @@ const ChatPage = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        const socket = io();
+        const socket = io()
         
-        socket.on('newMessage', (payload) => {
-            dispatch(getMessages())
+        socket.on('newMessage', () => {
+            try {
+              dispatch(getMessages())
+            }
+            catch {
+              showError(t('Toast.Error_loaded'))
+            }
         })
         
-        socket.on('newChannel', (payload) => {
+        socket.on('newChannel', () => {
+          try {
             dispatch(getChannels())
-        });
+          }
+          catch {
+            showError(t('Toast.Error_loaded'))
+          }
+        })
                 
-        socket.on('removeChannel', (payload) => {
+        socket.on('removeChannel', () => {
+          try {
+            dispatch(getChannels())
+          }
+          catch {
+            showError(t('Toast.Error_loaded'))
+          }
+      })
+      socket.on('renameChannel', () => {
+        try {
           dispatch(getChannels())
-      });
-      socket.on('renameChannel', (payload) => {
-        dispatch(getChannels())
+        }
+        catch {
+          showError(t('Toast.Error_loaded'))
+        }
     });
         
         return () => {

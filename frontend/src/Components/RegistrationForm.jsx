@@ -6,9 +6,11 @@ import { registration, clearError, login } from "../slices/authSlice.jsx"
 import { useEffect } from "react"
 import * as Yup from 'yup'
 import { useTranslation} from "react-i18next"
+import useToast from '../hooks/useToast.js'
 
 const RegistrationForm = () => {
     const {t} = useTranslation('all')
+    const { showError } = useToast()
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { error, status } = useSelector(state => state.auth)
@@ -37,15 +39,21 @@ const RegistrationForm = () => {
         validationSchema,
         
         onSubmit: async (values) => {
-            const newUser = { 
-                username: values.username, 
-                password: values.password, 
+            try {
+                const newUser = { 
+                    username: values.username, 
+                    password: values.password, 
+                }
+                const result = await dispatch(registration(newUser))
+                if (registration.fulfilled.match(result)) {
+                    await dispatch(login(newUser))
+                    navigate('/')
+                } 
             }
-            const result = await dispatch(registration(newUser))
-            if (registration.fulfilled.match(result)) {
-                await dispatch(login(newUser))
-                navigate('/')
-            }    
+            catch {
+                showError(t('Toast.Error_sended'))
+            }
+               
         }
     })
     useEffect(() => {

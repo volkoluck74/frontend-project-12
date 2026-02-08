@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { removeChannel} from "../slices/channelSlice"
 import React, { useRef, useEffect } from 'react'
 import { useTranslation} from "react-i18next"
+import useToast from '../hooks/useToast.js'
 
 //import axios from 'axios'
 //import getAuthHeader from './../utils/getAuthHeader.js'
@@ -12,12 +13,19 @@ import {changeCurrentRemoveChannel, closeRemovingChannelDialog, changeCurrentCha
 const RemovingChannelDialog = () => {
     const {t} = useTranslation('all')
     const dispatch = useDispatch()
+    const { showSuccess, showError } = useToast()
     const {currentRemoveChannelId} = useSelector(state => state.uiState)
     const modalRef = useRef(null)
     const deleteChannel = () => {
-        dispatch(removeChannel(currentRemoveChannelId))
-        dispatch(closeRemovingChannelDialog())
-        dispatch(changeCurrentChannel({id: '1'}))
+        try {
+            dispatch(removeChannel(currentRemoveChannelId))
+            dispatch(closeRemovingChannelDialog())
+            dispatch(changeCurrentChannel({id: '1'}))
+            showSuccess(t('Toast.Channel_deleted'))
+        }
+        catch {
+            showError(t('Toast.Error_sended'))
+        }
     }
     const cancelRemovingChannel = () => {
         dispatch(changeCurrentRemoveChannel({id: 0}))

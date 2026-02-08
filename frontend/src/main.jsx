@@ -7,6 +7,8 @@ import { Provider } from 'react-redux'
 import {store} from './slices/store.js'
 import { I18nextProvider } from 'react-i18next'
 import i18n from './i18n'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 i18n.init({
 }).then(() => {
@@ -17,9 +19,10 @@ i18n.init({
   createRoot(document.getElementById('root')).render(
     <Provider store={store}>
       <StrictMode>
-        <I18nextProvider i18n={i18n}>
-          <App />
-        </I18nextProvider>
+          <I18nextProvider i18n={i18n}>
+            <App />
+            <ToastContainer/>
+          </I18nextProvider>
       </StrictMode>
     </Provider>
   )

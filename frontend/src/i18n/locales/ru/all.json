@@ -47,6 +47,13 @@
     "Registration": "Регистрация",
     "Rename": "Переименовать",
     "Send": "Отправить",
+    "Toast": {
+        "Channel_created": "Канал создан",
+        "Channel_deleted": "Канал удален",
+        "Channel_renamed": "Канал переименован",
+        "Error_loaded": "Ошибка загрузки данных",
+        "Error_sended": "Ошибка отправки данных"
+    },
     "Username": "Имя пользователя"
     
 }

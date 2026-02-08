@@ -5,7 +5,7 @@ import { useEffect, useRef, useCallback} from 'react'
 import {editChannel, selectAllChannels, selectChannelsStatus} from "../slices/channelSlice.jsx"
 import {changeCurentRenameChannel, closeRenamingChannelDialog, setChannelChangeError} from "../slices/UIslice.jsx"
 import * as Yup from 'yup'
-
+import useToast from '../hooks/useToast.js'
 
 const RenamingChannelDialog = () => {
     const dispatch = useDispatch()
@@ -17,6 +17,7 @@ const RenamingChannelDialog = () => {
     const min = 3
     const max = 20
     const {t} = useTranslation('all')
+    const { showSuccess} = useToast()
     const formik = useFormik({
         initialValues: {
             name: channels.find(item => item.id === curentRenameChannelId)?.name || '',
@@ -71,13 +72,12 @@ const RenamingChannelDialog = () => {
             const newNameChannel = formik.values.name.trim()
             dispatch(editChannel({newNameChannel, id: curentRenameChannelId}))
                 .unwrap() 
-                .then((response) => {
+                .then(() => {
                     dispatch(closeRenamingChannelDialog())
                     dispatch(setChannelChangeError({ error: '' }))
                     dispatch(changeCurentRenameChannel({id: 0}))
-                    formik.resetForm()
-                    console.log(response)
-                    
+                    showSuccess(t('Toast.Channel_renamed'))
+                    formik.resetForm()                    
                 })
                 .catch((error) => {
                     dispatch(setChannelChangeError({ 

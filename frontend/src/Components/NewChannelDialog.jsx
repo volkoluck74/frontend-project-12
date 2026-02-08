@@ -8,6 +8,7 @@ import { useTranslation} from "react-i18next"
 import {postChannel, selectAllChannels, selectChannelsStatus} from "../slices/channelSlice.jsx"
 import {changeCurrentChannel, closeChannelDialog, setChannelChangeError} from "../slices/UIslice.jsx"
 import * as Yup from 'yup'
+import useToast from '../hooks/useToast.js'
 
 
 const NewChannelDialog = () => {
@@ -20,6 +21,7 @@ const NewChannelDialog = () => {
     const {t} = useTranslation('all')
     const min = 3
     const max = 20
+    const { showSuccess, showError } = useToast()
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -74,15 +76,15 @@ const NewChannelDialog = () => {
                     closeNewChannelDialog()
                     dispatch(setChannelChangeError({ error: '' }))
                     formik.resetForm()
-                    console.log(response)
                     dispatch(changeCurrentChannel({id: response.id}))
+                    showSuccess(t('Toast.Channel_created'))
                     
                 })
                 .catch((error) => {
-                    console.log('Ooops', error)
                     dispatch(setChannelChangeError({ 
                         error: error.message
                     }))
+                    showError(t('Toast.Error_sended'))
                 })
         } else {
             dispatch(setChannelChangeError({ error: errors.name}))

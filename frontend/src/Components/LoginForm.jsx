@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector} from "react-redux"
 import {login} from "../slices/authSlice.jsx"
 import { useTranslation} from "react-i18next"
+import useToast from '../hooks/useToast.js'
 
 const LoginForm = () => {
     const { error, status } = useSelector(state => state.auth)
     const {t} = useTranslation('all')
     const dispatch = useDispatch()
+    const { showError } = useToast()
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -21,7 +23,7 @@ const LoginForm = () => {
                 }
             }
             catch {
-                console.log('!!!!')
+                showError(t('Toast.Error_sended'))
             }
         }
     })

@@ -7,9 +7,10 @@ import { useEffect, useRef} from 'react'
 //import getAuthHeader from './../utils/getAuthHeader.js'
 //import {io} from 'socket.io-client'
 import {postMessage, selectMessagesStatus} from "../slices/messageSlice.jsx"
+import useToast from '../hooks/useToast.js'
 
 const ChatForm = () => {
-    const {t, i18n} = useTranslation('all')
+    const {t} = useTranslation('all')
     const formik = useFormik({
         initialValues: {
             body: '',
@@ -17,6 +18,7 @@ const ChatForm = () => {
     })
     //const socket = io();
     const dispatch = useDispatch()
+    const { showError } = useToast()
     //const token = getAuthHeader()
     const { currentChannelId, addingChannel, renamingChannel } = useSelector(state => state.uiState)
     const isAnyModalOpen = addingChannel  || renamingChannel
@@ -63,9 +65,8 @@ const ChatForm = () => {
             */
         }
         catch {
-            console.log('Ooops')
+            showError(t('Toast.Error_sended'))
         }
-        
         formik.setFieldValue('body', '')
     }
     
