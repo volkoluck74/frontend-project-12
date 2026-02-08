@@ -4,7 +4,7 @@ import axios from 'axios'
 
 export const login = createAsyncThunk(
     'auth/login',
-    async (body) => {
+    async (body, { rejectWithValue }) => {
         try {
             const data = await axios.post(routes.loginPath(), body)
             const token = data.data.token
@@ -12,7 +12,9 @@ export const login = createAsyncThunk(
             return {token, username}
         }
         catch (e) {
-            console.log(e)
+            return rejectWithValue(
+                e.status === 401 ? 'Неверные имя пользователя или пароль' : 'Ошибка входа'
+            )
         }
     }
 )
@@ -63,7 +65,7 @@ const authSlice = createSlice({
             })
             .addCase(login.rejected, (state, action) => {
                 state.status = 'failed'
-                state.error = action.error.message
+                state.error = action.payload
             })
             .addCase(registration.pending, (state) =>{
                 state.status = 'loading'
@@ -75,7 +77,7 @@ const authSlice = createSlice({
             })
             .addCase(registration.rejected, (state, action) => {
                 state.status = 'failed'
-                state.error = action.payload || 'Ошибка'
+                state.error = action.payload
             })
     }
 })

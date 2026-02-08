@@ -2,8 +2,10 @@ import React, { useRef, useEffect } from 'react'
 import { changeCurrentChannel, changeChannelWithMenu, changeCurrentRemoveChannel, openRemovingChannelDialog, changeCurentRenameChannel, openRenamingChannelDialog} from "../slices/UIslice.jsx"
 import cn from 'classnames'
 import { useDispatch, useSelector } from "react-redux"
+import { useTranslation} from "react-i18next"
 
 const ItemChannelWithMenu = (props) => {
+    const {t} = useTranslation('all')
     const dispatch = useDispatch()
     const { numberChannelWithMenu, currentChannelId} = useSelector(state => state.uiState)
     
@@ -115,17 +117,17 @@ const ItemChannelWithMenu = (props) => {
                     onClick={handleMenuToggle}
                     ref={toggleButtonRef}
                 >
-                    <span className="visually-hidden">Управление каналом</span>
+                    <span className="visually-hidden">{t('Channel.Managment')}</span>
                 </button>
                 <div 
                     className={props.item.id === numberChannelWithMenu ? "dropdown-menu show" : "dropdown-menu"}
                     ref={menuRef}
                 >
                     <a className="dropdown-item" role="button" tabIndex="0" href="#" onClick = {deleteChannel}>
-                        Удалить
+                        {t('Delete')}
                     </a>
                     <a className="dropdown-item" role="button" tabIndex="0" href="#" onClick={renameChannel}>
-                        Переименовать
+                        {t('Rename')}
                     </a>
                 </div>
             </div>

@@ -1,0 +1,52 @@
+{   
+    "Add_symbol": "+",
+    "Authors_separator": ": ",
+    "Cancel": "Отменить",
+    "Channel": {
+        "Add_Channel": "Добавить канал",
+        "Channels": "Каналы",
+        "Managment": "Управление каналом",
+        "Name": "Имя канала",
+        "Rename": "Переименовать канал", 
+        "Separator": "#"
+    },
+    "Chat_form": {
+        "Enter_a_message": "Введите сообщение..."
+    },
+    "Confirm_Password": "Подтвердите пароль",
+    "Delete": "Удалить",
+    "Delete_Channel": "Удалить канал",
+    "Are_you_sure": "Уверены?",
+    "Enter": "Войти",
+    "Exit": "Выйти",
+    "Form": {
+        "Count_symbol": "От {{min}} до {{max}} символов",
+        "Have_been_unique": "Должно быть уникальным",
+        "Min_count_symbol_one": "Минимум {{count}} символ",
+        "Min_count_symbol_few": "Минимум {{count}} символа",
+        "Min_count_symbol_many": "Минимум {{count}} символов",
+        "Passwords_have_been_match": "Пароли должны совпадать", 
+        "Required": "Обязательное поле"
+
+    },
+    "Header_name": "Hexlet Chat",
+    "Login": {
+        "Hasnt_account": "Нет аккаунта?",
+        "Your_nick": "Ваш ник" 
+    },
+    "Message_one": "{{count}} сообщение",
+    "Message_few": "{{count}} сообщения",
+    "Message_many": "{{count}} сообщений",
+    "Not_Found": {
+        "At_main": "на главную страницу",
+        "But_you_can": "Но вы можете перейти ",
+        "Page_not_found": "Страница не найдена "
+    },
+    "Password": "Пароль",
+    "Register": "Зарегистрироваться",
+    "Registration": "Регистрация",
+    "Rename": "Переименовать",
+    "Send": "Отправить",
+    "Username": "Имя пользователя"
+    
+}

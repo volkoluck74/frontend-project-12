@@ -3,9 +3,10 @@ import LoginForm from "./LoginForm"
 import {Navigate } from 'react-router-dom'
 import hasToken from '../utils/hasToken.js'
 import Header from "./Header.jsx"
-
+import { useTranslation} from "react-i18next"
 
 const LoginPage = () => {
+    const {t} = useTranslation('all')
     return (
         (!hasToken())  ? 
         (
@@ -18,14 +19,14 @@ const LoginPage = () => {
                                 <div className="card shadow-sm">
                                     <div className="card-body row p-5">
                                         <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                                            <img src={avatar} className="rounded-circle" alt="Войти" />
+                                            <img src={avatar} className="rounded-circle" alt={t('Enter')} />
                                         </div>
                                         <LoginForm />
                                     </div>
                                     <div className="card-footer p-4">
                                         <div className="text-center">
-                                            <span>Нет аккаунта?</span>
-                                            <a href="/signup">Регистрация</a>
+                                            <span>{t('Login.Hasnt_account')}</span>
+                                            <a href="/signup">{t('Registration')}</a>
                                         </div>
                                     </div>
                                 </div>

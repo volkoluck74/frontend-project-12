@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { removeChannel} from "../slices/channelSlice"
 import React, { useRef, useEffect } from 'react'
+import { useTranslation} from "react-i18next"
 
 //import axios from 'axios'
 //import getAuthHeader from './../utils/getAuthHeader.js'
@@ -9,6 +10,7 @@ import {changeCurrentRemoveChannel, closeRemovingChannelDialog, changeCurrentCha
 
 
 const RemovingChannelDialog = () => {
+    const {t} = useTranslation('all')
     const dispatch = useDispatch()
     const {currentRemoveChannelId} = useSelector(state => state.uiState)
     const modalRef = useRef(null)
@@ -53,14 +55,14 @@ const RemovingChannelDialog = () => {
             <div className="modal-dialog modal-dialog-centered" ref={modalRef}>
                 <div className="modal-content">
                     <div className="modal-header">
-                        <div className="modal-title h4">Удалить канал</div>
+                        <div className="modal-title h4">{t('Delete_Channel')}</div>
                         <button type="button" aria-label="Close" data-bs-dismiss="modal" className="btn btn-close" onClick = {cancelRemovingChannel}></button>
                     </div>
                     <div className="modal-body">
-                        <p className="lead">Уверены?</p>
+                        <p className="lead">{t('Are_you_sure')}</p>
                         <div className="d-flex justify-content-end">
-                            <button type="button" className="me-2 btn btn-secondary" onClick = {cancelRemovingChannel}>Отменить</button>
-                            <button type="button" className="btn btn-danger" onClick = {deleteChannel} >Удалить</button>
+                            <button type="button" className="me-2 btn btn-secondary" onClick = {cancelRemovingChannel}>{t('Cancel')}</button>
+                            <button type="button" className="btn btn-danger" onClick = {deleteChannel} >{t('Delete')}</button>
                         </div>
                     </div>
                 </div>

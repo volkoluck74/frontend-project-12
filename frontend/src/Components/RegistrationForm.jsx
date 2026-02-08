@@ -5,23 +5,27 @@ import { useNavigate } from "react-router-dom"
 import { registration, clearError, login } from "../slices/authSlice.jsx"
 import { useEffect } from "react"
 import * as Yup from 'yup'
+import { useTranslation} from "react-i18next"
 
 const RegistrationForm = () => {
+    const {t} = useTranslation('all')
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { error, status } = useSelector(state => state.auth)
-    
+    const min = 3
+    const max = 20
+    const minPassword = 6
     const validationSchema = Yup.object({
         username: Yup.string()
-            .min(3, 'Минимум 3 символа')
-            .max(20, 'Максимум 20 символов')
-            .required('Обязательное поле'),
+            .min(min, t('Form.Count_symbol', { min, max }))
+            .max(max, t('Form.Count_symbol', { min, max }))
+            .required(t(`Form.Required`)),
         password: Yup.string()
-            .min(6, 'Минимум 6 символов')
-            .required('Обязательное поле'),
+            .min(minPassword, t('Form.Min_count_symbol', {count: minPassword}))
+            .required(t(`Form.Required`)),
         confirmPassword: Yup.string()
-            .oneOf([Yup.ref('password'), null], 'Пароли должны совпадать')
-            .required('Обязательное поле'),
+            .oneOf([Yup.ref('password'), null], t(`Form.Passwords_have_been_match`))
+            .required(t(`Form.Required`)),
     })
 
     const formik = useFormik({
@@ -63,11 +67,11 @@ const RegistrationForm = () => {
                                 <img src={registrationIMG} className="rounded-circle" alt="Регистрация"/>
                             </div>
                             <form className="w-50" onSubmit={formik.handleSubmit}>
-                                <h1 className="text-center mb-4">Регистрация</h1>
+                                <h1 className="text-center mb-4">{t('Registration')}</h1>
                                 
                                 <div className="form-floating mb-3">
                                     <input 
-                                        placeholder="От 3 до 20 символов" 
+                                        placeholder = {t('Form.Count_symbol', { min, max })}
                                         name="username" 
                                         autoComplete="username" 
                                         required 
@@ -78,7 +82,7 @@ const RegistrationForm = () => {
                                         onBlur={formik.handleBlur}
                                     />
                                     <label className="form-label" htmlFor="username">
-                                        Имя пользователя
+                                        {t('Username')}
                                     </label>
                                     <div placement="right" className="invalid-tooltip">
                                     {formik.touched.username && formik.errors.username}
@@ -87,7 +91,7 @@ const RegistrationForm = () => {
                                 
                                 <div className="form-floating mb-3">
                                     <input 
-                                        placeholder="Не менее 6 символов" 
+                                        placeholder={t('Form.Min_count_symbol', {count: minPassword})}
                                         name="password" 
                                         required 
                                         autoComplete="new-password" 
@@ -101,7 +105,7 @@ const RegistrationForm = () => {
                                         onBlur={formik.handleBlur}
                                     />
                                     <label className="form-label" htmlFor="password">
-                                        Пароль
+                                        {t('Password')}
                                     </label>
                                     <div placement="right" className="invalid-tooltip">
                                         {formik.touched.password && formik.errors.password}
@@ -110,7 +114,7 @@ const RegistrationForm = () => {
                                 
                                 <div className="form-floating mb-4">
                                     <input 
-                                        placeholder="Пароли должны совпадать" 
+                                        placeholder={t(`Form.Passwords_have_been_match`)} 
                                         name="confirmPassword" 
                                         required 
                                         autoComplete="new-password" 
@@ -122,7 +126,7 @@ const RegistrationForm = () => {
                                         onBlur={formik.handleBlur}
                                     />
                                     <label className="form-label" htmlFor="confirmPassword">
-                                        Подтвердите пароль
+                                        {t('Confirm_Password')}
                                     </label>
                                     <div placement="right" className="invalid-tooltip">
                                         {confirmPasswordError}
@@ -134,7 +138,7 @@ const RegistrationForm = () => {
                                     className="w-100 btn btn-outline-primary"
                                     disabled={status === 'loading'}
                                 >
-                                    Зарегистрироваться
+                                    {t('Confirm_Password')}
                                 </button>
                             </form>
                         </div>

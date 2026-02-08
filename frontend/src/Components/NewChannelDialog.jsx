@@ -1,6 +1,7 @@
 import { useFormik} from "formik"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useRef} from 'react'
+import { useTranslation} from "react-i18next"
 //import axios from 'axios'
 //import getAuthHeader from './../utils/getAuthHeader.js'
 //import {io} from 'socket.io-client'
@@ -16,16 +17,19 @@ const NewChannelDialog = () => {
     const status = useSelector(selectChannelsStatus)
     const modalRef = useRef(null)
     const inputEl = useRef(null)
+    const {t} = useTranslation('all')
+    const min = 3
+    const max = 20
     const formik = useFormik({
         initialValues: {
             name: '',
         },
         validationSchema: Yup.object({
             name: Yup.string()
-            .min(3, 'Слишком мало символов')
-            .max(20, "Слишком много символов")
-            .required('Обязательное поле')
-            .test('unique-name', 'Должно быть уникальным', (value) => {
+            .min(min, t('Form.Count_symbol', { min, max }))
+            .max(max, t('Form.Count_symbol', { min, max }))
+            .required(t(`Form.Required`))
+            .test('unique-name', t(`Form.Have_been_unique`), (value) => {
                 if (!value) return true;
                 return !channels.map(item => item.name).includes(value.trim());
               }),
@@ -77,11 +81,11 @@ const NewChannelDialog = () => {
                 .catch((error) => {
                     console.log('Ooops', error)
                     dispatch(setChannelChangeError({ 
-                        error: error.message || 'Ошибка при создании канала' 
+                        error: error.message
                     }))
                 })
         } else {
-            dispatch(setChannelChangeError({ error: errors.name || 'Ошибка валидации' }))
+            dispatch(setChannelChangeError({ error: errors.name}))
         }
     }
     //const socket = io();
@@ -95,18 +99,18 @@ const NewChannelDialog = () => {
             <div className="modal-dialog modal-dialog-centered" ref={modalRef}>
                 <div className="modal-content">
                     <div className="modal-header">
-                        <div className="modal-title h4">Добавить канал</div>
+                        <div className="modal-title h4">{t('Channel.Add_Channel')}</div>
                         <button type="button" aria-label="Close" data-bs-dismiss="modal" className="btn btn-close" onClick={closeNewChannelDialog} disabled = {isDisabled}></button>
                     </div>
                     <div class="modal-body">
                             <form className="" onSubmit={onSubmit}>
                                 <div>
                                     <input name="name" id="name" className={channelChangeError === '' ? "mb-2 form-control" : "mb-2 form-control is-invalid"} value={formik.values.name} onChange={formik.handleChange} ref = {inputEl} disabled = {isDisabled}/>
-                                    <label className="visually-hidden" htmlFor="name">Имя канала</label>
+                                    <label className="visually-hidden" htmlFor="name">{t('Channel.Name')}</label>
                                     <div className="invalid-feedback">{channelChangeError}</div>
                                     <div className="d-flex justify-content-end">
-                                        <button type="button" className="me-2 btn btn-secondary" onClick={closeNewChannelDialog} disabled = {isDisabled}>Отменить</button>
-                                        <button type="submit" className="btn btn-primary" disabled = {isDisabled}>Отправить</button>
+                                        <button type="button" className="me-2 btn btn-secondary" onClick={closeNewChannelDialog} disabled = {isDisabled}>{t('Cancel')}</button>
+                                        <button type="submit" className="btn btn-primary" disabled = {isDisabled}>{t('Send')}</button>
                                     </div>
                                 </div>
                             </form>
