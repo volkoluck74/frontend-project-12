@@ -6,6 +6,8 @@ import {editChannel, selectAllChannels, selectChannelsStatus} from "../slices/ch
 import {changeCurentRenameChannel, closeRenamingChannelDialog, setChannelChangeError} from "../slices/UIslice.jsx"
 import * as Yup from 'yup'
 import useToast from '../hooks/useToast.js'
+import leoProfanity from 'leo-profanity'
+
 
 const RenamingChannelDialog = () => {
     const dispatch = useDispatch()
@@ -17,6 +19,9 @@ const RenamingChannelDialog = () => {
     const min = 3
     const max = 20
     const {t} = useTranslation('all')
+    useEffect(() => {
+        leoProfanity.loadDictionary('ru')
+    }, [])
     const { showSuccess} = useToast()
     const formik = useFormik({
         initialValues: {
@@ -69,7 +74,7 @@ const RenamingChannelDialog = () => {
         
         if (Object.keys(errors).length === 0) {
             console.log(typeof curentRenameChannelId)
-            const newNameChannel = formik.values.name.trim()
+            const newNameChannel = leoProfanity.clean(formik.values.name).trim()
             dispatch(editChannel({newNameChannel, id: curentRenameChannelId}))
                 .unwrap() 
                 .then(() => {

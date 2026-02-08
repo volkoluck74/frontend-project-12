@@ -8,7 +8,7 @@ import { useEffect, useRef} from 'react'
 //import {io} from 'socket.io-client'
 import {postMessage, selectMessagesStatus} from "../slices/messageSlice.jsx"
 import useToast from '../hooks/useToast.js'
-
+import leoProfanity from 'leo-profanity'
 const ChatForm = () => {
     const {t} = useTranslation('all')
     const formik = useFormik({
@@ -16,6 +16,11 @@ const ChatForm = () => {
             body: '',
         },
     })
+    
+    useEffect(() => {
+        leoProfanity.loadDictionary('ru')
+    }, [])
+    
     //const socket = io();
     const dispatch = useDispatch()
     const { showError } = useToast()
@@ -32,12 +37,15 @@ const ChatForm = () => {
     
     const onSubmit =  async (e) => {
         e.preventDefault();
+        
+        
         const newMessage = { 
-            body: formik.values.body, 
+            body: leoProfanity.clean(formik.values.body), 
             channelId: currentChannelId, 
             username: JSON.parse(localStorage.getItem('userId')).username
         }
         try {
+
             dispatch(postMessage(newMessage))
             /*
             console.log("New message send")
@@ -64,7 +72,8 @@ const ChatForm = () => {
             //console.log(response2)
             */
         }
-        catch {
+        catch (e) {
+            console.log(e)
             showError(t('Toast.Error_sended'))
         }
         formik.setFieldValue('body', '')

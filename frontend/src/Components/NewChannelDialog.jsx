@@ -9,6 +9,7 @@ import {postChannel, selectAllChannels, selectChannelsStatus} from "../slices/ch
 import {changeCurrentChannel, closeChannelDialog, setChannelChangeError} from "../slices/UIslice.jsx"
 import * as Yup from 'yup'
 import useToast from '../hooks/useToast.js'
+import leoProfanity from 'leo-profanity'
 
 
 const NewChannelDialog = () => {
@@ -22,6 +23,9 @@ const NewChannelDialog = () => {
     const min = 3
     const max = 20
     const { showSuccess, showError } = useToast()
+    useEffect(() => {
+        leoProfanity.loadDictionary('ru')
+    }, [])
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -68,7 +72,7 @@ const NewChannelDialog = () => {
         
         if (Object.keys(errors).length === 0) {
             const newChannel = {
-                name: formik.values.name.trim(),
+                name: leoProfanity.clean(formik.values.name).trim(),
             }
             dispatch(postChannel(newChannel))
                 .unwrap() 

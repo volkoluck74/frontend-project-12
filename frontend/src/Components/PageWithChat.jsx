@@ -1,5 +1,5 @@
 import React from 'react'
-import { useEffect } from 'react'
+import { useEffect} from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { getChannels, selectAllChannels} from "../slices/channelSlice.jsx"
 import { openChannelDialog} from "../slices/UIslice.jsx"
@@ -31,7 +31,6 @@ const ChatPage = () => {
         dispatch(getMessages())
         dispatch(getChannels())
     }, [dispatch]);
-
     useEffect(() => {
         const socket = io()
         
