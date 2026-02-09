@@ -1,5 +1,5 @@
 import React from 'react'
-import { useEffect} from 'react'
+import { useEffect, useRef, useCallback} from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { getChannels, selectAllChannels} from "../slices/channelSlice.jsx"
 import { openChannelDialog} from "../slices/UIslice.jsx"
@@ -19,14 +19,27 @@ import useToast from '../hooks/useToast.js'
 
 const ChatPage = () => {
     const {t} = useTranslation('all')
+    const messagesEndRef = useRef(null)
+    const messagesContainerRef = useRef(null)
     const dispatch = useDispatch()
     const channels = useSelector(selectAllChannels)
     const messages = useSelector(selectAllMessages)
     const { addingChannel, currentChannelId, removingChannel, renamingChannel} = useSelector(state => state.uiState)
     const { showError } = useToast()
+    const scrollToBottom = useCallback(() => {
+      if (messagesContainerRef.current) {
+          const { scrollHeight, clientHeight } = messagesContainerRef.current
+          messagesContainerRef.current.scrollTo({
+              top: scrollHeight - clientHeight,
+              behavior: 'smooth'
+          })
+      }
+  }, [])
     //const token = getAuthHeader()
     let currentChannel = channels.length > 0 ? channels.find(item => item.id === currentChannelId) : {}
-
+    useEffect(() => {
+      scrollToBottom()
+    }, [messages, currentChannelId])
     useEffect(() => {
         dispatch(getMessages())
         dispatch(getChannels())
@@ -117,11 +130,12 @@ const ChatPage = () => {
                                                 {t('Message', {count: messages.filter(item => item.channelId === currentChannelId).length})}
                                             </span>
                                         </div>
-                                        <div id="messages-box" className="chat-messages overflow-auto px-5 ">
+                                        <div id="messages-box" className="chat-messages overflow-auto px-5 " ref={messagesContainerRef}>
                                             {messages.filter(item => item.channelId === currentChannelId).map(item => 
                                                 <ItemMessage key={item.id} item={item} />
                                             )}
                                         </div>
+                                        <div ref={messagesEndRef} />
                                         <div className="mt-auto px-5 py-3">
                                             <ChatForm />
                                         </div>
