@@ -13,6 +13,7 @@ export const login = createAsyncThunk(
             return {token, username}
         }
         catch (e) {
+            console.log('Проверь Rollbar')
             return rejectWithValue(
                 e.status === 401 ? 'Неверные имя пользователя или пароль' : 'Ошибка входа'
             )
@@ -27,6 +28,7 @@ export const registration = createAsyncThunk(
             return response.data
         }
         catch (e) {
+            console.log('Проверь Rollbar')
             return rejectWithValue(
                 e.status === 409 ? 'Такой пользователь уже существует' : 'Ошибка регистрации'
             )

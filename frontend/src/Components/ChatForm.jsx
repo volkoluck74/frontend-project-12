@@ -37,8 +37,6 @@ const ChatForm = () => {
     
     const onSubmit =  async (e) => {
         e.preventDefault();
-        
-        
         const newMessage = { 
             body: leoProfanity.clean(formik.values.body), 
             channelId: currentChannelId, 
@@ -46,35 +44,11 @@ const ChatForm = () => {
         }
         try {
 
-            dispatch(postMessage(newMessage))
-            /*
-            console.log("New message send")
-            const response123 = await axios.get(routes.messagesPath(), {
-                headers: token,
-            });
-            console.log(response123);
-            
-            const response2 = await axios.post(routes.channelsPath(), newChannel, {
-                headers: token,
-            })
-            console.log(response2)
-            
-            const response3 = await axios.get(routes.dataPath(), {
-                headers: token,
-            })
-            console.log(response3.data)
-            const response4 = await axios.get(routes.channelsPath(), {
-                headers: token,
-            })
-            console.log(response4.data)
-            
-            //const response2 = await axios.post(routes.newUserPath(), { username: 'newuser', password: 'tttt456'});
-            //console.log(response2)
-            */
+            await dispatch(postMessage(newMessage)).unwrap()
         }
         catch (e) {
-            console.log(e)
             showError(t('Toast.Error_sended'))
+            throw new Error (e)
         }
         formik.setFieldValue('body', '')
     }

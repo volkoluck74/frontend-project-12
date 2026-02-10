@@ -47,38 +47,42 @@ const ChatPage = () => {
     useEffect(() => {
         const socket = io()
         
-        socket.on('newMessage', () => {
+        socket.on('newMessage', async () => {
             try {
-              dispatch(getMessages())
+              await dispatch(getMessages()).unwrap()
             }
-            catch {
+            catch (e) {
               showError(t('Toast.Error_loaded'))
+              throw new Error(e)
             }
         })
         
-        socket.on('newChannel', () => {
+        socket.on('newChannel', async () => {
           try {
-            dispatch(getChannels())
+            await dispatch(getChannels()).unwrap()
           }
-          catch {
+          catch(e) {
             showError(t('Toast.Error_loaded'))
+            throw new Error(e)
           }
         })
                 
-        socket.on('removeChannel', () => {
+        socket.on('removeChannel', async () => {
           try {
-            dispatch(getChannels())
+            await dispatch(getChannels()).unwrap()
           }
-          catch {
+          catch(e) {
             showError(t('Toast.Error_loaded'))
+            throw new Error(e)
           }
       })
-      socket.on('renameChannel', () => {
+      socket.on('renameChannel', async () => {
         try {
-          dispatch(getChannels())
+          await dispatch(getChannels()).unwrap()
         }
-        catch {
+        catch(e) {
           showError(t('Toast.Error_loaded'))
+          throw new Error(e)
         }
     });
         
@@ -87,12 +91,10 @@ const ChatPage = () => {
         }
     }, [dispatch]);
 
+    
     const addNewChannel = () => {
         dispatch(openChannelDialog())
-        console.log(messages)
     }
-
-   
     return (
         <>
             <div className='h-100'>

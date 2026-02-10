@@ -12,10 +12,10 @@ const Header = () => {
     const onSubmitLogout = async (e) => {
         e.preventDefault();
         try {
-            await dispatch(logout())
+            await dispatch(logout()).unwrap()
             navigate('/login')
-        } catch {
-            navigate('/')
+        } catch(e) {
+            throw new Error(e)
         }
     }
     const isAuthorization = hasToken()

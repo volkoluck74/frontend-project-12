@@ -18,8 +18,9 @@ export const getMessages = createAsyncThunk(
       });
       return response.data
     }
-    catch {
-      console.log('Error get messages')
+    catch (e) {
+      console.log('Проверь Rollbar')
+      throw new Error(e)
     }
   }
 )
@@ -34,8 +35,9 @@ export const postMessage = createAsyncThunk(
       })
       return response.data
     }
-    catch {
-      console.log('Error post messages')
+    catch (e) {
+      console.log('Проверь Rollbar')
+      throw new Error(e)
     }
   }
 )

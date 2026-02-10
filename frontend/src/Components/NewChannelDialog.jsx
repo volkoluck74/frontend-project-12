@@ -89,6 +89,7 @@ const NewChannelDialog = () => {
                         error: error.message
                     }))
                     showError(t('Toast.Error_sended'))
+                    throw new Error(error)
                 })
         } else {
             dispatch(setChannelChangeError({ error: errors.name}))

@@ -88,6 +88,7 @@ const RenamingChannelDialog = () => {
                     dispatch(setChannelChangeError({ 
                         error: error.message
                     }))
+                    throw new Error(error)
                 })
         } else {
             dispatch(setChannelChangeError({ error: errors.name}))

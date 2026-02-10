@@ -17,13 +17,12 @@ const LoginForm = () => {
         },
         onSubmit: async (values) => {
             try {
-                const resultAction = await dispatch(login(values))
-                if (login.fulfilled.match(resultAction)) {
-                    navigate('/')
-                }
+                await dispatch(login(values)).unwrap()
+                navigate('/')
             }
-            catch {
+            catch (e) {
                 showError(t('Toast.Error_sended'))
+                throw new Error(e)
             }
         }
     })

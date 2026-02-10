@@ -44,14 +44,13 @@ const RegistrationForm = () => {
                     username: values.username, 
                     password: values.password, 
                 }
-                const result = await dispatch(registration(newUser))
-                if (registration.fulfilled.match(result)) {
-                    await dispatch(login(newUser))
-                    navigate('/')
-                } 
+                await dispatch(registration(newUser)).unwrap()
+                await dispatch(login(newUser)).unwrap()
+                navigate('/')
             }
-            catch {
+            catch (e) {
                 showError(t('Toast.Error_sended'))
+                throw new Error(e)
             }
                
         }
