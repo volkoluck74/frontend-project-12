@@ -7,6 +7,9 @@ import { useEffect } from "react"
 import * as Yup from 'yup'
 import { useTranslation} from "react-i18next"
 import useToast from '../hooks/useToast.js'
+const minSymbols = 3
+const maxSymbols = 20
+const minPassword = 6
 
 const RegistrationForm = () => {
     const {t} = useTranslation('all')
@@ -14,13 +17,11 @@ const RegistrationForm = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { error, status } = useSelector(state => state.auth)
-    const min = 3
-    const max = 20
-    const minPassword = 6
+
     const validationSchema = Yup.object({
         username: Yup.string()
-            .min(min, t('Form.Count_symbol', { min, max }))
-            .max(max, t('Form.Count_symbol', { min, max }))
+            .min(minSymbols, t('Form.Count_symbol', { minSymbols, maxSymbols }))
+            .max(maxSymbols, t('Form.Count_symbol', { minSymbols, maxSymbols }))
             .required(t(`Form.Required`)),
         password: Yup.string()
             .min(minPassword, t('Form.Min_count_symbol', {count: minPassword}))
@@ -37,7 +38,6 @@ const RegistrationForm = () => {
             confirmPassword: '',
         },
         validationSchema,
-        
         onSubmit: async (values) => {
             try {
                 const newUser = { 
@@ -50,7 +50,7 @@ const RegistrationForm = () => {
             }
             catch (e) {
                 showError(t('Toast.Error_sended'))
-                throw new Error(e)
+                throw e
             }
                
         }
@@ -78,7 +78,7 @@ const RegistrationForm = () => {
                                 
                                 <div className="form-floating mb-3">
                                     <input 
-                                        placeholder = {t('Form.Count_symbol', { min, max })}
+                                        placeholder = {t('Form.Count_symbol', { minSymbols, maxSymbols })}
                                         name="username" 
                                         autoComplete="username" 
                                         required 

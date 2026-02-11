@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 const ItemChannel = (props) => {
     const dispatch = useDispatch()
     const {currentChannelId} = useSelector(state => state.uiState) 
-    const cn =  props.item.id === currentChannelId ? "w-100 rounded-0 text-start btn btn-secondary" : "w-100 rounded-0 text-start btn"
+    const cn = `w-100 rounded-0 text-start btn ${props.item.id === currentChannelId ? 'btn-secondary' : ''}`
     const changeChannel = (id) => {
         dispatch(changeCurrentChannel({id}))
     }

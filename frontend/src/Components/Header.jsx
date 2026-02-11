@@ -6,17 +6,13 @@ import { useTranslation} from "react-i18next"
 
 
 const Header = () => {
-    const {t, i18n} = useTranslation('all')
+    const {t} = useTranslation('all')
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const onSubmitLogout = async (e) => {
+    const onSubmitLogout = (e) => {
         e.preventDefault();
-        try {
-            await dispatch(logout()).unwrap()
-            navigate('/login')
-        } catch(e) {
-            throw new Error(e)
-        }
+        dispatch(logout())
+        navigate('/login')
     }
     const isAuthorization = hasToken()
     return (

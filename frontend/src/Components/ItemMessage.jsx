@@ -1,4 +1,3 @@
-//import {useSelector } from "react-redux"
 import { useTranslation} from "react-i18next"
 
 const ItemMessage = (props) => {

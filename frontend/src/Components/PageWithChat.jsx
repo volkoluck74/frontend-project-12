@@ -10,7 +10,6 @@ import ItemMessage from "./ItemMessage.jsx"
 import ChatForm from "./ChatForm.jsx"
 import RemovingChannelDialog from "./RemovingChannelDialog.jsx"
 import RenamingChannelDialog from "./RenameChannelDialog.jsx"
-//import getAuthHeader from './../utils/getAuthHeader.js'
 import { io } from 'socket.io-client'
 import {getMessages, selectAllMessages} from '../slices/messageSlice.jsx'
 import Header from './Header.jsx'
@@ -24,7 +23,10 @@ const ChatPage = () => {
     const dispatch = useDispatch()
     const channels = useSelector(selectAllChannels)
     const messages = useSelector(selectAllMessages)
-    const { addingChannel, currentChannelId, removingChannel, renamingChannel} = useSelector(state => state.uiState)
+    const { addingChannel, 
+            currentChannelId, 
+            removingChannel, 
+            renamingChannel} = useSelector(state => state.uiState)
     const { showError } = useToast()
     const scrollToBottom = useCallback(() => {
       if (messagesContainerRef.current) {
@@ -35,7 +37,6 @@ const ChatPage = () => {
           })
       }
   }, [])
-    //const token = getAuthHeader()
     let currentChannel = channels.length > 0 ? channels.find(item => item.id === currentChannelId) : {}
     useEffect(() => {
       scrollToBottom()
@@ -46,34 +47,31 @@ const ChatPage = () => {
     }, [dispatch]);
     useEffect(() => {
         const socket = io()
-        
         socket.on('newMessage', async () => {
             try {
               await dispatch(getMessages()).unwrap()
             }
             catch (e) {
               showError(t('Toast.Error_loaded'))
-              throw new Error(e)
+              throw e
             }
         })
-        
         socket.on('newChannel', async () => {
           try {
             await dispatch(getChannels()).unwrap()
           }
           catch(e) {
             showError(t('Toast.Error_loaded'))
-            throw new Error(e)
+            throw e
           }
         })
-                
         socket.on('removeChannel', async () => {
           try {
             await dispatch(getChannels()).unwrap()
           }
           catch(e) {
             showError(t('Toast.Error_loaded'))
-            throw new Error(e)
+            throw e
           }
       })
       socket.on('renameChannel', async () => {
@@ -82,15 +80,13 @@ const ChatPage = () => {
         }
         catch(e) {
           showError(t('Toast.Error_loaded'))
-          throw new Error(e)
+          throw e
         }
-    });
-        
+    })
         return () => {
-            socket.disconnect();
+            socket.disconnect()
         }
-    }, [dispatch]);
-
+    }, [dispatch])
     
     const addNewChannel = () => {
         dispatch(openChannelDialog())
@@ -154,7 +150,7 @@ const ChatPage = () => {
             {removingChannel && <RemovingChannelDialog />}
             {renamingChannel && <RenamingChannelDialog />}
         </>
-    );
+    )
 }
 
 export default ChatPage

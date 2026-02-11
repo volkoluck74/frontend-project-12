@@ -3,12 +3,7 @@ import { removeChannel} from "../slices/channelSlice"
 import React, { useRef, useEffect } from 'react'
 import { useTranslation} from "react-i18next"
 import useToast from '../hooks/useToast.js'
-
-//import axios from 'axios'
-//import getAuthHeader from './../utils/getAuthHeader.js'
-//import {io} from 'socket.io-client'
 import {changeCurrentRemoveChannel, closeRemovingChannelDialog, changeCurrentChannel} from "../slices/UIslice.jsx"
-
 
 const RemovingChannelDialog = () => {
     const {t} = useTranslation('all')
@@ -25,7 +20,7 @@ const RemovingChannelDialog = () => {
         }
         catch (e) {
             showError(t('Toast.Error_sended'))
-            throw new Error(e)
+            throw e
         }
     }
     const cancelRemovingChannel = () => {

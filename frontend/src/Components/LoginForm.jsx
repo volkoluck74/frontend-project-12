@@ -22,7 +22,7 @@ const LoginForm = () => {
             }
             catch (e) {
                 showError(t('Toast.Error_sended'))
-                throw new Error(e)
+                throw e
             }
         }
     })

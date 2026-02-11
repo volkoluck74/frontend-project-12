@@ -1,118 +1,94 @@
-import React, { useRef, useEffect } from 'react'
-import { changeCurrentChannel, changeChannelWithMenu, changeCurrentRemoveChannel, openRemovingChannelDialog, changeCurentRenameChannel, openRenamingChannelDialog} from "../slices/UIslice.jsx"
+import React, { useRef, useEffect, useCallback } from 'react'
+import { changeCurrentChannel, changeChannelWithMenu, changeCurrentRemoveChannel, 
+    openRemovingChannelDialog, changeCurentRenameChannel, openRenamingChannelDialog} from "../slices/UIslice.jsx"
 import cn from 'classnames'
 import { useDispatch, useSelector } from "react-redux"
 import { useTranslation} from "react-i18next"
+
+
 
 const ItemChannelWithMenu = (props) => {
     const {t} = useTranslation('all')
     const dispatch = useDispatch()
     const { numberChannelWithMenu, currentChannelId} = useSelector(state => state.uiState)
-    
+    const isCurrentChannel = props.item.id === currentChannelId
+    const isChannelWithMenu = props.item.id === numberChannelWithMenu
     const menuRef = useRef(null)
-    const toggleButtonRef = useRef(null)
-  
-    const isMenuActionClicked = useRef(false)
+    const toggleButtonRef = useRef(null)    
+    const cnMainButton = `w-100 rounded-0 text-start btn ${isCurrentChannel ? 'btn-secondary' : ''}`
     
-    const cnMainButton = props.item.id === currentChannelId ? 
-        "w-100 rounded-0 text-start btn btn-secondary" : 
-        "w-100 rounded-0 text-start btn"
+    const cnDivGroup = `d-flex drpotown btn-group ${isChannelWithMenu ? 'show' : ''}`
     
-    const cnDivGroup = props.item.id === numberChannelWithMenu ? 
-        "d-flex drpotown show btn-group" : 
-        "d-flex drpotown btn-group"
-    
-    const cnMenuBtn = cn('flex-grow-0', 'dropdown-toggle', 'dropdown-toggle-split', 'btn', {
-        'btn-secondary': props.item.id === currentChannelId,
-        'show': props.item.id === numberChannelWithMenu,
-    })
+    const cnMenuBtn = cn(
+        'flex-grow-0', 
+        'dropdown-toggle', 
+        'dropdown-toggle-split', 
+        'btn', {
+            'btn-secondary': isCurrentChannel,
+            'show': isChannelWithMenu,
+        }
+    )
 
     const changeChannel = () => {
         dispatch(changeCurrentChannel({ id: props.item.id }))
-        if (props.item.id === numberChannelWithMenu) {
+        if (isChannelWithMenu) {
             dispatch(changeChannelWithMenu({ id: 0 }))
         }
     }
 
     const handleMenuToggle = () => {
-        if (props.item.id === numberChannelWithMenu) {
-            dispatch(changeChannelWithMenu({ id: 0 }))
-        } else {
-            dispatch(changeChannelWithMenu({ id: props.item.id }))
-        }
+        isChannelWithMenu ? dispatch(changeChannelWithMenu({ id: 0 })) : dispatch(changeChannelWithMenu({ id: props.item.id }))
     }
 
-    const handleMenuClear = () => {
+    const handleMenuClear = useCallback(() => {
         dispatch(changeChannelWithMenu({ id: 0 }))
-    }
-
+    }, [dispatch])
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (isMenuActionClicked.current) {
-                isMenuActionClicked.current = false;
-                return;
-            }
-            
-            if (props.item.id === numberChannelWithMenu &&
+            if (isChannelWithMenu && 
                 menuRef.current && 
                 !menuRef.current.contains(event.target) &&
                 toggleButtonRef.current && 
                 !toggleButtonRef.current.contains(event.target)) {
-                handleMenuClear();
+                    handleMenuClear()
             }
         }
         
-        if (props.item.id === numberChannelWithMenu) {
+        if (isChannelWithMenu) {
             document.addEventListener('mousedown', handleClickOutside);
         }
         
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         }
-    }, [props.item.id, numberChannelWithMenu, handleMenuClear]);
+    }, [isChannelWithMenu, handleMenuClear])
 
     const deleteChannel = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        isMenuActionClicked.current = true;
-        
+        e.preventDefault()
+        e.stopPropagation()
         dispatch(changeCurrentRemoveChannel({ id: props.item.id }))
         dispatch(openRemovingChannelDialog())
-        setTimeout(() => {
-            handleMenuClear();
-            isMenuActionClicked.current = false;
-        }, 100);
+        handleMenuClear()
     }
-
+    
     const renameChannel = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        isMenuActionClicked.current = true;
-        
+        e.preventDefault()
+        e.stopPropagation()
         dispatch(changeCurentRenameChannel({ id: props.item.id }))
         dispatch(openRenamingChannelDialog())
-        
-        setTimeout(() => {
-            handleMenuClear();
-            isMenuActionClicked.current = false;
-        }, 100);
+        handleMenuClear()
     }
+
     return (
         <li className="nav-item w-100">
             <div role='group' className={cnDivGroup}>
-                <button 
-                    type="button" 
-                    className={cnMainButton} 
-                    onClick={changeChannel}
-                >
+                <button type="button" className={cnMainButton} onClick={changeChannel}>
                     <span className="me-1">#</span>
                     {props.item.name}
                 </button>
                 <button 
                     type="button" 
-                    aria-expanded={props.item.id === numberChannelWithMenu} 
+                    aria-expanded={isChannelWithMenu} 
                     className={cnMenuBtn}
                     onClick={handleMenuToggle}
                     ref={toggleButtonRef}
@@ -120,13 +96,13 @@ const ItemChannelWithMenu = (props) => {
                     <span className="visually-hidden">{t('Channel.Managment')}</span>
                 </button>
                 <div 
-                    className={props.item.id === numberChannelWithMenu ? "dropdown-menu show" : "dropdown-menu"}
+                    className={isChannelWithMenu ? "dropdown-menu show" : "dropdown-menu"}
                     ref={menuRef}
                 >
-                    <a className="dropdown-item" role="button" tabIndex="0" href="#" onClick = {deleteChannel}>
+                    <a className="dropdown-item" role="button" tabIndex="0" href="#" onMouseDown = {deleteChannel}>
                         {t('Delete')}
                     </a>
-                    <a className="dropdown-item" role="button" tabIndex="0" href="#" onClick={renameChannel}>
+                    <a className="dropdown-item" role="button" tabIndex="0" href="#" onMouseDown={renameChannel}>
                         {t('Rename')}
                     </a>
                 </div>

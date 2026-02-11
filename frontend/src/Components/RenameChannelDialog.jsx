@@ -7,7 +7,8 @@ import {changeCurentRenameChannel, closeRenamingChannelDialog, setChannelChangeE
 import * as Yup from 'yup'
 import useToast from '../hooks/useToast.js'
 import leoProfanity from 'leo-profanity'
-
+const min = 3
+const max = 20
 
 const RenamingChannelDialog = () => {
     const dispatch = useDispatch()
@@ -16,8 +17,6 @@ const RenamingChannelDialog = () => {
     const status = useSelector(selectChannelsStatus)
     const modalRef = useRef(null)
     const inputEl = useRef(null)
-    const min = 3
-    const max = 20
     const {t} = useTranslation('all')
     useEffect(() => {
         leoProfanity.loadDictionary('ru')
@@ -34,7 +33,7 @@ const RenamingChannelDialog = () => {
             .required(t(`Form.Required`))
             .test('unique-name', t(`Form.Have_been_unique`), (value) => {
                 if (!value) return true;
-                return !channels.map(item => item.name).includes(value.trim());
+                return !channels.map(item => item.name).includes(value.trim())
               }),
         }),
     })
@@ -88,7 +87,7 @@ const RenamingChannelDialog = () => {
                     dispatch(setChannelChangeError({ 
                         error: error.message
                     }))
-                    throw new Error(error)
+                    throw e
                 })
         } else {
             dispatch(setChannelChangeError({ error: errors.name}))
