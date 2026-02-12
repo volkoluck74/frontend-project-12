@@ -2,11 +2,8 @@ import { useFormik} from "formik"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useRef} from 'react'
 import { useTranslation} from "react-i18next"
-//import axios from 'axios'
-//import getAuthHeader from './../utils/getAuthHeader.js'
-//import {io} from 'socket.io-client'
 import {postChannel, selectAllChannels, selectChannelsStatus} from "../slices/channelSlice.jsx"
-import {changeCurrentChannel, closeChannelDialog, setChannelChangeError} from "../slices/UIslice.jsx"
+import {changeCurrentChannel, closeChannelAddingDialog, setChannelChangeError} from "../slices/UIslice.jsx"
 import * as Yup from 'yup'
 import useToast from '../hooks/useToast.js'
 import leoProfanity from 'leo-profanity'
@@ -43,7 +40,7 @@ const NewChannelDialog = () => {
     })
     const isDisabled = status === 'loading' || formik.isSubmitting
     const closeNewChannelDialog = () => {
-        dispatch(closeChannelDialog())
+        dispatch(closeChannelAddingDialog())
         dispatch(setChannelChangeError({ error: '' }))
     }
     useEffect(() => {

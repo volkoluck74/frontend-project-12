@@ -10,10 +10,10 @@ const uiSlice = createSlice({
         currentChannelId : '1',
         currentRemoveChannelId: 0,
         curentRenameChannelId: 0,
-        addingChannel: false,
-        removingChannel: false,
-        renamingChannel: false,
-        numberChannelWithMenu: 0,
+        isAddingChannelDialogOpen: false,
+        isRemovingChannelDialogOpen: false,
+        isRenamingChannelDialogOpen: false,
+        channelWithOpenMenuId: 0,
     },
     reducers:{
         setChannelChangeError: (state, action) => {
@@ -28,32 +28,40 @@ const uiSlice = createSlice({
         changeCurentRenameChannel: (state, action) => {
             state.curentRenameChannelId = action.payload.id
         },
-        openChannelDialog: (state) => {
-            state.addingChannel = true
+        openChannelAddingDialog: (state) => {
+            state.isAddingChannelDialogOpen = true
         },
-        closeChannelDialog: (state) => {
-            state.addingChannel = false
+        closeChannelAddingDialog: (state) => {
+            state.isAddingChannelDialogOpen = false
         },
-        changeChannelWithMenu: (state, action) => {
-            state.numberChannelWithMenu = action.payload.id
+        changeChannelWithOpenMenu: (state, action) => {
+            state.channelWithOpenMenuId = action.payload.id
         },
         openRemovingChannelDialog: (state) => {
-            state.removingChannel = true
+            state.isRemovingChannelDialogOpen = true
         },
         closeRemovingChannelDialog: (state) => {
-            state.removingChannel = false
+            state.isRemovingChannelDialogOpen = false
         },
         openRenamingChannelDialog: (state) => {
-            state.renamingChannel = true
+            state.isRenamingChannelDialogOpen = true
         },
         closeRenamingChannelDialog: (state) => {
-            state.renamingChannel = false
+            state.isRenamingChannelDialogOpen = false
         },
         
     },
 })
 
-export const { openChannelDialog,  closeChannelDialog, changeChannelWithMenu, changeCurrentRemoveChannel, 
-            changeCurrentChannel, openRemovingChannelDialog, closeRemovingChannelDialog, 
-            changeCurentRenameChannel, openRenamingChannelDialog, closeRenamingChannelDialog, setChannelChangeError}  = uiSlice.actions
+export const { openChannelAddingDialog,
+                closeChannelAddingDialog, 
+                changeChannelWithOpenMenu, 
+                changeCurrentRemoveChannel, 
+                changeCurrentChannel,
+                openRemovingChannelDialog,
+                closeRemovingChannelDialog, 
+                changeCurentRenameChannel,
+                openRenamingChannelDialog,
+                closeRenamingChannelDialog,
+                setChannelChangeError}  = uiSlice.actions
 export default uiSlice.reducer

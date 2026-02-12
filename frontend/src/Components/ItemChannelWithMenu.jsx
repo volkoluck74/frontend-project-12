@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useCallback } from 'react'
-import { changeCurrentChannel, changeChannelWithMenu, changeCurrentRemoveChannel, 
+import { changeCurrentChannel, changeChannelWithOpenMenu, changeCurrentRemoveChannel, 
     openRemovingChannelDialog, changeCurentRenameChannel, openRenamingChannelDialog} from "../slices/UIslice.jsx"
 import cn from 'classnames'
 import { useDispatch, useSelector } from "react-redux"
@@ -10,9 +10,9 @@ import { useTranslation} from "react-i18next"
 const ItemChannelWithMenu = (props) => {
     const {t} = useTranslation('all')
     const dispatch = useDispatch()
-    const { numberChannelWithMenu, currentChannelId} = useSelector(state => state.uiState)
+    const { channelWithOpenMenuId, currentChannelId} = useSelector(state => state.uiState)
     const isCurrentChannel = props.item.id === currentChannelId
-    const isChannelWithMenu = props.item.id === numberChannelWithMenu
+    const isChannelWithMenu = props.item.id === channelWithOpenMenuId
     const menuRef = useRef(null)
     const toggleButtonRef = useRef(null)    
     const cnMainButton = `w-100 rounded-0 text-start btn ${isCurrentChannel ? 'btn-secondary' : ''}`
@@ -32,16 +32,16 @@ const ItemChannelWithMenu = (props) => {
     const changeChannel = () => {
         dispatch(changeCurrentChannel({ id: props.item.id }))
         if (isChannelWithMenu) {
-            dispatch(changeChannelWithMenu({ id: 0 }))
+            dispatch(changeChannelWithOpenMenu({ id: 0 }))
         }
     }
 
     const handleMenuToggle = () => {
-        isChannelWithMenu ? dispatch(changeChannelWithMenu({ id: 0 })) : dispatch(changeChannelWithMenu({ id: props.item.id }))
+        isChannelWithMenu ? dispatch(changeChannelWithOpenMenu({ id: 0 })) : dispatch(changeChannelWithOpenMenu({ id: props.item.id }))
     }
 
     const handleMenuClear = useCallback(() => {
-        dispatch(changeChannelWithMenu({ id: 0 }))
+        dispatch(changeChannelWithOpenMenu({ id: 0 }))
     }, [dispatch])
     useEffect(() => {
         const handleClickOutside = (event) => {

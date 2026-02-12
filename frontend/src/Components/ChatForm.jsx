@@ -32,8 +32,8 @@ const ChatForm = () => {
     }, [])
     const dispatch = useDispatch()
     const { showError } = useToast()
-    const { currentChannelId, addingChannel, renamingChannel } = useSelector(state => state.uiState)
-    const isAnyModalOpen = addingChannel  || renamingChannel
+    const { currentChannelId, isAddingChannelDialogOpen, isRenamingChannelDialogOpen } = useSelector(state => state.uiState)
+    const isAnyModalOpen = isAddingChannelDialogOpen  || isRenamingChannelDialogOpen
     const inputEl = useRef(null)
     const status = useSelector(selectMessagesStatus)
     useEffect(() => {
