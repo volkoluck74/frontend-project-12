@@ -7,8 +7,8 @@ import { useEffect } from "react"
 import * as Yup from 'yup'
 import { useTranslation} from "react-i18next"
 import useToast from '../hooks/useToast.js'
-const minSymbols = 3
-const maxSymbols = 20
+const min = 3
+const max = 20
 const minPassword = 6
 
 const RegistrationForm = () => {
@@ -20,8 +20,8 @@ const RegistrationForm = () => {
 
     const validationSchema = Yup.object({
         username: Yup.string()
-            .min(minSymbols, t('Form.Count_symbol', { minSymbols, maxSymbols }))
-            .max(maxSymbols, t('Form.Count_symbol', { minSymbols, maxSymbols }))
+            .min(min, t('Form.Count_symbol', { min, max }))
+            .max(max, t('Form.Count_symbol', { min, max }))
             .required(t(`Form.Required`)),
         password: Yup.string()
             .min(minPassword, t('Form.Min_count_symbol', {count: minPassword}))
@@ -78,7 +78,7 @@ const RegistrationForm = () => {
                                 
                                 <div className="form-floating mb-3">
                                     <input 
-                                        placeholder = {t('Form.Count_symbol', { minSymbols, maxSymbols })}
+                                        placeholder = {t('Form.Count_symbol', { min, max })}
                                         name="username" 
                                         autoComplete="username" 
                                         required 
