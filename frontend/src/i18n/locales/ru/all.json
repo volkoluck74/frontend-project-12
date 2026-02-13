@@ -50,7 +50,7 @@
     "Send": "Отправить",
     "Toast": {
         "Channel_created": "Канал создан",
-        "Channel_deleted": "Канал удален",
+        "Channel_deleted": "Канал удалён",
         "Channel_renamed": "Канал переименован",
         "Error_loaded": "Ошибка загрузки данных",
         "Error_sended": "Ошибка отправки данных"
