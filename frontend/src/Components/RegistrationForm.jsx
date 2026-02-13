@@ -24,7 +24,7 @@ const RegistrationForm = () => {
             .max(max, t('Form.Count_symbol', { min, max }))
             .required(t(`Form.Required`)),
         password: Yup.string()
-            .min(minPassword, t('Form.Min_count_symbol', {count: minPassword}))
+            .min(minPassword, t('Form.Min_count_symbol_password', {count: minPassword}))
             .required(t(`Form.Required`)),
         confirmPassword: Yup.string()
             .oneOf([Yup.ref('password'), null], t(`Form.Passwords_have_been_match`))

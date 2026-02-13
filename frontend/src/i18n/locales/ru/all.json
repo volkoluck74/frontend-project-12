@@ -25,6 +25,7 @@
         "Min_count_symbol_one": "Минимум {{count}} символ",
         "Min_count_symbol_few": "Минимум {{count}} символа",
         "Min_count_symbol_many": "Минимум {{count}} символов",
+        "Min_count_symbol_password": "Не менее {{count}} символов",
         "Passwords_have_been_match": "Пароли должны совпадать", 
         "Required": "Обязательное поле"
 
