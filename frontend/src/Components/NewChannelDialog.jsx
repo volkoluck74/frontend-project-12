@@ -21,7 +21,7 @@ const NewChannelDialog = () => {
     const {t} = useTranslation('all')
     const { showSuccess, showError } = useToast()
     useEffect(() => {
-        leoProfanity.loadDictionary('ru')
+        leoProfanity.loadDictionary('ru, en')
     }, [])
     const formik = useFormik({
         initialValues: {

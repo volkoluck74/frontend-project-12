@@ -19,7 +19,7 @@ const RenamingChannelDialog = () => {
     const inputEl = useRef(null)
     const {t} = useTranslation('all')
     useEffect(() => {
-        leoProfanity.loadDictionary('ru')
+        leoProfanity.loadDictionary('ru, en')
     }, [])
     const { showSuccess} = useToast()
     const formik = useFormik({

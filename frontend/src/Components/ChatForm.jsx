@@ -28,7 +28,7 @@ const ChatForm = () => {
         }
     })
     useEffect(() => {
-        leoProfanity.loadDictionary('ru')
+        leoProfanity.loadDictionary('ru, en')
     }, [])
     const dispatch = useDispatch()
     const { showError } = useToast()
