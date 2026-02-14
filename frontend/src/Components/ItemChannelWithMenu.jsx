@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from 'react'
+import { useRef, useEffect, useCallback } from 'react'
 import { changeCurrentChannel, changeChannelWithOpenMenu, changeCurrentRemoveChannel,
   openRemovingChannelDialog, changeCurentRenameChannel, openRenamingChannelDialog } from '../slices/UIslice.jsx'
 import cn from 'classnames'

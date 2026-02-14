@@ -5,7 +5,7 @@ import getAuthHeader from './../utils/getAuthHeader.js'
 
 export const getChannels = createAsyncThunk(
   'channels/getChannels',
-  async() => {
+  async () => {
     const token = getAuthHeader()
     try {
       const response = await axios.get(routes.channelsPath(), {
@@ -21,7 +21,7 @@ export const getChannels = createAsyncThunk(
 
 export const postChannel = createAsyncThunk(
   'channels/postChannel',
-  async(newChannel) => {
+  async (newChannel) => {
     const token = getAuthHeader()
     try {
       const response = await axios.post(routes.channelsPath(), newChannel, {
@@ -37,7 +37,7 @@ export const postChannel = createAsyncThunk(
 
 export const editChannel = createAsyncThunk(
   'channels/editChannel',
-  async({ newNameChannel, id }) => {
+  async ({ newNameChannel, id }) => {
     const changes = { name: newNameChannel }
     const token = getAuthHeader()
     try {
@@ -54,7 +54,7 @@ export const editChannel = createAsyncThunk(
 
 export const removeChannel = createAsyncThunk(
   'channels/removeChannel',
-  async(id) => {
+  async (id) => {
     const token = getAuthHeader()
     try {
       const response = await axios.delete(routes.channelsPathWithId(id), {

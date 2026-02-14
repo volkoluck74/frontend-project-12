@@ -11,7 +11,7 @@ const ChatForm = () => {
     initialValues: {
       body: '',
     },
-    onSubmit: async(values) => {
+    onSubmit: async (values) => {
       const newMessage = {
         body: leoProfanity.clean(values.body),
         channelId: currentChannelId,

@@ -1,4 +1,3 @@
-import React from 'react'
 import { useEffect, useRef, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getChannels, selectAllChannels } from '../slices/channelSlice.jsx'
@@ -47,7 +46,7 @@ const ChatPage = () => {
   }, [dispatch])
   useEffect(() => {
     const socket = io()
-    socket.on('newMessage', async() => {
+    socket.on('newMessage', async () => {
       try {
         await dispatch(getMessages()).unwrap()
       } catch (e) {
@@ -55,7 +54,7 @@ const ChatPage = () => {
         throw e
       }
     })
-    socket.on('newChannel', async() => {
+    socket.on('newChannel', async () => {
       try {
         await dispatch(getChannels()).unwrap()
       } catch (e) {
@@ -63,7 +62,7 @@ const ChatPage = () => {
         throw e
       }
     })
-    socket.on('removeChannel', async() => {
+    socket.on('removeChannel', async () => {
       try {
         await dispatch(getChannels()).unwrap()
       } catch (e) {
@@ -71,7 +70,7 @@ const ChatPage = () => {
         throw e
       }
     })
-    socket.on('renameChannel', async() => {
+    socket.on('renameChannel', async () => {
       try {
         await dispatch(getChannels()).unwrap()
       } catch (e) {

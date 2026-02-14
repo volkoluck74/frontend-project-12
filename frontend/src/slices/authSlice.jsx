@@ -4,7 +4,7 @@ import axios from 'axios'
 
 export const login = createAsyncThunk(
   'auth/login',
-  async(body, { rejectWithValue }) => {
+  async (body, { rejectWithValue }) => {
     try {
       const data = await axios.post(routes.loginPath(), body)
       const token = data.data.token
@@ -20,7 +20,7 @@ export const login = createAsyncThunk(
 )
 export const registration = createAsyncThunk(
   'auth/registration',
-  async(newUser, { rejectWithValue }) => {
+  async (newUser, { rejectWithValue }) => {
     try {
       const response = await axios.post(routes.newUserPath(), newUser)
       return response.data

@@ -15,7 +15,7 @@ const LoginForm = () => {
       username: '',
       password: '',
     },
-    onSubmit: async(values) => {
+    onSubmit: async (values) => {
       try {
         await dispatch(login(values)).unwrap()
         navigate('/')

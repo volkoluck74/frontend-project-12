@@ -1,3 +1,4 @@
+/* global process */
 import Rollbar from 'rollbar'
 
 const rollbarConfig = {

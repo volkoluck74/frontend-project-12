@@ -38,7 +38,7 @@ const RegistrationForm = () => {
       confirmPassword: '',
     },
     validationSchema,
-    onSubmit: async(values) => {
+    onSubmit: async (values) => {
       try {
         const newUser = {
           username: values.username,

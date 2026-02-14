@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { removeChannel } from '../slices/channelSlice'
-import React, { useRef, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import useToast from '../hooks/useToast.js'
 import { changeCurrentRemoveChannel, closeRemovingChannelDialog, changeCurrentChannel } from '../slices/UIslice.jsx'
@@ -11,7 +11,7 @@ const RemovingChannelDialog = () => {
   const { showSuccess, showError } = useToast()
   const { currentRemoveChannelId } = useSelector(state => state.uiState)
   const modalRef = useRef(null)
-  const deleteChannel = async() => {
+  const deleteChannel = async () => {
     try {
       await dispatch(removeChannel(currentRemoveChannelId)).unwrap()
       dispatch(closeRemovingChannelDialog())

@@ -10,7 +10,7 @@ const messagesAdapter = createEntityAdapter({
 
 export const getMessages = createAsyncThunk(
   'message/getMessages',
-  async() => {
+  async () => {
     const token = getAuthHeader()
     try {
       const response = await axios.get(routes.messagesPath(), {
@@ -26,7 +26,7 @@ export const getMessages = createAsyncThunk(
 
 export const postMessage = createAsyncThunk(
   'message/postMessage',
-  async(newMessage) => {
+  async (newMessage) => {
     const token = getAuthHeader()
     try {
       const response = await axios.post(routes.messagesPath(), newMessage, {

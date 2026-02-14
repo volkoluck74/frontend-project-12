@@ -66,7 +66,7 @@ const RenamingChannelDialog = () => {
       document.removeEventListener('keydown', handleEscapeKey)
     }
   }, [cancelRenamingChannel, isDisabled])
-  const onSubmit = async(e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
     const errors = await formik.validateForm()
     formik.setTouched({ name: true }, false)
