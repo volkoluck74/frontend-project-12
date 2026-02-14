@@ -1,12 +1,4 @@
-function hasToken() {
-  try {
-    JSON.parse(localStorage.getItem('userId')).token
-    return true
-  }
-  catch {
-    return false
-  }
-}
+import hasToken from './hasToken.js'
 
 export default function getAuthHeader() {
   if (hasToken()) {
