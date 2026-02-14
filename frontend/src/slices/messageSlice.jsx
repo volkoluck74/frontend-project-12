@@ -5,7 +5,7 @@ import getAuthHeader from './../utils/getAuthHeader.js'
 import { removeChannel } from './channelSlice.jsx'
 
 const messagesAdapter = createEntityAdapter({
-  selectId: (message) => message.id,
+  selectId: message => message.id,
 })
 
 export const getMessages = createAsyncThunk(
@@ -26,7 +26,7 @@ export const getMessages = createAsyncThunk(
 
 export const postMessage = createAsyncThunk(
   'message/postMessage',
-  async (newMessage) => {
+  async newMessage => {
     const token = getAuthHeader()
     try {
       const response = await axios.post(routes.messagesPath(), newMessage, {
@@ -46,9 +46,9 @@ const messagesSlice = createSlice({
     status: 'idle',
     error: null,
   }),
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(getMessages.pending, (state) => {
+      .addCase(getMessages.pending, state => {
         state.status = 'loading'
       })
       .addCase(getMessages.fulfilled, (state, action) => {
@@ -59,7 +59,7 @@ const messagesSlice = createSlice({
         state.status = 'failed'
         state.error = action.error.message
       })
-      .addCase(postMessage.pending, (state) => {
+      .addCase(postMessage.pending, state => {
         state.status = 'loading'
       })
       .addCase(postMessage.fulfilled, (state, action) => {
@@ -78,7 +78,7 @@ const messagesSlice = createSlice({
         if (removedChannelId) {
           const allMessages = Object.values(state.entities)
           const filteredMessages = allMessages.filter(
-            (message) => message.channelId !== removedChannelId,
+            message => message.channelId !== removedChannelId,
           )
 
           messagesAdapter.setAll(state, filteredMessages)
@@ -93,8 +93,8 @@ export const {
   selectIds: selectMessageIds,
   selectEntities: selectMessageEntities,
   selectTotal: selectTotalMessages,
-} = messagesAdapter.getSelectors((state) => state.messages)
+} = messagesAdapter.getSelectors(state => state.messages)
 
-export const selectMessagesStatus = (state) => state.messages.status
+export const selectMessagesStatus = state => state.messages.status
 
 export default messagesSlice.reducer

@@ -16,7 +16,7 @@ const RegistrationForm = () => {
   const { showError } = useToast()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { error, status } = useSelector((state) => state.auth)
+  const { error, status } = useSelector(state => state.auth)
 
   const validationSchema = Yup.object({
     username: Yup.string()
@@ -38,7 +38,7 @@ const RegistrationForm = () => {
       confirmPassword: '',
     },
     validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async values => {
       try {
         const newUser = {
           username: values.username,
@@ -76,7 +76,7 @@ const RegistrationForm = () => {
 
                 <div className="form-floating mb-3">
                   <input
-                    placeholder = {t('Form.Count_symbol', { min, max })}
+                    placeholder={t('Form.Count_symbol', { min, max })}
                     name="username"
                     autoComplete="username"
                     required

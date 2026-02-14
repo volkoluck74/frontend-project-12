@@ -11,7 +11,7 @@ const ChatForm = () => {
     initialValues: {
       body: '',
     },
-    onSubmit: async (values) => {
+    onSubmit: async values => {
       const newMessage = {
         body: leoProfanity.clean(values.body),
         channelId: currentChannelId,
@@ -31,7 +31,7 @@ const ChatForm = () => {
   }, [])
   const dispatch = useDispatch()
   const { showError } = useToast()
-  const { currentChannelId, isAddingChannelDialogOpen, isRenamingChannelDialogOpen } = useSelector((state) => state.uiState)
+  const { currentChannelId, isAddingChannelDialogOpen, isRenamingChannelDialogOpen } = useSelector(state => state.uiState)
   const isAnyModalOpen = isAddingChannelDialogOpen || isRenamingChannelDialogOpen
   const inputEl = useRef(null)
   const status = useSelector(selectMessagesStatus)
@@ -48,16 +48,16 @@ const ChatForm = () => {
           aria-label="Новое сообщение"
           placeholder={t('Chat_form.Enter_a_message')}
           className="border-0 p-0 ps-2 form-control"
-          id = "body"
+          id="body"
           value={formik.values.body}
           onChange={formik.handleChange}
-          disabled = {status !=='succeeded'}
-          ref = {inputEl}
+          disabled={status !=='succeeded'}
+          ref={inputEl}
           autoFocus={!isAnyModalOpen}
         />
         <button
           type="submit"
-          disabled = {formik.values.body === '' || status !=='succeeded'}
+          disabled={formik.values.body === '' || status !=='succeeded'}
           className="btn btn-group-vertical"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor" className="bi bi-arrow-right-square">

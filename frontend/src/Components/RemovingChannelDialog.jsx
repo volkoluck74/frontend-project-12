@@ -9,7 +9,7 @@ const RemovingChannelDialog = () => {
   const { t } = useTranslation('all')
   const dispatch = useDispatch()
   const { showSuccess, showError } = useToast()
-  const { currentRemoveChannelId } = useSelector((state) => state.uiState)
+  const { currentRemoveChannelId } = useSelector(state => state.uiState)
   const modalRef = useRef(null)
   const deleteChannel = async () => {
     try {
@@ -28,7 +28,7 @@ const RemovingChannelDialog = () => {
   }
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = event => {
       if (currentRemoveChannelId !== 0
         && modalRef.current
         && !modalRef.current.contains(event.target)) {
@@ -41,7 +41,7 @@ const RemovingChannelDialog = () => {
     }
   }, [currentRemoveChannelId])
   useEffect(() => {
-    const handleEscKey = (event) => {
+    const handleEscKey = event => {
       if (event.key === 'Escape' && currentRemoveChannelId !== 0) {
         cancelRemovingChannel()
       }
@@ -53,18 +53,18 @@ const RemovingChannelDialog = () => {
   }, [currentRemoveChannelId])
 
   return (
-    <div role="dialog" aria-modal="true" style = {{ display: 'block' }} className="fade modal show" tabIndex="-1">
+    <div role="dialog" aria-modal="true" style={{ display: 'block' }} className="fade modal show" tabIndex="-1">
       <div className="modal-dialog modal-dialog-centered" ref={modalRef}>
         <div className="modal-content">
           <div className="modal-header">
             <div className="modal-title h4">{t('Delete_Channel')}</div>
-            <button type="button" aria-label="Close" data-bs-dismiss="modal" className="btn btn-close" onClick = {cancelRemovingChannel}></button>
+            <button type="button" aria-label="Close" data-bs-dismiss="modal" className="btn btn-close" onClick={cancelRemovingChannel}></button>
           </div>
           <div className="modal-body">
             <p className="lead">{t('Are_you_sure')}</p>
             <div className="d-flex justify-content-end">
-              <button type="button" className="me-2 btn btn-secondary" onClick = {cancelRemovingChannel}>{t('Cancel')}</button>
-              <button type="button" className="btn btn-danger" onClick = {deleteChannel}>{t('Delete')}</button>
+              <button type="button" className="me-2 btn btn-secondary" onClick={cancelRemovingChannel}>{t('Cancel')}</button>
+              <button type="button" className="btn btn-danger" onClick={deleteChannel}>{t('Delete')}</button>
             </div>
           </div>
         </div>

@@ -33,7 +33,7 @@ export default [
       'react-hooks/exhaustive-deps': 'warn',
 
       // Stylistic rules
-      '@stylistic/arrow-parens': ['error', 'always'],
+      '@stylistic/arrow-parens': ['error', 'as-needed'],
       '@stylistic/semi': ['error', 'never'],
       '@stylistic/quotes': ['error', 'single'],
       '@stylistic/indent': ['error', 2],
@@ -41,6 +41,7 @@ export default [
       '@stylistic/jsx-quotes': ['error', 'prefer-double'],
       '@stylistic/no-trailing-spaces': 'error',
       '@stylistic/eol-last': ['error', 'always'],
+      '@stylistic/jsx-equals-spacing': ['error', 'never'],
       '@stylistic/object-curly-spacing': ['error', 'always'],
       '@stylistic/jsx-tag-spacing': ['error', { beforeClosing: 'never' }],
       '@stylistic/quote-props': ['error', 'as-needed'],
