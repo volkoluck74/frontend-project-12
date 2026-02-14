@@ -89,7 +89,7 @@ const RegistrationForm = () => {
                   <label className="form-label" htmlFor="username">
                     {t('Username')}
                   </label>
-                  <div placement="right" className="invalid-tooltip">
+                  <div data-bs-placement="right" className="invalid-tooltip">
                     {formik.touched.username && formik.errors.username}
                   </div>
                 </div>
@@ -112,7 +112,7 @@ const RegistrationForm = () => {
                   <label className="form-label" htmlFor="password">
                     {t('Password')}
                   </label>
-                  <div placement="right" className="invalid-tooltip">
+                  <div data-bs-placement="right" className="invalid-tooltip">
                     {formik.touched.password && formik.errors.password}
                   </div>
                 </div>
@@ -133,7 +133,7 @@ const RegistrationForm = () => {
                   <label className="form-label" htmlFor="confirmPassword">
                     {t('Confirm_Password')}
                   </label>
-                  <div placement="right" className="invalid-tooltip">
+                  <div data-bs-placement="right" className="invalid-tooltip">
                     {confirmPasswordError}
                   </div>
                 </div>
