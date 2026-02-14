@@ -10,7 +10,7 @@ export default [
     files: ['**/*.{js,jsx}'],
     plugins: {
       '@stylistic': stylistic,
-      'react': react,
+      react,
       'react-hooks': reactHooks,
     },
     languageOptions: {
@@ -39,6 +39,7 @@ export default [
       '@stylistic/eol-last': ['error', 'always'],
       '@stylistic/object-curly-spacing': ['error', 'always'],
       '@stylistic/jsx-tag-spacing': ['error', { 'beforeClosing': 'never' }],
+      '@stylistic/quote-props': ['error', 'as-needed'],
       'no-unused-vars': ['error', { 'varsIgnorePattern': '^[A-Z_]' }],
       'no-undef': 'error',
     },
@@ -48,4 +49,4 @@ export default [
       },
     },
   },
-];
+]
