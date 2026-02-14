@@ -9,7 +9,7 @@ const RemovingChannelDialog = () => {
   const { t } = useTranslation('all')
   const dispatch = useDispatch()
   const { showSuccess, showError } = useToast()
-  const { currentRemoveChannelId } = useSelector((state) => state.uiState)
+  const { currentRemoveChannelId } = useSelector(state => state.uiState)
   const modalRef = useRef(null)
   const deleteChannel = async () => {
     try {
@@ -17,7 +17,8 @@ const RemovingChannelDialog = () => {
       dispatch(closeRemovingChannelDialog())
       dispatch(changeCurrentChannel({ id: '1' }))
       showSuccess(t('Toast.Channel_deleted'))
-    } catch (e) {
+    }
+    catch (e) {
       showError(t('Toast.Error_sended'))
       throw e
     }

@@ -5,7 +5,7 @@ import getAuthHeader from './../utils/getAuthHeader.js'
 import { removeChannel } from './channelSlice.jsx'
 
 const messagesAdapter = createEntityAdapter({
-  selectId: (message) => message.id,
+  selectId: message => message.id,
 })
 
 export const getMessages = createAsyncThunk(
@@ -17,7 +17,8 @@ export const getMessages = createAsyncThunk(
         headers: token,
       })
       return response.data
-    } catch (e) {
+    }
+    catch (e) {
       console.log('Проверь Rollbar')
       throw new Error(e)
     }
@@ -33,7 +34,8 @@ export const postMessage = createAsyncThunk(
         headers: token,
       })
       return response.data
-    } catch (e) {
+    }
+    catch (e) {
       console.log('Проверь Rollbar')
       throw new Error(e)
     }
@@ -78,7 +80,7 @@ const messagesSlice = createSlice({
         if (removedChannelId) {
           const allMessages = Object.values(state.entities)
           const filteredMessages = allMessages.filter(
-            (message) => message.channelId !== removedChannelId,
+            message => message.channelId !== removedChannelId,
           )
 
           messagesAdapter.setAll(state, filteredMessages)
@@ -93,7 +95,7 @@ export const {
   selectIds: selectMessageIds,
   selectEntities: selectMessageEntities,
   selectTotal: selectTotalMessages,
-} = messagesAdapter.getSelectors((state) => state.messages)
+} = messagesAdapter.getSelectors(state => state.messages)
 
 export const selectMessagesStatus = (state) => state.messages.status
 

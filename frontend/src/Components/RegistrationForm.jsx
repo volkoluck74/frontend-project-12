@@ -47,7 +47,8 @@ const RegistrationForm = () => {
         await dispatch(registration(newUser)).unwrap()
         await dispatch(login(newUser)).unwrap()
         navigate('/')
-      } catch (e) {
+      }
+      catch (e) {
         showError(t('Toast.Error_sended'))
         throw e
       }

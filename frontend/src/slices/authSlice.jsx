@@ -10,7 +10,8 @@ export const login = createAsyncThunk(
       const token = data.data.token
       const username = data.data.username
       return { token, username }
-    } catch (e) {
+    }
+    catch (e) {
       console.log('Проверь Rollbar')
       return rejectWithValue(
         e.status === 401 ? 'Неверные имя пользователя или пароль' : 'Ошибка входа',
@@ -24,7 +25,8 @@ export const registration = createAsyncThunk(
     try {
       const response = await axios.post(routes.newUserPath(), newUser)
       return response.data
-    } catch (e) {
+    }
+    catch (e) {
       console.log('Проверь Rollbar')
       return rejectWithValue(
         e.status === 409 ? 'Такой пользователь уже существует' : 'Ошибка регистрации',

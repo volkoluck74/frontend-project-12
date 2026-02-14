@@ -12,7 +12,8 @@ export const getChannels = createAsyncThunk(
         headers: token,
       })
       return response.data
-    } catch (e) {
+    }
+    catch (e) {
       console.log('Проверь Rollbar')
       throw new Error(e)
     }
@@ -28,7 +29,8 @@ export const postChannel = createAsyncThunk(
         headers: token,
       })
       return response.data
-    } catch (e) {
+    }
+    catch (e) {
       console.log('Проверь Rollbar')
       throw new Error(e)
     }
@@ -45,7 +47,8 @@ export const editChannel = createAsyncThunk(
         headers: token,
       })
       return response.data
-    } catch (e) {
+    }
+    catch (e) {
       console.log('Проверь Rollbar')
       throw new Error(e)
     }
@@ -60,10 +63,9 @@ export const removeChannel = createAsyncThunk(
       const response = await axios.delete(routes.channelsPathWithId(id), {
         headers: token,
       })
-      console.log(response.data)
-      console.log(routes.channelsPathWithId(id))
       return response.data
-    } catch (e) {
+    }
+    catch (e) {
       console.log('Проверь Rollbar')
       throw new Error(e)
     }

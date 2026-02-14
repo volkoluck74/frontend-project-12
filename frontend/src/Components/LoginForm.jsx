@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import useToast from '../hooks/useToast.js'
 
 const LoginForm = () => {
-  const { error, status } = useSelector((state) => state.auth)
+  const { error, status } = useSelector(state => state.auth)
   const { t } = useTranslation('all')
   const dispatch = useDispatch()
   const { showError } = useToast()
@@ -19,7 +19,8 @@ const LoginForm = () => {
       try {
         await dispatch(login(values)).unwrap()
         navigate('/')
-      } catch (e) {
+      }
+      catch (e) {
         showError(t('Toast.Error_sended'))
         throw e
       }

@@ -12,7 +12,7 @@ const max = 20
 
 const RenamingChannelDialog = () => {
   const dispatch = useDispatch()
-  const { curentRenameChannelId, channelChangeError } = useSelector((state) => state.uiState)
+  const { curentRenameChannelId, channelChangeError } = useSelector(state => state.uiState)
   const channels = useSelector(selectAllChannels)
   const status = useSelector(selectChannelsStatus)
   const modalRef = useRef(null)
@@ -24,7 +24,7 @@ const RenamingChannelDialog = () => {
   const { showSuccess } = useToast()
   const formik = useFormik({
     initialValues: {
-      name: channels.find((item) => item.id === curentRenameChannelId)?.name || '',
+      name: channels.find(item => item.id === curentRenameChannelId)?.name || '',
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -33,7 +33,7 @@ const RenamingChannelDialog = () => {
         .required(t('Form.Required'))
         .test('unique-name', t('Form.Have_been_unique'), (value) => {
           if (!value) return true
-          return !channels.map((item) => item.name).includes(value.trim())
+          return !channels.map(item => item.name).includes(value.trim())
         }),
     }),
   })
@@ -89,7 +89,8 @@ const RenamingChannelDialog = () => {
           }))
           throw e
         })
-    } else {
+    }
+    else {
       dispatch(setChannelChangeError({ error: errors.name }))
     }
   }

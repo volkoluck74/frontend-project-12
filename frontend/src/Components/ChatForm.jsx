@@ -19,7 +19,7 @@ const ChatForm = () => {
       }
       try {
         await dispatch(postMessage(newMessage)).unwrap()
-      } 
+      }
       catch (e) {
         showError(t('Toast.Error_sended'))
         throw e

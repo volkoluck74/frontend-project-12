@@ -13,7 +13,7 @@ const max = 20
 
 const NewChannelDialog = () => {
   const dispatch = useDispatch()
-  const { channelChangeError } = useSelector((state) => state.uiState)
+  const { channelChangeError } = useSelector(state => state.uiState)
   const channels = useSelector(selectAllChannels)
   const status = useSelector(selectChannelsStatus)
   const modalRef = useRef(null)
@@ -34,7 +34,7 @@ const NewChannelDialog = () => {
         .required(t('Form.Required'))
         .test('unique-name', t('Form.Have_been_unique'), (value) => {
           if (!value) return true
-          return !channels.map((item) => item.name).includes(value.trim())
+          return !channels.map(item => item.name).includes(value.trim())
         }),
     }),
   })
@@ -87,7 +87,8 @@ const NewChannelDialog = () => {
           showError(t('Toast.Error_sended'))
           throw error
         })
-    } else {
+    }
+    else {
       dispatch(setChannelChangeError({ error: errors.name }))
     }
   }
