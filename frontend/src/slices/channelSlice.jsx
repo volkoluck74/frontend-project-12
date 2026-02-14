@@ -21,7 +21,7 @@ export const getChannels = createAsyncThunk(
 
 export const postChannel = createAsyncThunk(
   'channels/postChannel',
-  async newChannel => {
+  async (newChannel) => {
     const token = getAuthHeader()
     try {
       const response = await axios.post(routes.channelsPath(), newChannel, {
@@ -54,7 +54,7 @@ export const editChannel = createAsyncThunk(
 
 export const removeChannel = createAsyncThunk(
   'channels/removeChannel',
-  async id => {
+  async (id) => {
     const token = getAuthHeader()
     try {
       const response = await axios.delete(routes.channelsPathWithId(id), {
@@ -71,7 +71,7 @@ export const removeChannel = createAsyncThunk(
 )
 
 const channelAdapter = createEntityAdapter({
-  selectId: channel => channel.id,
+  selectId: (channel) => channel.id,
 })
 
 const channelsSlice = createSlice({
@@ -80,9 +80,9 @@ const channelsSlice = createSlice({
     status: 'idle',
     error: null,
   }),
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-      .addCase(getChannels.pending, state => {
+      .addCase(getChannels.pending, (state) => {
         state.status = 'loading'
       })
       .addCase(getChannels.fulfilled, (state, action) => {
@@ -93,11 +93,11 @@ const channelsSlice = createSlice({
         state.status = 'failed'
         state.error = action.error.message
       })
-      .addCase(postChannel.pending, state => {
+      .addCase(postChannel.pending, (state) => {
         console.log(state)
         state.status = 'loading'
       })
-      .addCase(postChannel.fulfilled, state => {
+      .addCase(postChannel.fulfilled, (state) => {
         console.log(state)
         state.status = 'succeeded'
       })
@@ -106,11 +106,11 @@ const channelsSlice = createSlice({
         state.status = 'failed'
         state.error = action.error.message
       })
-      .addCase(editChannel.pending, state => {
+      .addCase(editChannel.pending, (state) => {
         console.log(state)
         state.status = 'loading'
       })
-      .addCase(editChannel.fulfilled, state => {
+      .addCase(editChannel.fulfilled, (state) => {
         console.log(state)
         state.status = 'succeeded'
       })
@@ -119,11 +119,11 @@ const channelsSlice = createSlice({
         state.status = 'failed'
         state.error = action.error.message
       })
-      .addCase(removeChannel.pending, state => {
+      .addCase(removeChannel.pending, (state) => {
         console.log(state)
         state.status = 'loading'
       })
-      .addCase(removeChannel.fulfilled, state => {
+      .addCase(removeChannel.fulfilled, (state) => {
         console.log(state)
         state.status = 'succeeded'
       })
@@ -141,8 +141,8 @@ export const {
   selectIds: selectChannelBIds,
   selectEntities: selectChannelBntities,
   selectTotal: selectTotalChannels,
-} = channelAdapter.getSelectors(state => state.channels)
+} = channelAdapter.getSelectors((state) => state.channels)
 
-export const selectChannelsStatus = state => state.channels.status
+export const selectChannelsStatus = (state) => state.channels.status
 
 export default channelsSlice.reducer

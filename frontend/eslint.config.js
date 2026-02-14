@@ -32,7 +32,7 @@ export default [
       'react-hooks/exhaustive-deps': 'warn',
       'react/jsx-uses-react': 'error',
       'react/jsx-uses-vars': 'error',
-      '@stylistic/arrow-parens': ['error', 'as-needed'],
+      '@stylistic/arrow-parens': ['error', 'always'],
       '@stylistic/semi': ['error', 'never'],
       '@stylistic/quotes': ['error', 'single'],
       '@stylistic/indent': ['error', 2, {
@@ -48,7 +48,7 @@ export default [
         ImportDeclaration: 1,
         flatTernaryExpressions: false,
         ignoredNodes: ['TemplateLiteral *'],
-        offsetTernaryExpressions: false,
+        offsetTernaryExpressions: true,
       }],
       '@stylistic/comma-dangle': ['error', 'always-multiline'],
       '@stylistic/jsx-quotes': ['error', 'prefer-double'],
