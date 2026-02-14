@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
 //import routes from './../routes.js'
 //import axios from 'axios'
 
@@ -16,41 +16,41 @@ const uiSlice = createSlice({
   },
   reducers:{
     setChannelChangeError: (state, action) => {
-      state.channelChangeError = action.payload.error;
+      state.channelChangeError = action.payload.error
     },
     changeCurrentChannel: (state, action) => {
-      state.currentChannelId = action.payload.id;
+      state.currentChannelId = action.payload.id
     },
     changeCurrentRemoveChannel: (state, action) => {
-      state.currentRemoveChannelId = action.payload.id;
+      state.currentRemoveChannelId = action.payload.id
     },
     changeCurentRenameChannel: (state, action) => {
-      state.curentRenameChannelId = action.payload.id;
+      state.curentRenameChannelId = action.payload.id
     },
     openChannelAddingDialog: (state) => {
-      state.isAddingChannelDialogOpen = true;
+      state.isAddingChannelDialogOpen = true
     },
     closeChannelAddingDialog: (state) => {
-      state.isAddingChannelDialogOpen = false;
+      state.isAddingChannelDialogOpen = false
     },
     changeChannelWithOpenMenu: (state, action) => {
-      state.channelWithOpenMenuId = action.payload.id;
+      state.channelWithOpenMenuId = action.payload.id
     },
     openRemovingChannelDialog: (state) => {
-      state.isRemovingChannelDialogOpen = true;
+      state.isRemovingChannelDialogOpen = true
     },
     closeRemovingChannelDialog: (state) => {
-      state.isRemovingChannelDialogOpen = false;
+      state.isRemovingChannelDialogOpen = false
     },
     openRenamingChannelDialog: (state) => {
-      state.isRenamingChannelDialogOpen = true;
+      state.isRenamingChannelDialogOpen = true
     },
     closeRenamingChannelDialog: (state) => {
-      state.isRenamingChannelDialogOpen = false;
+      state.isRenamingChannelDialogOpen = false
     },
 
   },
-});
+})
 
 export const { openChannelAddingDialog,
   closeChannelAddingDialog,
@@ -62,5 +62,5 @@ export const { openChannelAddingDialog,
   changeCurentRenameChannel,
   openRenamingChannelDialog,
   closeRenamingChannelDialog,
-  setChannelChangeError } = uiSlice.actions;
-export default uiSlice.reducer;
+  setChannelChangeError } = uiSlice.actions
+export default uiSlice.reducer

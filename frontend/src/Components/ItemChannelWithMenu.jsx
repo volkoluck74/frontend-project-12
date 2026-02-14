@@ -1,21 +1,21 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react'
 import { changeCurrentChannel, changeChannelWithOpenMenu, changeCurrentRemoveChannel,
-  openRemovingChannelDialog, changeCurentRenameChannel, openRenamingChannelDialog } from '../slices/UIslice.jsx';
-import cn from 'classnames';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+  openRemovingChannelDialog, changeCurentRenameChannel, openRenamingChannelDialog } from '../slices/UIslice.jsx'
+import cn from 'classnames'
+import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 const ItemChannelWithMenu = (props) => {
-  const { t } = useTranslation('all');
-  const dispatch = useDispatch();
-  const { channelWithOpenMenuId, currentChannelId } = useSelector(state => state.uiState);
-  const isCurrentChannel = props.item.id === currentChannelId;
-  const isChannelWithMenu = props.item.id === channelWithOpenMenuId;
-  const menuRef = useRef(null);
-  const toggleButtonRef = useRef(null);
-  const cnMainButton = `w-100 rounded-0 text-start btn ${isCurrentChannel ? 'btn-secondary' : ''}`;
+  const { t } = useTranslation('all')
+  const dispatch = useDispatch()
+  const { channelWithOpenMenuId, currentChannelId } = useSelector(state => state.uiState)
+  const isCurrentChannel = props.item.id === currentChannelId
+  const isChannelWithMenu = props.item.id === channelWithOpenMenuId
+  const menuRef = useRef(null)
+  const toggleButtonRef = useRef(null)
+  const cnMainButton = `w-100 rounded-0 text-start btn ${isCurrentChannel ? 'btn-secondary' : ''}`
 
-  const cnDivGroup = `d-flex drpotown btn-group ${isChannelWithMenu ? 'show' : ''}`;
+  const cnDivGroup = `d-flex drpotown btn-group ${isChannelWithMenu ? 'show' : ''}`
 
   const cnMenuBtn = cn(
     'flex-grow-0',
@@ -25,22 +25,22 @@ const ItemChannelWithMenu = (props) => {
       'btn-secondary': isCurrentChannel,
       show: isChannelWithMenu,
     },
-  );
+  )
 
   const changeChannel = () => {
-    dispatch(changeCurrentChannel({ id: props.item.id }));
+    dispatch(changeCurrentChannel({ id: props.item.id }))
     if (isChannelWithMenu) {
-      dispatch(changeChannelWithOpenMenu({ id: 0 }));
+      dispatch(changeChannelWithOpenMenu({ id: 0 }))
     }
-  };
+  }
 
   const handleMenuToggle = () => {
-    isChannelWithMenu ? dispatch(changeChannelWithOpenMenu({ id: 0 })) : dispatch(changeChannelWithOpenMenu({ id: props.item.id }));
-  };
+    isChannelWithMenu ? dispatch(changeChannelWithOpenMenu({ id: 0 })) : dispatch(changeChannelWithOpenMenu({ id: props.item.id }))
+  }
 
   const handleMenuClear = useCallback(() => {
-    dispatch(changeChannelWithOpenMenu({ id: 0 }));
-  }, [dispatch]);
+    dispatch(changeChannelWithOpenMenu({ id: 0 }))
+  }, [dispatch])
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (isChannelWithMenu
@@ -48,34 +48,34 @@ const ItemChannelWithMenu = (props) => {
         && !menuRef.current.contains(event.target)
         && toggleButtonRef.current
         && !toggleButtonRef.current.contains(event.target)) {
-        handleMenuClear();
+        handleMenuClear()
       }
-    };
+    }
 
     if (isChannelWithMenu) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('mousedown', handleClickOutside)
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isChannelWithMenu, handleMenuClear]);
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isChannelWithMenu, handleMenuClear])
 
   const deleteChannel = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    dispatch(changeCurrentRemoveChannel({ id: props.item.id }));
-    dispatch(openRemovingChannelDialog());
-    handleMenuClear();
-  };
+    e.preventDefault()
+    e.stopPropagation()
+    dispatch(changeCurrentRemoveChannel({ id: props.item.id }))
+    dispatch(openRemovingChannelDialog())
+    handleMenuClear()
+  }
 
   const renameChannel = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    dispatch(changeCurentRenameChannel({ id: props.item.id }));
-    dispatch(openRenamingChannelDialog());
-    handleMenuClear();
-  };
+    e.preventDefault()
+    e.stopPropagation()
+    dispatch(changeCurentRenameChannel({ id: props.item.id }))
+    dispatch(openRenamingChannelDialog())
+    handleMenuClear()
+  }
 
   return (
     <li className="nav-item w-100">
@@ -106,7 +106,7 @@ const ItemChannelWithMenu = (props) => {
         </div>
       </div>
     </li>
-  );
-};
+  )
+}
 
-export default ItemChannelWithMenu;
+export default ItemChannelWithMenu

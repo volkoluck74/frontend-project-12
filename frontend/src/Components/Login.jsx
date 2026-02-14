@@ -1,12 +1,12 @@
-import avatar from './../assets/avatar-DIE1AEpS.jpg';
-import LoginForm from './LoginForm';
-import { Navigate } from 'react-router-dom';
-import hasToken from '../utils/hasToken.js';
-import Header from './Header.jsx';
-import { useTranslation } from 'react-i18next';
+import avatar from './../assets/avatar-DIE1AEpS.jpg'
+import LoginForm from './LoginForm'
+import { Navigate } from 'react-router-dom'
+import hasToken from '../utils/hasToken.js'
+import Header from './Header.jsx'
+import { useTranslation } from 'react-i18next'
 
 const LoginPage = () => {
-  const { t } = useTranslation('all');
+  const { t } = useTranslation('all')
   return (
     (!hasToken())
       ? (
@@ -38,7 +38,7 @@ const LoginPage = () => {
         </>
       )
       : <Navigate to="/" />
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage
