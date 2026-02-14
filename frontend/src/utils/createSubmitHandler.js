@@ -22,7 +22,8 @@ const createSubmitHandler = ({
       if (shouldReset && formikHelpers) {
         formikHelpers.resetForm()
       }
-    } catch (error) {
+    } 
+    catch (error) {
       showError(t(errorMessage))
       throw error
     }

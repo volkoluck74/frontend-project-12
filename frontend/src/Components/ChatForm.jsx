@@ -22,7 +22,7 @@ const ChatForm = () => {
     actions: [
       {
         action: postMessage,
-        transform: (data) => ({
+        transform: data => ({
           body: leoProfanity.clean(data.body),
           channelId: currentChannelId,
           username: JSON.parse(localStorage.getItem('userId')).username,
@@ -31,7 +31,7 @@ const ChatForm = () => {
     ],
     showError,
     t,
-    transformData: (values) => ({
+    transformData: values => ({
       body: values.body,
     }),
     shouldReset: true,

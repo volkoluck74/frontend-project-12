@@ -24,14 +24,14 @@ const RegistrationForm = () => {
     actions: [
       {
         action: registration,
-        transform: (data) => ({
+        transform: data => ({
           username: data.username,
           password: data.password,
         }),
       },
       {
         action: login,
-        transform: (data) => ({
+        transform: data => ({
           username: data.username,
           password: data.password,
         }),
