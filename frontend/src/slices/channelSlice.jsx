@@ -73,7 +73,7 @@ export const removeChannel = createAsyncThunk(
 )
 
 const channelAdapter = createEntityAdapter({
-  selectId: (channel) => channel.id,
+  selectId: channel => channel.id,
 })
 
 const channelsSlice = createSlice({
@@ -143,8 +143,8 @@ export const {
   selectIds: selectChannelBIds,
   selectEntities: selectChannelBntities,
   selectTotal: selectTotalChannels,
-} = channelAdapter.getSelectors((state) => state.channels)
+} = channelAdapter.getSelectors(state => state.channels)
 
-export const selectChannelsStatus = (state) => state.channels.status
+export const selectChannelsStatus = state => state.channels.status
 
 export default channelsSlice.reducer

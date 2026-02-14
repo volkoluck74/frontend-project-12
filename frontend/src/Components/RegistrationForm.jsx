@@ -60,9 +60,7 @@ const RegistrationForm = () => {
     }
   }, [formik.values])
 
-  const confirmPasswordError
-    = (formik.touched.confirmPassword && formik.errors.confirmPassword)
-    || (error && status === 'failed' ? error : null)
+  const confirmPasswordError = (formik.touched.confirmPassword && formik.errors.confirmPassword) || (error && status === 'failed' ? error : null)
   return (
     <div className="container-fluid h-100">
       <div className="row justify-content-center align-content-center h-100">

@@ -135,7 +135,7 @@ const ChatPage = () => {
                       </span>
                     </div>
                     <div id="messages-box" className="chat-messages overflow-auto px-5 " ref={messagesContainerRef}>
-                      {messages.filter((item) => item.channelId === currentChannelId).map(item =>
+                      {messages.filter(item => item.channelId === currentChannelId).map(item =>
                         <ItemMessage key={item.id} item={item} />,
                       )}
                     </div>

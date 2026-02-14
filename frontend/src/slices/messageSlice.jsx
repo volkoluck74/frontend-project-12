@@ -97,6 +97,6 @@ export const {
   selectTotal: selectTotalMessages,
 } = messagesAdapter.getSelectors(state => state.messages)
 
-export const selectMessagesStatus = (state) => state.messages.status
+export const selectMessagesStatus = state => state.messages.status
 
 export default messagesSlice.reducer
