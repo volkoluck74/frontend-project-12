@@ -13,7 +13,7 @@ const max = 20
 
 const NewChannelDialog = () => {
   const dispatch = useDispatch()
-  const { channelChangeError } = useSelector(state => state.uiState)
+  const { channelChangeError } = useSelector((state) => state.uiState)
   const channels = useSelector(selectAllChannels)
   const status = useSelector(selectChannelsStatus)
   const modalRef = useRef(null)
@@ -32,9 +32,9 @@ const NewChannelDialog = () => {
         .min(min, t('Form.Count_symbol', { min, max }))
         .max(max, t('Form.Count_symbol', { min, max }))
         .required(t('Form.Required'))
-        .test('unique-name', t('Form.Have_been_unique'), value => {
+        .test('unique-name', t('Form.Have_been_unique'), (value) => {
           if (!value) return true
-          return !channels.map(item => item.name).includes(value.trim())
+          return !channels.map((item) => item.name).includes(value.trim())
         }),
     }),
   })
@@ -45,12 +45,12 @@ const NewChannelDialog = () => {
   }
   useEffect(() => {
     inputEl.current?.focus()
-    const handleClickOutside = e => {
+    const handleClickOutside = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target) && !isDisabled) {
         closeNewChannelDialog()
       }
     }
-    const handleEscapeKey = e => {
+    const handleEscapeKey = (e) => {
       if (e.key === 'Escape' && !isDisabled) {
         closeNewChannelDialog()
       }
@@ -62,7 +62,7 @@ const NewChannelDialog = () => {
       document.removeEventListener('keydown', handleEscapeKey)
     }
   }, [closeNewChannelDialog, isDisabled])
-  const onSubmit = async e => {
+  const onSubmit = async (e) => {
     e.preventDefault()
     const errors = await formik.validateForm()
     formik.setTouched({ name: true }, false)
@@ -73,14 +73,14 @@ const NewChannelDialog = () => {
       }
       dispatch(postChannel(newChannel))
         .unwrap()
-        .then(response => {
+        .then((response) => {
           closeNewChannelDialog()
           dispatch(setChannelChangeError({ error: '' }))
           formik.resetForm()
           dispatch(changeCurrentChannel({ id: response.id }))
           showSuccess(t('Toast.Channel_created'))
         })
-        .catch(error => {
+        .catch((error) => {
           dispatch(setChannelChangeError({
             error: error.message,
           }))

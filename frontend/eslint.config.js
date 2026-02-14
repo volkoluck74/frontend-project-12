@@ -33,7 +33,7 @@ export default [
       'react-hooks/exhaustive-deps': 'warn',
 
       // Stylistic rules
-      '@stylistic/arrow-parens': ['error', 'as-needed'],
+      '@stylistic/arrow-parens': ['error', 'always'],
       '@stylistic/semi': ['error', 'never'],
       '@stylistic/quotes': ['error', 'single'],
       '@stylistic/indent': ['error', 2],

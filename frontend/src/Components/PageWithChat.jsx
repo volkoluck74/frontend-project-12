@@ -25,7 +25,7 @@ const ChatPage = () => {
   const { isAddingChannelDialogOpen,
     currentChannelId,
     isRemovingChannelDialogOpen,
-    isRenamingChannelDialogOpen } = useSelector(state => state.uiState)
+    isRenamingChannelDialogOpen } = useSelector((state) => state.uiState)
   const { showError } = useToast()
   const scrollToBottom = useCallback(() => {
     if (messagesContainerRef.current) {
@@ -36,7 +36,7 @@ const ChatPage = () => {
       })
     }
   }, [])
-  let currentChannel = channels.length > 0 ? channels.find(item => item.id === currentChannelId) : {}
+  let currentChannel = channels.length > 0 ? channels.find((item) => item.id === currentChannelId) : {}
   useEffect(() => {
     scrollToBottom()
   }, [messages, currentChannelId])
@@ -106,7 +106,7 @@ const ChatPage = () => {
                     </button>
                   </div>
                   <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
-                    {channels.map(item => !item.removable
+                    {channels.map((item) => !item.removable
                       ? <ItemChannel key={item.id} item={item} />
                       : <ItemChannelWithMenu key={item.id} item={item} />,
                     )}
@@ -127,11 +127,11 @@ const ChatPage = () => {
                         )
                         : <p className="m-0"><b>{t('Channel.Separator')}</b></p>}
                       <span className="text-muted">
-                        {t('Message', { count: messages.filter(item => item.channelId === currentChannelId).length })}
+                        {t('Message', { count: messages.filter((item) => item.channelId === currentChannelId).length })}
                       </span>
                     </div>
                     <div id="messages-box" className="chat-messages overflow-auto px-5 " ref={messagesContainerRef}>
-                      {messages.filter(item => item.channelId === currentChannelId).map(item =>
+                      {messages.filter((item) => item.channelId === currentChannelId).map((item) =>
                         <ItemMessage key={item.id} item={item} />,
                       )}
                     </div>
