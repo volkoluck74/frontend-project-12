@@ -1,45 +1,45 @@
-import { useFormik } from 'formik'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
-import { useEffect, useRef } from 'react'
-import { postMessage, selectMessagesStatus } from '../slices/messageSlice.jsx'
-import useToast from '../hooks/useToast.js'
-import leoProfanity from 'leo-profanity'
+import { useFormik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { useEffect, useRef } from 'react';
+import { postMessage, selectMessagesStatus } from '../slices/messageSlice.jsx';
+import useToast from '../hooks/useToast.js';
+import leoProfanity from 'leo-profanity';
 const ChatForm = () => {
-  const { t } = useTranslation('all')
+  const { t } = useTranslation('all');
   const formik = useFormik({
     initialValues: {
       body: '',
     },
-    onSubmit: async (values) => {
+    onSubmit: async values => {
       const newMessage = {
         body: leoProfanity.clean(values.body),
         channelId: currentChannelId,
         username: JSON.parse(localStorage.getItem('userId')).username,
-      }
+      };
       try {
-        await dispatch(postMessage(newMessage)).unwrap()
+        await dispatch(postMessage(newMessage)).unwrap();
       } catch (e) {
-        showError(t('Toast.Error_sended'))
-        throw e
+        showError(t('Toast.Error_sended'));
+        throw e;
       }
-      formik.setFieldValue('body', '')
+      formik.setFieldValue('body', '');
     },
-  })
+  });
   useEffect(() => {
-    leoProfanity.loadDictionary('ru, en')
-  }, [])
-  const dispatch = useDispatch()
-  const { showError } = useToast()
-  const { currentChannelId, isAddingChannelDialogOpen, isRenamingChannelDialogOpen } = useSelector(state => state.uiState)
-  const isAnyModalOpen = isAddingChannelDialogOpen || isRenamingChannelDialogOpen
-  const inputEl = useRef(null)
-  const status = useSelector(selectMessagesStatus)
+    leoProfanity.loadDictionary('ru, en');
+  }, []);
+  const dispatch = useDispatch();
+  const { showError } = useToast();
+  const { currentChannelId, isAddingChannelDialogOpen, isRenamingChannelDialogOpen } = useSelector(state => state.uiState);
+  const isAnyModalOpen = isAddingChannelDialogOpen || isRenamingChannelDialogOpen;
+  const inputEl = useRef(null);
+  const status = useSelector(selectMessagesStatus);
   useEffect(() => {
     if (!isAnyModalOpen && inputEl.current) {
-      inputEl.current.focus()
+      inputEl.current.focus();
     }
-  }, [isAnyModalOpen, currentChannelId, status])
+  }, [isAnyModalOpen, currentChannelId, status]);
   return (
     <form noValidate className="py-1 border rounded-2" onSubmit={formik.handleSubmit}>
       <div className="input-group has-validation">
@@ -67,7 +67,7 @@ const ChatForm = () => {
         </button>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default ChatForm
+export default ChatForm;

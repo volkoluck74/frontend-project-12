@@ -1,5 +1,5 @@
 /* global process */
-import Rollbar from 'rollbar'
+import Rollbar from 'rollbar';
 
 const rollbarConfig = {
   accessToken: 'YOUR_POST_CLIENT_ITEM_ACCESS_TOKEN',
@@ -15,7 +15,7 @@ const rollbarConfig = {
       },
     },
   },
-}
+};
 
-export const rollbar = new Rollbar(rollbarConfig)
-export default rollbar
+export const rollbar = new Rollbar(rollbarConfig);
+export default rollbar;

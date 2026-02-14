@@ -1,8 +1,8 @@
-import js from '@eslint/js'
-import stylistic from '@stylistic/eslint-plugin'
-import react from 'eslint-plugin-react'
-import reactHooks from 'eslint-plugin-react-hooks'
-import globals from 'globals'
+import js from '@eslint/js';
+import stylistic from '@stylistic/eslint-plugin';
+import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import globals from 'globals';
 
 export default [
   js.configs.recommended,
@@ -28,12 +28,9 @@ export default [
       },
     },
     rules: {
-      // React rules
       'react/no-unknown-property': 'error',
       'react-hooks/exhaustive-deps': 'warn',
-
-      // Stylistic rules
-      '@stylistic/semi': ['error', 'never'],
+      '@stylistic/semi': ['error', 'always'], // CI ожидает точки с запятой
       '@stylistic/quotes': ['error', 'single'],
       '@stylistic/indent': ['error', 2],
       '@stylistic/comma-dangle': ['error', 'always-multiline'],
@@ -41,9 +38,18 @@ export default [
       '@stylistic/no-trailing-spaces': 'error',
       '@stylistic/eol-last': ['error', 'always'],
       '@stylistic/object-curly-spacing': ['error', 'always'],
-      '@stylistic/jsx-tag-spacing': ['error', { beforeClosing: 'never' }],
+      '@stylistic/jsx-tag-spacing': ['error', {
+        closingSlash: 'never',
+        beforeSelfClosing: 'always',
+        afterOpening: 'never',
+        beforeClosing: 'never',
+      }],
       '@stylistic/quote-props': ['error', 'as-needed'],
-      '@stylistic/space-before-function-paren': ['error', 'always'],
+      '@stylistic/space-before-function-paren': ['error', {
+        anonymous: 'always',
+        named: 'never',
+        asyncArrow: 'always',
+      }],
       '@stylistic/keyword-spacing': ['error', { before: true, after: true }],
       '@stylistic/jsx-first-prop-new-line': ['error', 'multiline'],
       '@stylistic/jsx-closing-bracket-location': ['error', 'line-aligned'],
@@ -55,19 +61,18 @@ export default [
       '@stylistic/no-multi-spaces': 'error',
       '@stylistic/no-multiple-empty-lines': ['error', { max: 1 }],
       '@stylistic/padded-blocks': ['error', 'never'],
-      '@stylistic/brace-style': ['error', '1tbs'],
+      '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: false }],
       '@stylistic/arrow-spacing': ['error', { before: true, after: true }],
+      '@stylistic/arrow-parens': ['error', 'as-needed'],
       '@stylistic/jsx-wrap-multilines': ['error', {
-        declaration: 'parens',
-        assignment: 'parens',
-        return: 'parens',
-        arrow: 'parens',
-        condition: 'parens',
-        logical: 'parens',
-        prop: 'parens',
+        declaration: 'parens-new-line',
+        assignment: 'parens-new-line',
+        return: 'parens-new-line',
+        arrow: 'parens-new-line',
+        condition: 'parens-new-line',
+        logical: 'parens-new-line',
+        prop: 'parens-new-line',
       }],
-
-      // Common rules
       'no-unused-vars': ['error', {
         varsIgnorePattern: '^[A-Z_]',
         argsIgnorePattern: '^_',
@@ -91,4 +96,4 @@ export default [
       'no-undef': 'off',
     },
   },
-]
+];

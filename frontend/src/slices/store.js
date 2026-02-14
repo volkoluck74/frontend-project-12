@@ -1,9 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit'
-import authSlice from './authSlice.jsx'
-import messagesSlice from './messageSlice.jsx'
+import { configureStore } from '@reduxjs/toolkit';
+import authSlice from './authSlice.jsx';
+import messagesSlice from './messageSlice.jsx';
 //import chatsSlice from './chatSlice.jsx'
-import channelsSlice from './channelSlice.jsx'
-import uiSlice from './UIslice.jsx'
+import channelsSlice from './channelSlice.jsx';
+import uiSlice from './UIslice.jsx';
 
 export const store = configureStore({
   reducer: {
@@ -13,4 +13,4 @@ export const store = configureStore({
     messages: messagesSlice,
     uiState: uiSlice,
   },
-})
+});
