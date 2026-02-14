@@ -43,7 +43,11 @@ export default [
       '@stylistic/object-curly-spacing': ['error', 'always'],
       '@stylistic/jsx-tag-spacing': ['error', { beforeClosing: 'never' }],
       '@stylistic/quote-props': ['error', 'as-needed'],
-      '@stylistic/space-before-function-paren': ['error', 'always'],
+      '@stylistic/space-before-function-paren': ['error', {
+        anonymous: 'always',
+        named: 'never',
+        asyncArrow: 'always',
+      }],
       '@stylistic/keyword-spacing': ['error', { before: true, after: true }],
       '@stylistic/jsx-first-prop-new-line': ['error', 'multiline'],
       '@stylistic/jsx-closing-bracket-location': ['error', 'line-aligned'],

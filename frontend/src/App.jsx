@@ -12,7 +12,7 @@ const LoginOrChatPage = () => {
   )
 }
 
-function App () {
+function App() {
   return (
     <BrowserRouter>
       <Routes>
