@@ -28,11 +28,11 @@ export default [
       },
     },
     rules: {
-      // React rules
-      'react/no-unknown-property': 'error',
+      'react/no-unknown-property': ['error', { ignore: ['placement'] }],
+      'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
-
-      // Stylistic rules
+      'react/jsx-uses-react': 'error',
+      'react/jsx-uses-vars': 'error',
       '@stylistic/arrow-parens': ['error', 'always'],
       '@stylistic/semi': ['error', 'never'],
       '@stylistic/quotes': ['error', 'single'],
@@ -43,7 +43,12 @@ export default [
       '@stylistic/eol-last': ['error', 'always'],
       '@stylistic/jsx-equals-spacing': ['error', 'never'],
       '@stylistic/object-curly-spacing': ['error', 'always'],
-      '@stylistic/jsx-tag-spacing': ['error', { beforeClosing: 'never' }],
+      '@stylistic/jsx-tag-spacing': ['error', {
+        closingSlash: 'never',
+        beforeSelfClosing: 'always',
+        afterOpening: 'never',
+        beforeClosing: 'never',
+      }],
       '@stylistic/quote-props': ['error', 'as-needed'],
       '@stylistic/space-before-function-paren': ['error', {
         anonymous: 'always',
@@ -59,24 +64,39 @@ export default [
       '@stylistic/jsx-curly-newline': ['error', 'consistent'],
       '@stylistic/indent-binary-ops': ['error', 2],
       '@stylistic/no-multi-spaces': 'error',
-      '@stylistic/no-multiple-empty-lines': ['error', { max: 1 }],
+      '@stylistic/no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
       '@stylistic/padded-blocks': ['error', 'never'],
-      '@stylistic/brace-style': ['error', '1tbs'],
+      '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: false }],
       '@stylistic/arrow-spacing': ['error', { before: true, after: true }],
       '@stylistic/jsx-wrap-multilines': ['error', {
-        declaration: 'parens',
-        assignment: 'parens',
-        return: 'parens',
-        arrow: 'parens',
-        condition: 'parens',
-        logical: 'parens',
-        prop: 'parens',
+        declaration: 'parens-new-line',
+        assignment: 'parens-new-line',
+        return: 'parens-new-line',
+        arrow: 'parens-new-line',
+        condition: 'parens-new-line',
+        logical: 'parens-new-line',
+        prop: 'parens-new-line',
       }],
-
-      // Common rules
+      '@stylistic/space-infix-ops': 'error',
+      '@stylistic/key-spacing': ['error', {
+        beforeColon: false,
+        afterColon: true,
+        mode: 'strict',
+      }],
+      '@stylistic/spaced-comment': ['error', 'always', {
+        line: {
+          markers: ['/'],
+          exceptions: ['-', '+'],
+        },
+        block: {
+          markers: ['!'],
+          exceptions: ['*'],
+        },
+      }],
       'no-unused-vars': ['error', {
         varsIgnorePattern: '^[A-Z_]',
         argsIgnorePattern: '^_',
+        destructuredArrayIgnorePattern: '^_',
       }],
       'no-undef': 'error',
     },
@@ -96,5 +116,14 @@ export default [
     rules: {
       'no-undef': 'off',
     },
+  },
+  {
+    ignores: [
+      '**/dist/**',
+      '**/build/**',
+      '**/node_modules/**',
+      '**/coverage/**',
+      '**/.git/**',
+    ],
   },
 ]

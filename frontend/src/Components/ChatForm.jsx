@@ -51,13 +51,13 @@ const ChatForm = () => {
           id="body"
           value={formik.values.body}
           onChange={formik.handleChange}
-          disabled={status !=='succeeded'}
+          disabled={status !== 'succeeded'}
           ref={inputEl}
           autoFocus={!isAnyModalOpen}
         />
         <button
           type="submit"
-          disabled={formik.values.body === '' || status !=='succeeded'}
+          disabled={formik.values.body === '' || status !== 'succeeded'}
           className="btn btn-group-vertical"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor" className="bi bi-arrow-right-square">

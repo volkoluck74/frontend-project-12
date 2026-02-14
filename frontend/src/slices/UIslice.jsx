@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
-//import routes from './../routes.js'
-//import axios from 'axios'
+// import routes from './../routes.js'
+// import axios from 'axios'
 
 const uiSlice = createSlice({
   name: 'ui',
   initialState: {
     channelChangeError: '',
-    currentChannelId : '1',
+    currentChannelId: '1',
     currentRemoveChannelId: 0,
     curentRenameChannelId: 0,
     isAddingChannelDialogOpen: false,
@@ -14,7 +14,7 @@ const uiSlice = createSlice({
     isRenamingChannelDialogOpen: false,
     channelWithOpenMenuId: 0,
   },
-  reducers:{
+  reducers: {
     setChannelChangeError: (state, action) => {
       state.channelChangeError = action.payload.error
     },
