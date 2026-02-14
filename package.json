@@ -32,5 +32,14 @@
     "redux-thunk": "^3.1.0",
     "rollbar": "^2.26.5",
     "yup": "^1.7.1"
+  },
+  "devDependencies": {
+    "@eslint/create-config": "^1.11.0",
+    "@eslint/js": "^9.39.2",
+    "@stylistic/eslint-plugin": "^5.8.0",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "globals": "^17.3.0"
   }
 }

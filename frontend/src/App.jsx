@@ -1,20 +1,16 @@
-  import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import LoginPage from './Components/Login'
-import ChatPage from './Components/PageWithChat'
-import NotFoundPage from './Components/NotFound'
-import RegistrationPage from './Components/Registration.jsx'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { useSelector } from "react-redux"
-import './App.css'
-import hasToken from '../src/utils/hasToken.js'
+import LoginPage from './Components/Login';
+import ChatPage from './Components/PageWithChat';
+import NotFoundPage from './Components/NotFound';
+import RegistrationPage from './Components/Registration.jsx';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import './App.css';
+import hasToken from '../src/utils/hasToken.js';
 
 const LoginOrChatPage = () => {
   return (
     !hasToken() ? <Navigate to="login"/> : <ChatPage/>
-  )
-}
+  );
+};
 
 function App() {
   return (
@@ -27,7 +23,7 @@ function App() {
         <Route path='*' element={<NotFoundPage/>}/>
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;
