@@ -5,8 +5,6 @@ import cn from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-
-
 const ItemChannelWithMenu = (props) => {
   const { t } = useTranslation('all');
   const dispatch = useDispatch();
@@ -25,7 +23,7 @@ const ItemChannelWithMenu = (props) => {
     'dropdown-toggle-split',
     'btn', {
       'btn-secondary': isCurrentChannel,
-      'show': isChannelWithMenu,
+      show: isChannelWithMenu,
     },
   );
 
@@ -45,11 +43,11 @@ const ItemChannelWithMenu = (props) => {
   }, [dispatch]);
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (isChannelWithMenu &&
-                menuRef.current &&
-                !menuRef.current.contains(event.target) &&
-                toggleButtonRef.current &&
-                !toggleButtonRef.current.contains(event.target)) {
+      if (isChannelWithMenu
+        && menuRef.current
+        && !menuRef.current.contains(event.target)
+        && toggleButtonRef.current
+        && !toggleButtonRef.current.contains(event.target)) {
         handleMenuClear();
       }
     };

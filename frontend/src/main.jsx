@@ -27,7 +27,6 @@ const rollbarConfig = {
   },
 };
 
-
 i18n.init().then(() => {
   document.querySelector('body').classList.add('h-100', 'bg-light');
   document.querySelector('html').classList.add('h-100');

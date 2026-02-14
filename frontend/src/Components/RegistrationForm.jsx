@@ -38,7 +38,7 @@ const RegistrationForm = () => {
       confirmPassword: '',
     },
     validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async(values) => {
       try {
         const newUser = {
           username: values.username,
@@ -47,12 +47,10 @@ const RegistrationForm = () => {
         await dispatch(registration(newUser)).unwrap();
         await dispatch(login(newUser)).unwrap();
         navigate('/');
-      }
-      catch (e) {
+      } catch (e) {
         showError(t('Toast.Error_sended'));
         throw e;
       }
-
     },
   });
   useEffect(() => {
@@ -61,9 +59,9 @@ const RegistrationForm = () => {
     }
   }, [formik.values]);
 
-  const confirmPasswordError =
-    (formik.touched.confirmPassword && formik.errors.confirmPassword) ||
-        (error && status === 'failed' ? error : null);
+  const confirmPasswordError
+    = (formik.touched.confirmPassword && formik.errors.confirmPassword)
+    || (error && status === 'failed' ? error : null);
   return (
     <div className="container-fluid h-100">
       <div className="row justify-content-center align-content-center h-100">

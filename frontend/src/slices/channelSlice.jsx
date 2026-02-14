@@ -1,20 +1,18 @@
-import { createAsyncThunk, createSlice, createEntityAdapter  } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 import routes from './../routes.js';
 import axios from 'axios';
 import getAuthHeader from './../utils/getAuthHeader.js';
 
-
 export const getChannels = createAsyncThunk(
   'channels/getChannels',
-  async () => {
+  async() => {
     const token = getAuthHeader();
     try {
       const response = await axios.get(routes.channelsPath(), {
         headers: token,
       });
       return response.data;
-    }
-    catch(e) {
+    } catch (e) {
       console.log('Проверь Rollbar');
       throw new Error(e);
     }
@@ -23,15 +21,14 @@ export const getChannels = createAsyncThunk(
 
 export const postChannel = createAsyncThunk(
   'channels/postChannel',
-  async (newChannel) => {
+  async(newChannel) => {
     const token = getAuthHeader();
     try {
       const response = await axios.post(routes.channelsPath(), newChannel, {
         headers: token,
       });
       return response.data;
-    }
-    catch(e) {
+    } catch (e) {
       console.log('Проверь Rollbar');
       throw new Error(e);
     }
@@ -40,7 +37,7 @@ export const postChannel = createAsyncThunk(
 
 export const editChannel = createAsyncThunk(
   'channels/editChannel',
-  async ({ newNameChannel, id }) => {
+  async({ newNameChannel, id }) => {
     const changes = { name: newNameChannel };
     const token = getAuthHeader();
     try {
@@ -48,8 +45,7 @@ export const editChannel = createAsyncThunk(
         headers: token,
       });
       return response.data;
-    }
-    catch(e) {
+    } catch (e) {
       console.log('Проверь Rollbar');
       throw new Error(e);
     }
@@ -58,7 +54,7 @@ export const editChannel = createAsyncThunk(
 
 export const removeChannel = createAsyncThunk(
   'channels/removeChannel',
-  async (id) => {
+  async(id) => {
     const token = getAuthHeader();
     try {
       const response = await axios.delete(routes.channelsPathWithId(id), {
@@ -67,8 +63,7 @@ export const removeChannel = createAsyncThunk(
       console.log(response.data);
       console.log(routes.channelsPathWithId(id));
       return response.data;
-    }
-    catch(e) {
+    } catch (e) {
       console.log('Проверь Rollbar');
       throw new Error(e);
     }
@@ -87,7 +82,7 @@ const channelsSlice = createSlice({
   }),
   extraReducers: (builder) => {
     builder
-      .addCase(getChannels.pending, (state) =>{
+      .addCase(getChannels.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(getChannels.fulfilled, (state, action) => {
@@ -98,7 +93,7 @@ const channelsSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
-      .addCase(postChannel.pending, (state) =>{
+      .addCase(postChannel.pending, (state) => {
         console.log(state);
         state.status = 'loading';
       })
@@ -111,7 +106,7 @@ const channelsSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
-      .addCase(editChannel.pending, (state) =>{
+      .addCase(editChannel.pending, (state) => {
         console.log(state);
         state.status = 'loading';
       })
@@ -124,7 +119,7 @@ const channelsSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
-      .addCase(removeChannel.pending, (state) =>{
+      .addCase(removeChannel.pending, (state) => {
         console.log(state);
         state.status = 'loading';
       })
@@ -149,6 +144,5 @@ export const {
 } = channelAdapter.getSelectors(state => state.channels);
 
 export const selectChannelsStatus = (state) => state.channels.status;
-
 
 export default channelsSlice.reducer;

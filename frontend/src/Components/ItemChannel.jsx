@@ -9,7 +9,7 @@ const ItemChannel = (props) => {
   const changeChannel = (id) => {
     dispatch(changeCurrentChannel({ id }));
   };
-  return(
+  return (
     <li key = {props.item.id} className="nav-item w-100">
       <button type="button" className={cn} onClick = {() => changeChannel(props.item.id)}>
         <span className="me-1">#</span>

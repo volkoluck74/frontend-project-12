@@ -4,7 +4,6 @@ import { logout } from '../slices/authSlice.jsx';
 import hasToken from '../utils/hasToken.js';
 import { useTranslation } from 'react-i18next';
 
-
 const Header = () => {
   const { t } = useTranslation('all');
   const dispatch = useDispatch();

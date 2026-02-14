@@ -8,8 +8,8 @@ import { useTranslation } from 'react-i18next';
 const LoginPage = () => {
   const { t } = useTranslation('all');
   return (
-    (!hasToken())  ?
-      (
+    (!hasToken())
+      ? (
         <>
           <div className="d-flex flex-column h-100">
             <Header />
@@ -40,7 +40,5 @@ const LoginPage = () => {
       : <Navigate to="/" />
   );
 };
-
-
 
 export default LoginPage;

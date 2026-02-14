@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 //import routes from './../routes.js'
 //import axios from 'axios'
 
-
 const uiSlice = createSlice({
   name: 'ui',
   initialState: {
@@ -63,5 +62,5 @@ export const { openChannelAddingDialog,
   changeCurentRenameChannel,
   openRenamingChannelDialog,
   closeRenamingChannelDialog,
-  setChannelChangeError }  = uiSlice.actions;
+  setChannelChangeError } = uiSlice.actions;
 export default uiSlice.reducer;

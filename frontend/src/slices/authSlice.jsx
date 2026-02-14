@@ -2,17 +2,15 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import routes from './../routes.js';
 import axios from 'axios';
 
-
 export const login = createAsyncThunk(
   'auth/login',
-  async (body, { rejectWithValue }) => {
+  async(body, { rejectWithValue }) => {
     try {
       const data = await axios.post(routes.loginPath(), body);
       const token = data.data.token;
       const username = data.data.username;
       return { token, username };
-    }
-    catch (e) {
+    } catch (e) {
       console.log('Проверь Rollbar');
       return rejectWithValue(
         e.status === 401 ? 'Неверные имя пользователя или пароль' : 'Ошибка входа',
@@ -22,12 +20,11 @@ export const login = createAsyncThunk(
 );
 export const registration = createAsyncThunk(
   'auth/registration',
-  async (newUser, { rejectWithValue }) => {
+  async(newUser, { rejectWithValue }) => {
     try {
       const response = await axios.post(routes.newUserPath(), newUser);
       return response.data;
-    }
-    catch (e) {
+    } catch (e) {
       console.log('Проверь Rollbar');
       return rejectWithValue(
         e.status === 409 ? 'Такой пользователь уже существует' : 'Ошибка регистрации',
@@ -56,7 +53,7 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(login.pending, (state) =>{
+      .addCase(login.pending, (state) => {
         state.status = 'loading';
         state.error = null;
       })
@@ -70,7 +67,7 @@ const authSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload;
       })
-      .addCase(registration.pending, (state) =>{
+      .addCase(registration.pending, (state) => {
         state.status = 'loading';
         state.error = null;
       })

@@ -62,7 +62,7 @@ const NewChannelDialog = () => {
       document.removeEventListener('keydown', handleEscapeKey);
     };
   }, [closeNewChannelDialog, isDisabled]);
-  const onSubmit = async (e) => {
+  const onSubmit = async(e) => {
     e.preventDefault();
     const errors = await formik.validateForm();
     formik.setTouched({ name: true }, false);
@@ -79,7 +79,6 @@ const NewChannelDialog = () => {
           formik.resetForm();
           dispatch(changeCurrentChannel({ id: response.id }));
           showSuccess(t('Toast.Channel_created'));
-
         })
         .catch((error) => {
           dispatch(setChannelChangeError({
@@ -103,20 +102,24 @@ const NewChannelDialog = () => {
           <div className="modal-body">
             <form className="" onSubmit={onSubmit}>
               <div>
-                <input name="name"
+                <input
+                  name="name"
                   id="name"
                   className={channelChangeError === '' ? 'mb-2 form-control' : 'mb-2 form-control is-invalid'}
                   value={formik.values.name}
                   onChange={formik.handleChange}
                   ref = {inputEl}
-                  disabled = {isDisabled} />
+                  disabled = {isDisabled}
+                />
                 <label className="visually-hidden" htmlFor="name">{t('Channel.Name')}</label>
                 <div className="invalid-feedback">{channelChangeError}</div>
                 <div className="d-flex justify-content-end">
-                  <button type="button"
+                  <button
+                    type="button"
                     className="me-2 btn btn-secondary"
                     onClick={closeNewChannelDialog}
-                    disabled = {isDisabled}>
+                    disabled = {isDisabled}
+                  >
                     {t('Cancel')}
                   </button>
                   <button type="submit"className="btn btn-primary" disabled = {isDisabled}>{t('Send')}</button>
@@ -129,8 +132,5 @@ const NewChannelDialog = () => {
     </div>
   );
 };
-
-
-
 
 export default NewChannelDialog;

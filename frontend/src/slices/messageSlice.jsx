@@ -10,15 +10,14 @@ const messagesAdapter = createEntityAdapter({
 
 export const getMessages = createAsyncThunk(
   'message/getMessages',
-  async () => {
+  async() => {
     const token = getAuthHeader();
     try {
       const response = await axios.get(routes.messagesPath(), {
         headers: token,
       });
       return response.data;
-    }
-    catch (e) {
+    } catch (e) {
       console.log('Проверь Rollbar');
       throw new Error(e);
     }
@@ -27,15 +26,14 @@ export const getMessages = createAsyncThunk(
 
 export const postMessage = createAsyncThunk(
   'message/postMessage',
-  async (newMessage) => {
+  async(newMessage) => {
     const token = getAuthHeader();
     try {
       const response = await axios.post(routes.messagesPath(), newMessage, {
         headers: token,
       });
       return response.data;
-    }
-    catch (e) {
+    } catch (e) {
       console.log('Проверь Rollbar');
       throw new Error(e);
     }
@@ -86,7 +84,6 @@ const messagesSlice = createSlice({
           messagesAdapter.setAll(state, filteredMessages);
         }
       });
-
   },
 });
 

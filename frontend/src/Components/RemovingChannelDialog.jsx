@@ -11,14 +11,13 @@ const RemovingChannelDialog = () => {
   const { showSuccess, showError } = useToast();
   const { currentRemoveChannelId } = useSelector(state => state.uiState);
   const modalRef = useRef(null);
-  const deleteChannel = async () => {
+  const deleteChannel = async() => {
     try {
       await dispatch(removeChannel(currentRemoveChannelId)).unwrap();
       dispatch(closeRemovingChannelDialog());
       dispatch(changeCurrentChannel({ id: '1' }));
       showSuccess(t('Toast.Channel_deleted'));
-    }
-    catch (e) {
+    } catch (e) {
       showError(t('Toast.Error_sended'));
       throw e;
     }
@@ -30,9 +29,9 @@ const RemovingChannelDialog = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (currentRemoveChannelId !== 0 &&
-                modalRef.current &&
-                !modalRef.current.contains(event.target)) {
+      if (currentRemoveChannelId !== 0
+        && modalRef.current
+        && !modalRef.current.contains(event.target)) {
         cancelRemovingChannel();
       }
     };
@@ -52,7 +51,6 @@ const RemovingChannelDialog = () => {
       document.removeEventListener('keydown', handleEscKey);
     };
   }, [currentRemoveChannelId]);
-
 
   return (
     <div role="dialog" aria-modal="true" style = {{ display: 'block' }} className="fade modal show" tabIndex="-1">
@@ -74,8 +72,5 @@ const RemovingChannelDialog = () => {
     </div>
   );
 };
-
-
-
 
 export default RemovingChannelDialog;

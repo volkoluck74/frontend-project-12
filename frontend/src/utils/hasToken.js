@@ -1,10 +1,8 @@
-export default function hasToken () {
-  try{
+export default function hasToken() {
+  try {
     const token = JSON.parse(localStorage.getItem('userId')).token;
     return true;
-  }
-  catch {
+  } catch {
     return false;
   }
-
 }

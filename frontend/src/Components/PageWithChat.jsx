@@ -47,38 +47,34 @@ const ChatPage = () => {
   }, [dispatch]);
   useEffect(() => {
     const socket = io();
-    socket.on('newMessage', async () => {
+    socket.on('newMessage', async() => {
       try {
         await dispatch(getMessages()).unwrap();
-      }
-      catch (e) {
+      } catch (e) {
         showError(t('Toast.Error_loaded'));
         throw e;
       }
     });
-    socket.on('newChannel', async () => {
+    socket.on('newChannel', async() => {
       try {
         await dispatch(getChannels()).unwrap();
-      }
-      catch(e) {
+      } catch (e) {
         showError(t('Toast.Error_loaded'));
         throw e;
       }
     });
-    socket.on('removeChannel', async () => {
+    socket.on('removeChannel', async() => {
       try {
         await dispatch(getChannels()).unwrap();
-      }
-      catch(e) {
+      } catch (e) {
         showError(t('Toast.Error_loaded'));
         throw e;
       }
     });
-    socket.on('renameChannel', async () => {
+    socket.on('renameChannel', async() => {
       try {
         await dispatch(getChannels()).unwrap();
-      }
-      catch(e) {
+      } catch (e) {
         showError(t('Toast.Error_loaded'));
         throw e;
       }
@@ -111,19 +107,24 @@ const ChatPage = () => {
                     </button>
                   </div>
                   <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
-                    {channels.map(item => !item.removable ?
-                      <ItemChannel key={item.id} item={item} /> :
-                      <ItemChannelWithMenu key={item.id} item={item} />,
+                    {channels.map(item => !item.removable
+                      ? <ItemChannel key={item.id} item={item} />
+                      : <ItemChannelWithMenu key={item.id} item={item} />,
                     )}
                   </ul>
                 </div>
                 <div className="col p-0 h-100">
                   <div className="d-flex flex-column h-100">
                     <div className="bg-light mb-4 p-3 shadow-sm small">
-                      {currentChannel?.name !== undefined ?
-                        <p className="m-0"><b>{t('Channel.Separator')} {currentChannel.name}</b></p> :
-                        <p className="m-0"><b>{t('Channel.Separator')}</b></p>
-                      }
+                      {currentChannel?.name !== undefined
+                        ? <p className="m-0">
+                          <b>
+                            {t('Channel.Separator')}
+                            {' '}
+                            {currentChannel.name}
+                          </b>
+                        </p>
+                        : <p className="m-0"><b>{t('Channel.Separator')}</b></p>}
                       <span className="text-muted">
                         {t('Message', { count: messages.filter(item => item.channelId === currentChannelId).length })}
                       </span>
