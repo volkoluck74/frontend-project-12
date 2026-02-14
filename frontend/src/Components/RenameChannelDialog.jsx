@@ -12,7 +12,7 @@ const max = 20
 
 const RenamingChannelDialog = () => {
   const dispatch = useDispatch()
-  const { curentRenameChannelId, channelChangeError } = useSelector((state) => state.uiState)
+  const { curentRenameChannelId, channelChangeError } = useSelector(state => state.uiState)
   const channels = useSelector(selectAllChannels)
   const status = useSelector(selectChannelsStatus)
   const modalRef = useRef(null)
@@ -24,16 +24,16 @@ const RenamingChannelDialog = () => {
   const { showSuccess } = useToast()
   const formik = useFormik({
     initialValues: {
-      name: channels.find((item) => item.id === curentRenameChannelId)?.name || '',
+      name: channels.find(item => item.id === curentRenameChannelId)?.name || '',
     },
     validationSchema: Yup.object({
       name: Yup.string()
         .min(min, t('Form.Count_symbol', { min, max }))
         .max(max, t('Form.Count_symbol', { min, max }))
         .required(t('Form.Required'))
-        .test('unique-name', t('Form.Have_been_unique'), (value) => {
+        .test('unique-name', t('Form.Have_been_unique'), value => {
           if (!value) return true
-          return !channels.map((item) => item.name).includes(value.trim())
+          return !channels.map(item => item.name).includes(value.trim())
         }),
     }),
   })
@@ -49,12 +49,12 @@ const RenamingChannelDialog = () => {
   useEffect(() => {
     inputEl.current?.focus()
     inputEl.current.setSelectionRange(0, inputEl.current.value.length)
-    const handleClickOutside = (e) => {
+    const handleClickOutside = e => {
       if (modalRef.current && !modalRef.current.contains(e.target) && !isDisabled) {
         cancelRenamingChannel()
       }
     }
-    const handleEscapeKey = (e) => {
+    const handleEscapeKey = e => {
       if (e.key === 'Escape' && !isDisabled) {
         cancelRenamingChannel()
       }
@@ -66,7 +66,7 @@ const RenamingChannelDialog = () => {
       document.removeEventListener('keydown', handleEscapeKey)
     }
   }, [cancelRenamingChannel, isDisabled])
-  const onSubmit = async (e) => {
+  const onSubmit = async e => {
     e.preventDefault()
     const errors = await formik.validateForm()
     formik.setTouched({ name: true }, false)
@@ -83,7 +83,7 @@ const RenamingChannelDialog = () => {
           showSuccess(t('Toast.Channel_renamed'))
           formik.resetForm()
         })
-        .catch((error) => {
+        .catch(error => {
           dispatch(setChannelChangeError({
             error: error.message,
           }))

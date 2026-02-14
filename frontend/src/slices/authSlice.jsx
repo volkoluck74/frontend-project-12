@@ -42,18 +42,18 @@ const authSlice = createSlice({
     error: null,
   },
   reducers: {
-    logout: (state) => {
+    logout: state => {
       state.username = null
       state.token = null
       localStorage.removeItem('userId')
     },
-    clearError: (state) => {
+    clearError: state => {
       state.error = null
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(login.pending, (state) => {
+      .addCase(login.pending, state => {
         state.status = 'loading'
         state.error = null
       })
@@ -67,11 +67,11 @@ const authSlice = createSlice({
         state.status = 'failed'
         state.error = action.payload
       })
-      .addCase(registration.pending, (state) => {
+      .addCase(registration.pending, state => {
         state.status = 'loading'
         state.error = null
       })
-      .addCase(registration.fulfilled, (state) => {
+      .addCase(registration.fulfilled, state => {
         state.status = 'succeeded'
         state.error = null
       })

@@ -11,7 +11,7 @@ const ChatForm = () => {
     initialValues: {
       body: '',
     },
-    onSubmit: async (values) => {
+    onSubmit: async values => {
       const newMessage = {
         body: leoProfanity.clean(values.body),
         channelId: currentChannelId,
@@ -31,7 +31,7 @@ const ChatForm = () => {
   }, [])
   const dispatch = useDispatch()
   const { showError } = useToast()
-  const { currentChannelId, isAddingChannelDialogOpen, isRenamingChannelDialogOpen } = useSelector((state) => state.uiState)
+  const { currentChannelId, isAddingChannelDialogOpen, isRenamingChannelDialogOpen } = useSelector(state => state.uiState)
   const isAnyModalOpen = isAddingChannelDialogOpen || isRenamingChannelDialogOpen
   const inputEl = useRef(null)
   const status = useSelector(selectMessagesStatus)

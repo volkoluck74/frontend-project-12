@@ -9,7 +9,7 @@ const RemovingChannelDialog = () => {
   const { t } = useTranslation('all')
   const dispatch = useDispatch()
   const { showSuccess, showError } = useToast()
-  const { currentRemoveChannelId } = useSelector((state) => state.uiState)
+  const { currentRemoveChannelId } = useSelector(state => state.uiState)
   const modalRef = useRef(null)
   const deleteChannel = async () => {
     try {
@@ -28,7 +28,7 @@ const RemovingChannelDialog = () => {
   }
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = event => {
       if (currentRemoveChannelId !== 0
         && modalRef.current
         && !modalRef.current.contains(event.target)) {
@@ -41,7 +41,7 @@ const RemovingChannelDialog = () => {
     }
   }, [currentRemoveChannelId])
   useEffect(() => {
-    const handleEscKey = (event) => {
+    const handleEscKey = event => {
       if (event.key === 'Escape' && currentRemoveChannelId !== 0) {
         cancelRemovingChannel()
       }

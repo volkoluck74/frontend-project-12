@@ -27,25 +27,25 @@ const uiSlice = createSlice({
     changeCurentRenameChannel: (state, action) => {
       state.curentRenameChannelId = action.payload.id
     },
-    openChannelAddingDialog: (state) => {
+    openChannelAddingDialog: state => {
       state.isAddingChannelDialogOpen = true
     },
-    closeChannelAddingDialog: (state) => {
+    closeChannelAddingDialog: state => {
       state.isAddingChannelDialogOpen = false
     },
     changeChannelWithOpenMenu: (state, action) => {
       state.channelWithOpenMenuId = action.payload.id
     },
-    openRemovingChannelDialog: (state) => {
+    openRemovingChannelDialog: state => {
       state.isRemovingChannelDialogOpen = true
     },
-    closeRemovingChannelDialog: (state) => {
+    closeRemovingChannelDialog: state => {
       state.isRemovingChannelDialogOpen = false
     },
-    openRenamingChannelDialog: (state) => {
+    openRenamingChannelDialog: state => {
       state.isRenamingChannelDialogOpen = true
     },
-    closeRenamingChannelDialog: (state) => {
+    closeRenamingChannelDialog: state => {
       state.isRenamingChannelDialogOpen = false
     },
 

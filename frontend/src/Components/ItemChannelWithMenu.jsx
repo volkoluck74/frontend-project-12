@@ -5,10 +5,10 @@ import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
-const ItemChannelWithMenu = (props) => {
+const ItemChannelWithMenu = props => {
   const { t } = useTranslation('all')
   const dispatch = useDispatch()
-  const { channelWithOpenMenuId, currentChannelId } = useSelector((state) => state.uiState)
+  const { channelWithOpenMenuId, currentChannelId } = useSelector(state => state.uiState)
   const isCurrentChannel = props.item.id === currentChannelId
   const isChannelWithMenu = props.item.id === channelWithOpenMenuId
   const menuRef = useRef(null)
@@ -42,7 +42,7 @@ const ItemChannelWithMenu = (props) => {
     dispatch(changeChannelWithOpenMenu({ id: 0 }))
   }, [dispatch])
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = event => {
       if (isChannelWithMenu
         && menuRef.current
         && !menuRef.current.contains(event.target)
@@ -61,7 +61,7 @@ const ItemChannelWithMenu = (props) => {
     }
   }, [isChannelWithMenu, handleMenuClear])
 
-  const deleteChannel = (e) => {
+  const deleteChannel = e => {
     e.preventDefault()
     e.stopPropagation()
     dispatch(changeCurrentRemoveChannel({ id: props.item.id }))
@@ -69,7 +69,7 @@ const ItemChannelWithMenu = (props) => {
     handleMenuClear()
   }
 
-  const renameChannel = (e) => {
+  const renameChannel = e => {
     e.preventDefault()
     e.stopPropagation()
     dispatch(changeCurentRenameChannel({ id: props.item.id }))

@@ -16,7 +16,7 @@ const RegistrationForm = () => {
   const { showError } = useToast()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { error, status } = useSelector((state) => state.auth)
+  const { error, status } = useSelector(state => state.auth)
 
   const validationSchema = Yup.object({
     username: Yup.string()
@@ -38,7 +38,7 @@ const RegistrationForm = () => {
       confirmPassword: '',
     },
     validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async values => {
       try {
         const newUser = {
           username: values.username,
