@@ -19,7 +19,8 @@ const ChatForm = () => {
       }
       try {
         await dispatch(postMessage(newMessage)).unwrap()
-      } catch (e) {
+      } 
+      catch (e) {
         showError(t('Toast.Error_sended'))
         throw e
       }
@@ -31,7 +32,7 @@ const ChatForm = () => {
   }, [])
   const dispatch = useDispatch()
   const { showError } = useToast()
-  const { currentChannelId, isAddingChannelDialogOpen, isRenamingChannelDialogOpen } = useSelector((state) => state.uiState)
+  const { currentChannelId, isAddingChannelDialogOpen, isRenamingChannelDialogOpen } = useSelector(state => state.uiState)
   const isAnyModalOpen = isAddingChannelDialogOpen || isRenamingChannelDialogOpen
   const inputEl = useRef(null)
   const status = useSelector(selectMessagesStatus)

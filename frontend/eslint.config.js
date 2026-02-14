@@ -79,7 +79,7 @@ export default [
       '@stylistic/no-multi-spaces': 'error',
       '@stylistic/no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0, maxBOF: 0 }],
       '@stylistic/padded-blocks': ['error', 'never'],
-      '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: true }],
+      '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: false }],
       '@stylistic/arrow-spacing': ['error', { before: true, after: true }],
       '@stylistic/jsx-wrap-multilines': ['error', {
         declaration: 'parens-new-line',

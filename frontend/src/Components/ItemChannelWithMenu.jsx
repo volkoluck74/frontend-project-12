@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 const ItemChannelWithMenu = (props) => {
   const { t } = useTranslation('all')
   const dispatch = useDispatch()
-  const { channelWithOpenMenuId, currentChannelId } = useSelector((state) => state.uiState)
+  const { channelWithOpenMenuId, currentChannelId } = useSelector(state => state.uiState)
   const isCurrentChannel = props.item.id === currentChannelId
   const isChannelWithMenu = props.item.id === channelWithOpenMenuId
   const menuRef = useRef(null)
@@ -23,7 +23,7 @@ const ItemChannelWithMenu = (props) => {
     'dropdown-toggle-split',
     'btn', {
       'btn-secondary': isCurrentChannel,
-      show: isChannelWithMenu,
+      'show': isChannelWithMenu,
     },
   )
 
