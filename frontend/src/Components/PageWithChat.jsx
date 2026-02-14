@@ -117,13 +117,13 @@ const ChatPage = () => {
                   <div className="d-flex flex-column h-100">
                     <div className="bg-light mb-4 p-3 shadow-sm small">
                       {currentChannel?.name !== undefined
-                        ? <p className="m-0">
+                        ? (<p className="m-0">
                           <b>
                             {t('Channel.Separator')}
                             {' '}
                             {currentChannel.name}
                           </b>
-                        </p>
+                        </p>)
                         : <p className="m-0"><b>{t('Channel.Separator')}</b></p>}
                       <span className="text-muted">
                         {t('Message', { count: messages.filter(item => item.channelId === currentChannelId).length })}

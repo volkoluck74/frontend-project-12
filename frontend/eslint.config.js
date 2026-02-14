@@ -28,8 +28,11 @@ export default [
       },
     },
     rules: {
+      // React rules
       'react/no-unknown-property': 'error',
       'react-hooks/exhaustive-deps': 'warn',
+
+      // Stylistic rules
       '@stylistic/semi': ['error', 'always'],
       '@stylistic/quotes': ['error', 'single'],
       '@stylistic/indent': ['error', 2],
@@ -54,7 +57,21 @@ export default [
       '@stylistic/padded-blocks': ['error', 'never'],
       '@stylistic/brace-style': ['error', '1tbs'],
       '@stylistic/arrow-spacing': ['error', { before: true, after: true }],
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      '@stylistic/jsx-wrap-multilines': ['error', {
+        declaration: 'parens',
+        assignment: 'parens',
+        return: 'parens',
+        arrow: 'parens',
+        condition: 'parens',
+        logical: 'parens',
+        prop: 'parens',
+      }],
+
+      // Common rules
+      'no-unused-vars': ['error', {
+        varsIgnorePattern: '^[A-Z_]',
+        argsIgnorePattern: '^_',
+      }],
       'no-undef': 'error',
     },
     settings: {
