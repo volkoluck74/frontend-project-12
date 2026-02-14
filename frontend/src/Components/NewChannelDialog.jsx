@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { postChannel, selectAllChannels, selectChannelsStatus } from '../slices/channelSlice.jsx'
 import { changeCurrentChannel, closeChannelAddingDialog, setChannelChangeError } from '../slices/UIslice.jsx'
-import * as Yup from 'yup'
+import { validationSchemaChannelDialog } from './../utils/validationSchema.js'
 import useToast from '../hooks/useToast.js'
 import leoProfanity from 'leo-profanity'
 
@@ -27,16 +27,7 @@ const NewChannelDialog = () => {
     initialValues: {
       name: '',
     },
-    validationSchema: Yup.object({
-      name: Yup.string()
-        .min(min, t('Form.Count_symbol', { min, max }))
-        .max(max, t('Form.Count_symbol', { min, max }))
-        .required(t('Form.Required'))
-        .test('unique-name', t('Form.Have_been_unique'), (value) => {
-          if (!value) return true
-          return !channels.map(item => item.name).includes(value.trim())
-        }),
-    }),
+    validationSchema: validationSchemaChannelDialog(min, max, channels, t),
   })
   const isDisabled = status === 'loading' || formik.isSubmitting
   const closeNewChannelDialog = () => {

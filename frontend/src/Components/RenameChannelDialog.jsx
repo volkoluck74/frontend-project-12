@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useRef, useCallback } from 'react'
 import { editChannel, selectAllChannels, selectChannelsStatus } from '../slices/channelSlice.jsx'
 import { changeCurentRenameChannel, closeRenamingChannelDialog, setChannelChangeError } from '../slices/UIslice.jsx'
-import * as Yup from 'yup'
 import useToast from '../hooks/useToast.js'
 import leoProfanity from 'leo-profanity'
+import { validationSchemaChannelDialog } from './../utils/validationSchema.js'
 const min = 3
 const max = 20
 
@@ -26,16 +26,7 @@ const RenamingChannelDialog = () => {
     initialValues: {
       name: channels.find(item => item.id === curentRenameChannelId)?.name || '',
     },
-    validationSchema: Yup.object({
-      name: Yup.string()
-        .min(min, t('Form.Count_symbol', { min, max }))
-        .max(max, t('Form.Count_symbol', { min, max }))
-        .required(t('Form.Required'))
-        .test('unique-name', t('Form.Have_been_unique'), (value) => {
-          if (!value) return true
-          return !channels.map(item => item.name).includes(value.trim())
-        }),
-    }),
+    validationSchema: validationSchemaChannelDialog(min, max, channels, t),
   })
   const isDisabled = status === 'loading' || formik.isSubmitting
   const cancelRenamingChannel = useCallback(() => {
