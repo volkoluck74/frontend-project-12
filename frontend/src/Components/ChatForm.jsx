@@ -5,37 +5,48 @@ import { useEffect, useRef } from 'react'
 import { postMessage, selectMessagesStatus } from '../slices/messageSlice.jsx'
 import useToast from '../hooks/useToast.js'
 import leoProfanity from 'leo-profanity'
+import createSubmitHandler from './../utils/createSubmitHandler.js'
 const ChatForm = () => {
   const { t } = useTranslation('all')
-  const formik = useFormik({
-    initialValues: {
-      body: '',
-    },
-    onSubmit: async (values) => {
-      const newMessage = {
-        body: leoProfanity.clean(values.body),
-        channelId: currentChannelId,
-        username: JSON.parse(localStorage.getItem('userId')).username,
-      }
-      try {
-        await dispatch(postMessage(newMessage)).unwrap()
-      }
-      catch (e) {
-        showError(t('Toast.Error_sended'))
-        throw e
-      }
-      formik.setFieldValue('body', '')
-    },
-  })
-  useEffect(() => {
-    leoProfanity.loadDictionary('ru, en')
-  }, [])
   const dispatch = useDispatch()
   const { showError } = useToast()
   const { currentChannelId, isAddingChannelDialogOpen, isRenamingChannelDialogOpen } = useSelector(state => state.uiState)
   const isAnyModalOpen = isAddingChannelDialogOpen || isRenamingChannelDialogOpen
   const inputEl = useRef(null)
   const status = useSelector(selectMessagesStatus)
+  useEffect(() => {
+    leoProfanity.loadDictionary('ru, en')
+  }, [])
+  const handleSubmit = createSubmitHandler({
+    dispatch,
+    actions: [
+      {
+        action: postMessage,
+        transform: (data) => ({
+          body: leoProfanity.clean(data.body),
+          channelId: currentChannelId,
+          username: JSON.parse(localStorage.getItem('userId')).username,
+        }),
+      },
+    ],
+    showError,
+    t,
+    transformData: (values) => ({
+      body: values.body,
+    }),
+    shouldReset: true,
+    onSuccess: (_, formikHelpers) => {
+      formikHelpers.setFieldValue('body', '')
+    },
+    errorMessage: 'Toast.Error_sended',
+  })
+  const formik = useFormik({
+    initialValues: {
+      body: '',
+    },
+    onSubmit: handleSubmit,
+  })
+
   useEffect(() => {
     if (!isAnyModalOpen && inputEl.current) {
       inputEl.current.focus()

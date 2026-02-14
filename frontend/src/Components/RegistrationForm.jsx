@@ -7,6 +7,7 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import useToast from '../hooks/useToast.js'
 import { validationSchemaRegistration } from './../utils/validationSchema.js'
+import createSubmitHandler from './../utils/createSubmitHandler.js'
 const min = 3
 const max = 20
 const minPassword = 6
@@ -17,9 +18,30 @@ const RegistrationForm = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { error, status } = useSelector(state => state.auth)
-
   const validationSchema = validationSchemaRegistration(min, max, minPassword, t)
-
+  const handlerSubmit = createSubmitHandler({
+    dispatch,
+    actions: [
+      {
+        action: registration,
+        transform: (data) => ({
+          username: data.username,
+          password: data.password,
+        }),
+      },
+      {
+        action: login,
+        transform: (data) => ({
+          username: data.username,
+          password: data.password,
+        }),
+      },
+    ],
+    showError,
+    t,
+    onSuccess: () => navigate('/'),
+    errorMessage: 'Toast.Error_sended',
+  })
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -27,29 +49,14 @@ const RegistrationForm = () => {
       confirmPassword: '',
     },
     validationSchema,
-    onSubmit: async (values) => {
-      try {
-        const newUser = {
-          username: values.username,
-          password: values.password,
-        }
-        await dispatch(registration(newUser)).unwrap()
-        await dispatch(login(newUser)).unwrap()
-        navigate('/')
-      }
-      catch (e) {
-        showError(t('Toast.Error_sended'))
-        throw e
-      }
-    },
+    onSubmit: handlerSubmit,
   })
+  const confirmPasswordError = (formik.touched.confirmPassword && formik.errors.confirmPassword) || (error && status === 'failed' ? error : null)
   useEffect(() => {
     if (error) {
       dispatch(clearError())
     }
   }, [formik.values])
-
-  const confirmPasswordError = (formik.touched.confirmPassword && formik.errors.confirmPassword) || (error && status === 'failed' ? error : null)
   return (
     <div className="container-fluid h-100">
       <div className="row justify-content-center align-content-center h-100">

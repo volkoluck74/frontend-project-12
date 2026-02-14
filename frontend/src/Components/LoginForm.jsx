@@ -4,29 +4,34 @@ import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../slices/authSlice.jsx'
 import { useTranslation } from 'react-i18next'
 import useToast from '../hooks/useToast.js'
+import createSubmitHandler from './../utils/createSubmitHandler.js'
 
 const LoginForm = () => {
   const { error, status } = useSelector(state => state.auth)
   const { t } = useTranslation('all')
   const dispatch = useDispatch()
   const { showError } = useToast()
+  const navigate = useNavigate()
+  const handleSubmit = createSubmitHandler({
+    dispatch,
+    actions: [
+      {
+        action: login,
+      },
+    ],
+    showError,
+    t,
+    onSuccess: () => navigate('/'),
+    errorMessage: 'Toast.Error_sended',
+  })
+
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
-    onSubmit: async (values) => {
-      try {
-        await dispatch(login(values)).unwrap()
-        navigate('/')
-      }
-      catch (e) {
-        showError(t('Toast.Error_sended'))
-        throw e
-      }
-    },
+    onSubmit: handleSubmit,
   })
-  const navigate = useNavigate()
 
   return (
     <form className="col-12 col-md-6 mt-3 mt-md-0" onSubmit={formik.handleSubmit}>
