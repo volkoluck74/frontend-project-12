@@ -1,11 +1,11 @@
 import { changeCurrentChannel } from '../slices/UIslice.jsx'
 import { useDispatch, useSelector } from 'react-redux'
 
-const ItemChannel = props => {
+const ItemChannel = (props) => {
   const dispatch = useDispatch()
-  const { currentChannelId } = useSelector(state => state.uiState)
+  const { currentChannelId } = useSelector((state) => state.uiState)
   const cn = `w-100 rounded-0 text-start btn ${props.item.id === currentChannelId ? 'btn-secondary' : ''}`
-  const changeChannel = id => {
+  const changeChannel = (id) => {
     dispatch(changeCurrentChannel({ id }))
   }
   return (

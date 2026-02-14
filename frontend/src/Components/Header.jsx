@@ -8,7 +8,7 @@ const Header = () => {
   const { t } = useTranslation('all')
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const onSubmitLogout = e => {
+  const onSubmitLogout = (e) => {
     e.preventDefault()
     dispatch(logout())
     navigate('/login')

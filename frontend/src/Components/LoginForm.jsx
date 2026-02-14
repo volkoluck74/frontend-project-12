@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import useToast from '../hooks/useToast.js'
 
 const LoginForm = () => {
-  const { error, status } = useSelector(state => state.auth)
+  const { error, status } = useSelector((state) => state.auth)
   const { t } = useTranslation('all')
   const dispatch = useDispatch()
   const { showError } = useToast()
@@ -15,7 +15,7 @@ const LoginForm = () => {
       username: '',
       password: '',
     },
-    onSubmit: async values => {
+    onSubmit: async (values) => {
       try {
         await dispatch(login(values)).unwrap()
         navigate('/')

@@ -1,10 +1,10 @@
 import { toast } from 'react-toastify'
 
 const useToast = () => {
-  const showSuccess = message => {
+  const showSuccess = (message) => {
     toast.success(message)
   }
-  const showError = message => {
+  const showError = (message) => {
     toast.error(message)
   }
   return { showSuccess, showError }
