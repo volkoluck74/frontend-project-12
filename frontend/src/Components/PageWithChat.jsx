@@ -41,11 +41,9 @@ const ChatPage = () => {
     scrollToBottom()
   }, [messages, currentChannelId])
   useEffect(() => {
+    const socket = io()
     dispatch(getMessages())
     dispatch(getChannels())
-  }, [dispatch])
-  useEffect(() => {
-    const socket = io()
     socket.on('newMessage', async () => {
       try {
         await dispatch(getMessages()).unwrap()
