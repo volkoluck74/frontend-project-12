@@ -1,16 +1,16 @@
-function hasToken() {
+function hasToken () {
   try {
-    const token = JSON.parse(localStorage.getItem('userId')).token;
-    return true;
+    const token = JSON.parse(localStorage.getItem('userId')).token
+    return true
   } catch {
-    return false;
+    return false
   }
 }
 
-export default function getAuthHeader() {
+export default function getAuthHeader () {
   if (hasToken()) {
-    const token = JSON.parse(localStorage.getItem('userId')).token;
-    return { Authorization: `Bearer ${token}` };
+    const token = JSON.parse(localStorage.getItem('userId')).token
+    return { Authorization: `Bearer ${token}` }
   }
-  return {};
+  return {}
 }

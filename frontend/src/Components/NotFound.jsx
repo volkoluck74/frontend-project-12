@@ -1,9 +1,9 @@
-import image404 from './../assets/404-D_FLHmTM.svg';
-import Header from './Header.jsx';
-import { useTranslation } from 'react-i18next';
+import image404 from './../assets/404-D_FLHmTM.svg'
+import Header from './Header.jsx'
+import { useTranslation } from 'react-i18next'
 
 const NotFoundPage = () => {
-  const { t } = useTranslation('all');
+  const { t } = useTranslation('all')
   return (
     <>
       <div className="h-100" id="chat">
@@ -21,7 +21,7 @@ const NotFoundPage = () => {
         <div className="Toastify"></div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default NotFoundPage;
+export default NotFoundPage

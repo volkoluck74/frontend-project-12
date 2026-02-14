@@ -1,22 +1,22 @@
-import registrationIMG from './../assets/registration.jpg';
-import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { registration, clearError, login } from '../slices/authSlice.jsx';
-import { useEffect } from 'react';
-import * as Yup from 'yup';
-import { useTranslation } from 'react-i18next';
-import useToast from '../hooks/useToast.js';
-const min = 3;
-const max = 20;
-const minPassword = 6;
+import registrationIMG from './../assets/registration.jpg'
+import { useFormik } from 'formik'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { registration, clearError, login } from '../slices/authSlice.jsx'
+import { useEffect } from 'react'
+import * as Yup from 'yup'
+import { useTranslation } from 'react-i18next'
+import useToast from '../hooks/useToast.js'
+const min = 3
+const max = 20
+const minPassword = 6
 
 const RegistrationForm = () => {
-  const { t } = useTranslation('all');
-  const { showError } = useToast();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { error, status } = useSelector(state => state.auth);
+  const { t } = useTranslation('all')
+  const { showError } = useToast()
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { error, status } = useSelector(state => state.auth)
 
   const validationSchema = Yup.object({
     username: Yup.string()
@@ -29,7 +29,7 @@ const RegistrationForm = () => {
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), null], t('Form.Passwords_have_been_match'))
       .required(t('Form.Required')),
-  });
+  })
 
   const formik = useFormik({
     initialValues: {
@@ -43,25 +43,25 @@ const RegistrationForm = () => {
         const newUser = {
           username: values.username,
           password: values.password,
-        };
-        await dispatch(registration(newUser)).unwrap();
-        await dispatch(login(newUser)).unwrap();
-        navigate('/');
+        }
+        await dispatch(registration(newUser)).unwrap()
+        await dispatch(login(newUser)).unwrap()
+        navigate('/')
       } catch (e) {
-        showError(t('Toast.Error_sended'));
-        throw e;
+        showError(t('Toast.Error_sended'))
+        throw e
       }
     },
-  });
+  })
   useEffect(() => {
     if (error) {
-      dispatch(clearError());
+      dispatch(clearError())
     }
-  }, [formik.values]);
+  }, [formik.values])
 
   const confirmPasswordError
     = (formik.touched.confirmPassword && formik.errors.confirmPassword)
-    || (error && status === 'failed' ? error : null);
+    || (error && status === 'failed' ? error : null)
   return (
     <div className="container-fluid h-100">
       <div className="row justify-content-center align-content-center h-100">
@@ -151,7 +151,7 @@ const RegistrationForm = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default RegistrationForm;
+export default RegistrationForm

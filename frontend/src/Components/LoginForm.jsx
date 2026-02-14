@@ -1,15 +1,15 @@
-import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../slices/authSlice.jsx';
-import { useTranslation } from 'react-i18next';
-import useToast from '../hooks/useToast.js';
+import { useFormik } from 'formik'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { login } from '../slices/authSlice.jsx'
+import { useTranslation } from 'react-i18next'
+import useToast from '../hooks/useToast.js'
 
 const LoginForm = () => {
-  const { error, status } = useSelector(state => state.auth);
-  const { t } = useTranslation('all');
-  const dispatch = useDispatch();
-  const { showError } = useToast();
+  const { error, status } = useSelector(state => state.auth)
+  const { t } = useTranslation('all')
+  const dispatch = useDispatch()
+  const { showError } = useToast()
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -17,15 +17,15 @@ const LoginForm = () => {
     },
     onSubmit: async values => {
       try {
-        await dispatch(login(values)).unwrap();
-        navigate('/');
+        await dispatch(login(values)).unwrap()
+        navigate('/')
       } catch (e) {
-        showError(t('Toast.Error_sended'));
-        throw e;
+        showError(t('Toast.Error_sended'))
+        throw e
       }
     },
-  });
-  const navigate = useNavigate();
+  })
+  const navigate = useNavigate()
 
   return (
     <form className="col-12 col-md-6 mt-3 mt-md-0" onSubmit={formik.handleSubmit}>
@@ -62,7 +62,7 @@ const LoginForm = () => {
       </div>
       <button type="submit" className="w-100 mb-3 btn btn-outline-primary">{t('Enter')}</button>
     </form>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm

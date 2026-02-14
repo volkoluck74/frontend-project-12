@@ -1,91 +1,91 @@
-import { useEffect, useRef, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getChannels, selectAllChannels } from '../slices/channelSlice.jsx';
-import { openChannelAddingDialog } from '../slices/UIslice.jsx';
-import ItemChannel from './ItemChannel.jsx';
-import ItemChannelWithMenu from './ItemChannelWithMenu.jsx';
-import NewChannelDialog from './NewChannelDialog.jsx';
-import ItemMessage from './ItemMessage.jsx';
-import ChatForm from './ChatForm.jsx';
-import RemovingChannelDialog from './RemovingChannelDialog.jsx';
-import RenamingChannelDialog from './RenameChannelDialog.jsx';
-import { io } from 'socket.io-client';
-import { getMessages, selectAllMessages } from '../slices/messageSlice.jsx';
-import Header from './Header.jsx';
-import { useTranslation } from 'react-i18next';
-import useToast from '../hooks/useToast.js';
+import { useEffect, useRef, useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getChannels, selectAllChannels } from '../slices/channelSlice.jsx'
+import { openChannelAddingDialog } from '../slices/UIslice.jsx'
+import ItemChannel from './ItemChannel.jsx'
+import ItemChannelWithMenu from './ItemChannelWithMenu.jsx'
+import NewChannelDialog from './NewChannelDialog.jsx'
+import ItemMessage from './ItemMessage.jsx'
+import ChatForm from './ChatForm.jsx'
+import RemovingChannelDialog from './RemovingChannelDialog.jsx'
+import RenamingChannelDialog from './RenameChannelDialog.jsx'
+import { io } from 'socket.io-client'
+import { getMessages, selectAllMessages } from '../slices/messageSlice.jsx'
+import Header from './Header.jsx'
+import { useTranslation } from 'react-i18next'
+import useToast from '../hooks/useToast.js'
 
 const ChatPage = () => {
-  const { t } = useTranslation('all');
-  const messagesEndRef = useRef(null);
-  const messagesContainerRef = useRef(null);
-  const dispatch = useDispatch();
-  const channels = useSelector(selectAllChannels);
-  const messages = useSelector(selectAllMessages);
+  const { t } = useTranslation('all')
+  const messagesEndRef = useRef(null)
+  const messagesContainerRef = useRef(null)
+  const dispatch = useDispatch()
+  const channels = useSelector(selectAllChannels)
+  const messages = useSelector(selectAllMessages)
   const { isAddingChannelDialogOpen,
     currentChannelId,
     isRemovingChannelDialogOpen,
-    isRenamingChannelDialogOpen } = useSelector(state => state.uiState);
-  const { showError } = useToast();
+    isRenamingChannelDialogOpen } = useSelector(state => state.uiState)
+  const { showError } = useToast()
   const scrollToBottom = useCallback(() => {
     if (messagesContainerRef.current) {
-      const { scrollHeight, clientHeight } = messagesContainerRef.current;
+      const { scrollHeight, clientHeight } = messagesContainerRef.current
       messagesContainerRef.current.scrollTo({
         top: scrollHeight - clientHeight,
         behavior: 'smooth',
-      });
+      })
     }
-  }, []);
-  let currentChannel = channels.length > 0 ? channels.find(item => item.id === currentChannelId) : {};
+  }, [])
+  let currentChannel = channels.length > 0 ? channels.find(item => item.id === currentChannelId) : {}
   useEffect(() => {
-    scrollToBottom();
-  }, [messages, currentChannelId]);
+    scrollToBottom()
+  }, [messages, currentChannelId])
   useEffect(() => {
-    dispatch(getMessages());
-    dispatch(getChannels());
-  }, [dispatch]);
+    dispatch(getMessages())
+    dispatch(getChannels())
+  }, [dispatch])
   useEffect(() => {
-    const socket = io();
+    const socket = io()
     socket.on('newMessage', async () => {
       try {
-        await dispatch(getMessages()).unwrap();
+        await dispatch(getMessages()).unwrap()
       } catch (e) {
-        showError(t('Toast.Error_loaded'));
-        throw e;
+        showError(t('Toast.Error_loaded'))
+        throw e
       }
-    });
+    })
     socket.on('newChannel', async () => {
       try {
-        await dispatch(getChannels()).unwrap();
+        await dispatch(getChannels()).unwrap()
       } catch (e) {
-        showError(t('Toast.Error_loaded'));
-        throw e;
+        showError(t('Toast.Error_loaded'))
+        throw e
       }
-    });
+    })
     socket.on('removeChannel', async () => {
       try {
-        await dispatch(getChannels()).unwrap();
+        await dispatch(getChannels()).unwrap()
       } catch (e) {
-        showError(t('Toast.Error_loaded'));
-        throw e;
+        showError(t('Toast.Error_loaded'))
+        throw e
       }
-    });
+    })
     socket.on('renameChannel', async () => {
       try {
-        await dispatch(getChannels()).unwrap();
+        await dispatch(getChannels()).unwrap()
       } catch (e) {
-        showError(t('Toast.Error_loaded'));
-        throw e;
+        showError(t('Toast.Error_loaded'))
+        throw e
       }
-    });
+    })
     return () => {
-      socket.disconnect();
-    };
-  }, [dispatch]);
+      socket.disconnect()
+    }
+  }, [dispatch])
 
   const addNewChannel = () => {
-    dispatch(openChannelAddingDialog());
-  };
+    dispatch(openChannelAddingDialog())
+  }
   return (
     <>
       <div className="h-100">
@@ -152,7 +152,7 @@ const ChatPage = () => {
       {isRemovingChannelDialogOpen && <RemovingChannelDialog />}
       {isRenamingChannelDialogOpen && <RenamingChannelDialog />}
     </>
-  );
-};
+  )
+}
 
-export default ChatPage;
+export default ChatPage

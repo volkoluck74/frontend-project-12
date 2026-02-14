@@ -1,5 +1,5 @@
-import RegistrationForm from './RegistrationForm.jsx';
-import Header from './Header.jsx';
+import RegistrationForm from './RegistrationForm.jsx'
+import Header from './Header.jsx'
 
 const RegistrationPage = () => {
   return (
@@ -9,7 +9,7 @@ const RegistrationPage = () => {
         <RegistrationForm />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default RegistrationPage;
+export default RegistrationPage

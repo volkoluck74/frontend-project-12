@@ -1,28 +1,28 @@
-import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
-import { postChannel, selectAllChannels, selectChannelsStatus } from '../slices/channelSlice.jsx';
-import { changeCurrentChannel, closeChannelAddingDialog, setChannelChangeError } from '../slices/UIslice.jsx';
-import * as Yup from 'yup';
-import useToast from '../hooks/useToast.js';
-import leoProfanity from 'leo-profanity';
+import { useFormik } from 'formik'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { postChannel, selectAllChannels, selectChannelsStatus } from '../slices/channelSlice.jsx'
+import { changeCurrentChannel, closeChannelAddingDialog, setChannelChangeError } from '../slices/UIslice.jsx'
+import * as Yup from 'yup'
+import useToast from '../hooks/useToast.js'
+import leoProfanity from 'leo-profanity'
 
-const min = 3;
-const max = 20;
+const min = 3
+const max = 20
 
 const NewChannelDialog = () => {
-  const dispatch = useDispatch();
-  const { channelChangeError } = useSelector(state => state.uiState);
-  const channels = useSelector(selectAllChannels);
-  const status = useSelector(selectChannelsStatus);
-  const modalRef = useRef(null);
-  const inputEl = useRef(null);
-  const { t } = useTranslation('all');
-  const { showSuccess, showError } = useToast();
+  const dispatch = useDispatch()
+  const { channelChangeError } = useSelector(state => state.uiState)
+  const channels = useSelector(selectAllChannels)
+  const status = useSelector(selectChannelsStatus)
+  const modalRef = useRef(null)
+  const inputEl = useRef(null)
+  const { t } = useTranslation('all')
+  const { showSuccess, showError } = useToast()
   useEffect(() => {
-    leoProfanity.loadDictionary('ru, en');
-  }, []);
+    leoProfanity.loadDictionary('ru, en')
+  }, [])
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -33,64 +33,64 @@ const NewChannelDialog = () => {
         .max(max, t('Form.Count_symbol', { min, max }))
         .required(t('Form.Required'))
         .test('unique-name', t('Form.Have_been_unique'), value => {
-          if (!value) return true;
-          return !channels.map(item => item.name).includes(value.trim());
+          if (!value) return true
+          return !channels.map(item => item.name).includes(value.trim())
         }),
     }),
-  });
-  const isDisabled = status === 'loading' || formik.isSubmitting;
+  })
+  const isDisabled = status === 'loading' || formik.isSubmitting
   const closeNewChannelDialog = () => {
-    dispatch(closeChannelAddingDialog());
-    dispatch(setChannelChangeError({ error: '' }));
-  };
+    dispatch(closeChannelAddingDialog())
+    dispatch(setChannelChangeError({ error: '' }))
+  }
   useEffect(() => {
-    inputEl.current?.focus();
+    inputEl.current?.focus()
     const handleClickOutside = e => {
       if (modalRef.current && !modalRef.current.contains(e.target) && !isDisabled) {
-        closeNewChannelDialog();
+        closeNewChannelDialog()
       }
-    };
+    }
     const handleEscapeKey = e => {
       if (e.key === 'Escape' && !isDisabled) {
-        closeNewChannelDialog();
+        closeNewChannelDialog()
       }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('keydown', handleEscapeKey);
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('keydown', handleEscapeKey)
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('keydown', handleEscapeKey);
-    };
-  }, [closeNewChannelDialog, isDisabled]);
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('keydown', handleEscapeKey)
+    }
+  }, [closeNewChannelDialog, isDisabled])
   const onSubmit = async e => {
-    e.preventDefault();
-    const errors = await formik.validateForm();
-    formik.setTouched({ name: true }, false);
+    e.preventDefault()
+    const errors = await formik.validateForm()
+    formik.setTouched({ name: true }, false)
 
     if (Object.keys(errors).length === 0) {
       const newChannel = {
         name: leoProfanity.clean(formik.values.name).trim(),
-      };
+      }
       dispatch(postChannel(newChannel))
         .unwrap()
         .then(response => {
-          closeNewChannelDialog();
-          dispatch(setChannelChangeError({ error: '' }));
-          formik.resetForm();
-          dispatch(changeCurrentChannel({ id: response.id }));
-          showSuccess(t('Toast.Channel_created'));
+          closeNewChannelDialog()
+          dispatch(setChannelChangeError({ error: '' }))
+          formik.resetForm()
+          dispatch(changeCurrentChannel({ id: response.id }))
+          showSuccess(t('Toast.Channel_created'))
         })
         .catch(error => {
           dispatch(setChannelChangeError({
             error: error.message,
-          }));
-          showError(t('Toast.Error_sended'));
-          throw error;
-        });
+          }))
+          showError(t('Toast.Error_sended'))
+          throw error
+        })
     } else {
-      dispatch(setChannelChangeError({ error: errors.name }));
+      dispatch(setChannelChangeError({ error: errors.name }))
     }
-  };
+  }
   return (
     <div role="dialog" aria-modal="true" className="fade modal show" tabIndex="-1" style = {{ display: 'block' }}>
       <div className="modal-dialog modal-dialog-centered" ref={modalRef}>
@@ -130,7 +130,7 @@ const NewChannelDialog = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NewChannelDialog;
+export default NewChannelDialog

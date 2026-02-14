@@ -1,56 +1,56 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { removeChannel } from '../slices/channelSlice';
-import { useRef, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import useToast from '../hooks/useToast.js';
-import { changeCurrentRemoveChannel, closeRemovingChannelDialog, changeCurrentChannel } from '../slices/UIslice.jsx';
+import { useDispatch, useSelector } from 'react-redux'
+import { removeChannel } from '../slices/channelSlice'
+import { useRef, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import useToast from '../hooks/useToast.js'
+import { changeCurrentRemoveChannel, closeRemovingChannelDialog, changeCurrentChannel } from '../slices/UIslice.jsx'
 
 const RemovingChannelDialog = () => {
-  const { t } = useTranslation('all');
-  const dispatch = useDispatch();
-  const { showSuccess, showError } = useToast();
-  const { currentRemoveChannelId } = useSelector(state => state.uiState);
-  const modalRef = useRef(null);
+  const { t } = useTranslation('all')
+  const dispatch = useDispatch()
+  const { showSuccess, showError } = useToast()
+  const { currentRemoveChannelId } = useSelector(state => state.uiState)
+  const modalRef = useRef(null)
   const deleteChannel = async () => {
     try {
-      await dispatch(removeChannel(currentRemoveChannelId)).unwrap();
-      dispatch(closeRemovingChannelDialog());
-      dispatch(changeCurrentChannel({ id: '1' }));
-      showSuccess(t('Toast.Channel_deleted'));
+      await dispatch(removeChannel(currentRemoveChannelId)).unwrap()
+      dispatch(closeRemovingChannelDialog())
+      dispatch(changeCurrentChannel({ id: '1' }))
+      showSuccess(t('Toast.Channel_deleted'))
     } catch (e) {
-      showError(t('Toast.Error_sended'));
-      throw e;
+      showError(t('Toast.Error_sended'))
+      throw e
     }
-  };
+  }
   const cancelRemovingChannel = () => {
-    dispatch(changeCurrentRemoveChannel({ id: 0 }));
-    dispatch(closeRemovingChannelDialog());
-  };
+    dispatch(changeCurrentRemoveChannel({ id: 0 }))
+    dispatch(closeRemovingChannelDialog())
+  }
 
   useEffect(() => {
     const handleClickOutside = event => {
       if (currentRemoveChannelId !== 0
         && modalRef.current
         && !modalRef.current.contains(event.target)) {
-        cancelRemovingChannel();
+        cancelRemovingChannel()
       }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
+    }
+    document.addEventListener('mousedown', handleClickOutside)
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [currentRemoveChannelId]);
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [currentRemoveChannelId])
   useEffect(() => {
     const handleEscKey = event => {
       if (event.key === 'Escape' && currentRemoveChannelId !== 0) {
-        cancelRemovingChannel();
+        cancelRemovingChannel()
       }
-    };
-    document.addEventListener('keydown', handleEscKey);
+    }
+    document.addEventListener('keydown', handleEscKey)
     return () => {
-      document.removeEventListener('keydown', handleEscKey);
-    };
-  }, [currentRemoveChannelId]);
+      document.removeEventListener('keydown', handleEscKey)
+    }
+  }, [currentRemoveChannelId])
 
   return (
     <div role="dialog" aria-modal="true" style = {{ display: 'block' }} className="fade modal show" tabIndex="-1">
@@ -70,7 +70,7 @@ const RemovingChannelDialog = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default RemovingChannelDialog;
+export default RemovingChannelDialog
