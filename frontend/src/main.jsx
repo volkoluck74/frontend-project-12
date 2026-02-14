@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { Provider as RollbarProvider } from '@rollbar/react'
 
 const rollbarConfig = {
-  accessToken: '84c4f36d3617417db2b2736b2855167d',
+  accessToken: import.meta.env.VITE_ROLLBAR_ACCESS_TOKEN,
   environment: 'testenv',
   captureUncaught: true,
   captureUnhandledRejections: true,
