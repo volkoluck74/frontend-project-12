@@ -10,10 +10,10 @@ const rollbarConfig = {
       javascript: {
         source_map_enabled: true,
         code_version: process.env.REACT_APP_VERSION || '1.0.0',
-        guess_uncaught_frames: true,
-      },
-    },
-  },
+        guess_uncaught_frames: true
+      }
+    }
+  }
 };
 
 export const rollbar = new Rollbar(rollbarConfig);
