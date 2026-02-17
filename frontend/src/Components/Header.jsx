@@ -15,7 +15,7 @@ const Header = () => {
   }
   const isAuthorization = hasToken()
   return (
-    <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
+    <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white ">
       <div className="container">
         <a className="navbar-brand" href="/">{t('Header_name')}</a>
         {isAuthorization ? <button type="button" className="btn btn-primary" onClick={onSubmitLogout}>{t('Exit')}</button> : null }
