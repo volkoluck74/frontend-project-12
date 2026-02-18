@@ -60,15 +60,14 @@ const RegistrationForm = () => {
   return (
     <div className="container-fluid h-100">
       <div className="row justify-content-center align-content-center h-100">
-        <div className="col-12 col-md-8 col-xxl-6">
+        <div className="col-12 col-md-6">
           <div className="card shadow-sm">
             <div className="card-body d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
               <div>
                 <img src={registrationIMG} className="rounded-circle" alt="Регистрация" />
               </div>
-              <form className="w-50" onSubmit={formik.handleSubmit}>
+              <form className="w-100" onSubmit={formik.handleSubmit}>
                 <h1 className="text-center mb-4">{t('Registration')}</h1>
-
                 <div className="form-floating mb-3">
                   <input
                     placeholder={t('Form.Count_symbol', { min, max })}

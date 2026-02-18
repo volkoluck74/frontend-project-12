@@ -32,7 +32,7 @@
     },
     "Header_name": "Hexlet Chat",
     "Login": {
-        "Hasnt_account": "Нет аккаунта?",
+        "Hasnt_account": "Нет аккаунта? ",
         "Your_nick": "Ваш ник" 
     },
     "Message_one": "{{count}} сообщение",

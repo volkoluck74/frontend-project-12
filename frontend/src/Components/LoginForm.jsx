@@ -39,7 +39,6 @@ const LoginForm = () => {
       <div className="form-floating mb-3">
         <input
           name="username"
-          autoComplete="username"
           required
           placeholder={t('Login.Your_nick')}
           id="username"
@@ -53,7 +52,6 @@ const LoginForm = () => {
       <div className="form-floating mb-4">
         <input
           name="password"
-          autoComplete="current-password"
           required
           placeholder={t('Password')}
           type="password"
